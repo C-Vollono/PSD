@@ -2,19 +2,24 @@
 	Tipo di veicolo: Stringa
 	Modello: Stringa
 	Colore: Stringa
-	Posizione: Stringa
-	*Orari disponibili: Float (?) // Modalità di prenotazione: costo orario e costo giornata intera
-		// Disponibilita : Bool (?)
+	Targa: Stringa
+	Orari disponibili: array di struct che contiene ogni fascia oraria (con inizio e fine come variabili) e disponibilità (bool)  
 	Posti omologati: Intero
-	Accessibilita' per trasporto disabili: Char (Y per Si, N per No)
 	Tipo di combustibile: Stringa
 	Anno di immatricolazione: Intero
-	Costo noleggio: Float
+	Costo noleggio: Float (Costo orario)
 
 -- Funzioni ADT Veicolo --
 	
-	stampaDettagli(veicolo) -> void  //Lo usiamo in modo iterativo per la stampa della disponibilitá dei veicoli (PUNTO 2)
-	modificaDisponibilita(veicolo, orarioScelto) -> void
+	stampaDettagli(veicolo) -> void  //Lo usiamo in modo iterativo per la stampa della disponibilitá dei veicoli
+
+	modificaDisponibilita(veicolo, int (indice dell'orario scelto nell'array di struct degli orari del veicolo)) -> void // Cambia la disponibilità di una fascia oraria occupata
+
+	CostoNoleggio (int inizio, int fine, veicolo) -> int //Calcola il costo complessivo del noleggio con eventuali sconti applicati al veicolo
+
+	riempiArrayStructVeicolo da file txt esterno
+
+	riempi ArrrayStructOrari da file txt esterno
 
 ---------------------------------------------------------------------------------------
 
@@ -53,6 +58,8 @@
 
 	void DestroyHashtable (hashtable);
 
+	confronta orari prenotazione
+
 	// poi devono essere inserite le funzioni richieste nella traccia
 
 ---------------------------------------------------------------------------------------
@@ -80,6 +87,7 @@
 	-Se l'utente conferma, inserisci nell'adt la prenotazione effettuata
 	-Se l'utente annulla, torni al menu
 	-Torna al menu principale
+	// Dopo aver creato una prenotazione, bisogna aggiornare i file txt esterni degli orari e del veicolo per quanto riguarda la disponibilità. Basta sovrascrivere i file esterni txt con i dati aggiornati nelle struct del programma
 
 	-Caso 2 (Visualizza storico prenotazioni):
 	-Stampa direttamente tutte le prenotazioni effettuate dal cliente
@@ -99,7 +107,7 @@
 
 	-Caso 6 (Annulla prenotazione):
 	-Chiedi all'utente di inserire l'ID della prenotazione da concellare
-	-Canvcella prenotazione e torna al menu principale
+	-Cancella prenotazione e torna al menu principale
 
 
 
