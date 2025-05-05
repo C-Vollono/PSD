@@ -12,7 +12,7 @@ typedef struct Orario {
     int Disponibilità;
 }Orario;
 
-struct Veicolo{
+struct Vettura{
 
     char tipoVeicolo[30];
 
