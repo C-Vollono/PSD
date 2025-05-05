@@ -19,7 +19,7 @@
 
 	riempiArrayStructVeicolo da file txt esterno
 
-	riempi ArrrayStructOrari da file txt esterno
+	salvaOrari dopo aver confermato o annullato una prenotazione
 
 ---------------------------------------------------------------------------------------
 
