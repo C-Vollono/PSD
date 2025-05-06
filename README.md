@@ -1,27 +1,40 @@
 -- ADT Veicolo: Array di Struct (Veicolo) --
+	
+	struct Vettura{
 	Tipo di veicolo: Stringa
 	Modello: Stringa
 	Colore: Stringa
 	Targa: Stringa
-	Orari disponibili: array di struct che contiene ogni fascia oraria (con inizio e fine come variabili) e disponibilità (bool)  
+	struct Orari disponibili{  //array di struct delle fascie orarie
+		float inizio
+		float fine
+		int disponibilità (booleano)
+	}  
 	Posti omologati: Intero
 	Tipo di combustibile: Stringa
 	Anno di immatricolazione: Intero
 	Costo noleggio: Float (Costo orario)
+	}
 
 -- Funzioni ADT Veicolo --
 	
-	stampaDettagli(veicolo) -> void  //Lo usiamo in modo iterativo per la stampa della disponibilitá dei veicoli
+	stampaveicolo(veicolo) -> void  //stampa i dati del veicolo e la sua disponibilità;
 
-	modificaDisponibilita(veicolo, int (indice dell'orario scelto nell'array di struct degli orari del veicolo)) -> void // Cambia la disponibilità di una fascia oraria occupata
+	modificaDisponibilita(veicolo, int (indice dell'orario scelto nell'array di struct degli orari del veicolo)) -> void; 
+	// Cambia la disponibilità di una fascia oraria occupata
 
-	CostoNoleggio (int inizio, int fine, veicolo) -> int //Calcola il costo complessivo del noleggio con eventuali sconti applicati al veicolo
+	CostoNoleggio (int inizio, int fine, veicolo) -> int //Calcola il costo complessivo del noleggio con eventuali sconti applicati al veicolo;
 
-	riempiArrayStructVeicolo da file txt esterno
+	riempiVeicoli (veicolo, char* nomefile)-> void //prende i dati dal file e li inserisce nell'array di struct dell'ADT Veicolo;
+	
+	salvaOrari(veicolo, char*) -> void //prende in input la struct veicolo e il file aperto precedentemente così da poter salvare gli orari
+		                               //dal file alla struct di orari
+	stampaOrari(veicolo) -> void       // stampa gli orari disponibili del veicolo 
+	//dopo aver confermato o annullato una prenotazione
 
-	salvaOrari dopo aver confermato o annullato una prenotazione
+	verificaDisponibilità -> char* //stampa a video se un veicolo è disponibile o meno in una determinata fascia oraria
 
----------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------------------------
 
  -- ADT Prenotazione: Tabella Hash  --
 	
@@ -62,7 +75,7 @@
 
 	// poi devono essere inserite le funzioni richieste nella traccia
 
----------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------------------------
 
 --PSEUDOCODICE--
 	-Chiedere se si è un nuovo utente e si è già registrati.
@@ -108,21 +121,3 @@
 	-Caso 6 (Annulla prenotazione):
 	-Chiedi all'utente di inserire l'ID della prenotazione da concellare
 	-Cancella prenotazione e torna al menu principale
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	
