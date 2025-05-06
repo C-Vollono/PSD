@@ -23,7 +23,7 @@
 	modificaDisponibilita(veicolo, int (indice dell'orario scelto nell'array di struct degli orari del veicolo)) -> void; 
 	// Cambia la disponibilità di una fascia oraria occupata
 
-	CostoNoleggio (int inizio, int fine, veicolo) -> int //Calcola il costo complessivo del noleggio con eventuali sconti applicati al veicolo;
+	CostoNoleggio (float inizio, float fine, veicolo) -> float //Calcola il costo complessivo del noleggio con eventuali sconti applicati al veicolo;
 
 	riempiVeicoli (veicolo, char* nomefile)-> void //prende i dati dal file e li inserisce nell'array di struct dell'ADT Veicolo;
 	
@@ -32,7 +32,7 @@
 	stampaOrari(veicolo) -> void       // stampa gli orari disponibili del veicolo 
 	//dopo aver confermato o annullato una prenotazione
 
-	verificaDisponibilità -> char* //stampa a video se un veicolo è disponibile o meno in una determinata fascia oraria
+	verificaDisponibilità -> void //stampa a video se un veicolo è disponibile o meno in una determinata fascia oraria
 
 ---------------------------------------------------------------------------------------------------------------------------------------------
 
