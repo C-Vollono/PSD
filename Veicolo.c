@@ -242,3 +242,62 @@ void riempiOrari (veicolo v, char* nomefile){
         }
     }
 }
+
+void liberaVeicoli (veicolo v){
+
+    for (int i=0; i<10; i++){
+
+        free (v[i].annoDiImmatricolazione);
+        free (v[i].colore);
+        free (v[i].Combustibile);
+        free (v[i].modello);
+        free (v[i].targa);
+        free (v[i].tipoVeicolo);
+        free (v[i].orari);
+    }
+
+    free (v);
+}
+
+void aggiornaOrari (veicolo v, char* nomefile, int i, int k){
+
+    FILE *file;
+    char buffer [600];
+
+    file = fopen ("nomefile", "r+");
+
+    if (file == NULL){
+
+        perror ("Errore nell'apertura del file.");
+        exit (1);
+    }
+
+    for (int j=0; j <= i; j++){
+
+        fgets (buffer, sizeof (buffer), file);
+    }
+
+    char* token = strtok (buffer, ";");
+
+    for (int j=0; j < k; j++){  //Da discutere il contatore j con k per lo spostamemto del cursore all'interno del file
+
+        token = strtok (NULL, ";");
+    }
+
+   token = atoi (token);
+
+   if (token != v[i].orari[k].Disponibilità){
+
+        token = itoa (token, v[i].orari[k].Disponibilità, 10);
+
+        fprintf (file, "%s", token);
+   }
+
+   rewind (file);
+
+   if (fclose (file) == 1){
+
+    perror ("Errore nella chiusura del file.");
+    exit (1);
+   }
+}
