@@ -242,3 +242,46 @@ void riempiOrari (veicolo v, char* nomefile){
         }
     }
 }
+
+void liberaVeicoli (veicolo v){
+
+    for (int i=0; i<10; i++){
+
+        free (v[i].annoDiImmatricolazione);
+        free (v[i].colore);
+        free (v[i].Combustibile);
+        free (v[i].modello);
+        free (v[i].targa);
+        free (v[i].tipoVeicolo);
+        free (v[i].orari);
+    }
+
+    free (v);
+}
+
+void aggiornaOrari (veicolo v, char* nomefile){
+
+    FILE *file;
+
+    file = fopen ("nomefile", "r+");
+
+    if (file == NULL){
+
+        perror ("Errore nell'apertura del file.");
+        exit (1);
+    }
+
+    fseek (file, 14, SEEK_SET);
+
+    fprintf (file, "%d", v[0].orari[0].Disponibilità);
+
+    for (int i=0; i<10; i++){
+
+        for (int k=1; k<8; k++){
+
+            fseek (file, 14, SEEK_CUR);
+        }
+    }
+
+
+}
