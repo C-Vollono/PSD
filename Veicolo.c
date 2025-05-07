@@ -259,9 +259,10 @@ void liberaVeicoli (veicolo v){
     free (v);
 }
 
-void aggiornaOrari (veicolo v, char* nomefile){
+void aggiornaOrari (veicolo v, char* nomefile, int i, int k){
 
     FILE *file;
+    char buffer [600];
 
     file = fopen ("nomefile", "r+");
 
@@ -271,17 +272,32 @@ void aggiornaOrari (veicolo v, char* nomefile){
         exit (1);
     }
 
-    fseek (file, 14, SEEK_SET);
+    for (int j=0; j <= i; j++){
 
-    fprintf (file, "%d", v[0].orari[0].Disponibilità);
-
-    for (int i=0; i<10; i++){
-
-        for (int k=1; k<8; k++){
-
-            fseek (file, 14, SEEK_CUR);
-        }
+        fgets (buffer, sizeof (buffer), file);
     }
 
+    char* token = strtok (buffer, ";");
 
+    for (int j=0; j < k; j++){  //Da discutere il contatore j con k per lo spostamemto del cursore all'interno del file
+
+        token = strtok (NULL, ";");
+    }
+
+   token = atoi (token);
+
+   if (token != v[i].orari[k].Disponibilità){
+
+        token = itoa (token, v[i].orari[k].Disponibilità, 10);
+
+        fprintf (file, "%s", token);
+   }
+
+   rewind (file);
+
+   if (fclose (file) == 1){
+
+    perror ("Errore nella chiusura del file.");
+    exit (1);
+   }
 }

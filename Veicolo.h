@@ -22,6 +22,6 @@ float verificaSconto (veicolo v);
 
 void aggiornaVeicoli (veicolo v, char* nomefile);
 
-void aggiornaOrari (veicolo v, char* nomefile);
+void aggiornaOrari (veicolo v, char* nomefile, int i, int k);
 
 void liberaVeicoli (veicolo v);
