@@ -35,28 +35,28 @@ struct Vettura{
 };
 
 
-void stampaVeicolo (veicolo v){
+void stampaVeicolo (veicolo v, int i){
 
-    printf ("VEICOLO:\nTipo Veicolo: %s\nModello: %s\nColore: %s\nTarga: %s\nPosti Omologati: %d\nCombustibile: %s\nAnno di immatricolazione: %d\nCosto Noleggio: %.2f€/h", v->tipoVeicolo, v->modello, v->colore, v->targa, v->postiOmologati, v->Combustibile,v->annoDiImmatricolazione, v->CostoNoleggioOrario);
+    printf ("VEICOLO:\nTipo Veicolo: %s\nModello: %s\nColore: %s\nTarga: %s\nPosti Omologati: %d\nCombustibile: %s\nAnno di immatricolazione: %d\nCosto Noleggio: %.2f€/h", v[i].tipoVeicolo, v[i].modello, v[i].colore, v[i].targa, v[i].postiOmologati, v[i].Combustibile,v[i].annoDiImmatricolazione, v[i].CostoNoleggioOrario);
 
     printf ("Fasce Orarie: ");
     
-    stampaOrari (v);
+    stampaOrari (v, i);
 }
 
-void stampaOrari (veicolo v){
+void stampaOrari (veicolo v, int i){
 
-    for (int i=0; i<8; i++){
+        for (int k=0; k<8; k++){
 
-        printf ("%.2f-%.2f ", v->orari->inizio, v->orari->fine);
+        printf ("%.2f-%.2f ", v[i].orari[k].inizio, v[i].orari[k].fine);
 
-        verificaDisponibilità(v);
-    }
+        verificaDisponibilità(v, i, k);
+        }
 }
 
-void verificaDisponibilità (veicolo v){
+void verificaDisponibilità (veicolo v, int i, int k){
 
-    if ((v->orari->Disponibilità)%2 == 1){
+    if ((v[i].orari[k].Disponibilità)%2 == 1){
 
         printf ("Non Disponibile\n");
     }
@@ -66,11 +66,11 @@ void verificaDisponibilità (veicolo v){
     } 
 }
 
-float costoNoleggio (veicolo v){
+float costoNoleggio (veicolo v, int i, int k){
 
     int ore, minuti, tempoNoleggio;
 
-    float inizio = v->orari->inizio, fine = v->orari->fine;
+    float inizio = v[i].orari[k].inizio, fine = v[i].orari[k].fine;
 
     minuti = (inizio - (int)inizio)*100;
 
@@ -84,12 +84,12 @@ float costoNoleggio (veicolo v){
 
     tempoNoleggio = ((ore*3600 + minuti*60) - tempoNoleggio)/3600;
 
-    return (tempoNoleggio * v->CostoNoleggioOrario) * verificaSconto(v);
+    return (tempoNoleggio * v[i].CostoNoleggioOrario) * verificaSconto(v);
 }
 
-void modificaDisponibilità (veicolo v){
+void modificaDisponibilità (veicolo v, int i, int k){
 
-    v->orari->Disponibilità = 1;
+    v[i].orari[k].Disponibilità = 1;
 }
 
 void riempiVeicoli (veicolo v, char* nomefile){
