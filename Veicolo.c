@@ -37,7 +37,7 @@ struct Vettura{
 
 void stampaVeicolo (veicolo v, int i){
 
-    printf ("VEICOLO:\nTipo Veicolo: %s\nModello: %s\nColore: %s\nTarga: %s\nPosti Omologati: %d\nCombustibile: %s\nAnno di immatricolazione: %d\nCosto Noleggio: %.2f€/h", v[i].tipoVeicolo, v[i].modello, v[i].colore, v[i].targa, v[i].postiOmologati, v[i].Combustibile,v[i].annoDiImmatricolazione, v[i].CostoNoleggioOrario);
+    printf ("VEICOLO:\nTipo Veicolo: %s\nModello: %s\nColore: %s\nTarga: %s\nPosti Omologati: %d\nCombustibile: %s\nAnno di immatricolazione: %d\nCosto Noleggio: %.2f€/h", v->tipoVeicolo, v[i].modello, v[i].colore, v[i].targa, v[i].postiOmologati, v[i].Combustibile,v[i].annoDiImmatricolazione, v[i].CostoNoleggioOrario);
 
     printf ("Fasce Orarie: ");
     
