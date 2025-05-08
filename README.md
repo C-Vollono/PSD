@@ -18,21 +18,25 @@
 
 -- Funzioni ADT Veicolo --
 	
-	stampaveicolo(veicolo) -> void  //stampa i dati del veicolo e la sua disponibilità;
+	stampaVeicolo(veicolo) -> void;  //stampa i dati del veicolo e la sua disponibilità
 
-	modificaDisponibilita(veicolo, int (indice dell'orario scelto nell'array di struct degli orari del veicolo)) -> void; 
-	// Cambia la disponibilità di una fascia oraria occupata
+	modificaDisponibilita(veicolo, int k) -> void; // Cambia la disponibilità di una fascia oraria occupata nella struct Orari
 
-	CostoNoleggio (float inizio, float fine, veicolo) -> float //Calcola il costo complessivo del noleggio con eventuali sconti applicati al veicolo;
+	CostoNoleggio (veicolo, int k) -> float; //Calcola il costo complessivo del noleggio con eventuali sconti applicati all'orario
 
-	riempiVeicoli (veicolo, char* nomefile)-> void //prende i dati dal file e li inserisce nell'array di struct dell'ADT Veicolo;
+	riempiVeicoli (veicolo, char* nomefile) -> void; //prende i dati dal file Veicoli.txt e li inserisce nell'array di struct dell'ADT Veicolo
+
+	riempiOrari(veicolo, char*file) -> void; //prende i dati dal file Orari.txt e li inserisce nella struct annidata Orari dell'ADT Veicolo
 	
-	salvaOrari(veicolo, char*) -> void //prende in input la struct veicolo e il file aperto precedentemente così da poter salvare gli orari
-		                               //dal file alla struct di orari
-	stampaOrari(veicolo) -> void       // stampa gli orari disponibili del veicolo 
-	//dopo aver confermato o annullato una prenotazione
+	stampaOrari(veicolo) -> void // stampa gli orari disponibili del veicolo
 
-	verificaDisponibilità -> void //stampa a video se un veicolo è disponibile o meno in una determinata fascia oraria
+	verificaDisponibilità(veicolo, int k) -> void //stampa a video se un veicolo è disponibile o meno in una determinata fascia oraria
+
+	verificaSconto(veicolo, int k) -> float //Restituisce la percentuale di sconto da applicare nel costo del noleggio in determinati orari altrimenti nessuno
+
+	aggiornaOrari(veicolo, char* nomefile, int i, int k) -> void //Aggiorna gli orari nel file Orari.txt dopo una prenotazione effettuata
+
+	liberaVeicoli(veicolo) -> void //Deallocazione della memoria
 
 ---------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -83,7 +87,7 @@
 	-Se si è già registrati, accedere e confrontare le credenziali con quelle salvate nel file txt.
 	-Apertura del menu
 
-	-Scelte disponibili nel menu principale: (da fare eventualmente con uno switch)
+	-Scelte disponibili nel menu principale: (da fare con uno switch)
 	Nuova prenotazione
 	Visualizza Storico Prenotazioni 
 	Visualizza Sconti
@@ -103,11 +107,11 @@
 	// Dopo aver creato una prenotazione, bisogna aggiornare i file txt esterni degli orari e del veicolo per quanto riguarda la disponibilità. Basta sovrascrivere i file esterni txt con i dati aggiornati nelle struct del programma
 
 	-Caso 2 (Visualizza storico prenotazioni):
-	-Stampa direttamente tutte le prenotazioni effettuate dal cliente
+	-Stampa direttamente tutte le prenotazioni effettuate dal cliente //Chiedere per il salvataggio
 	-Chiedi all'utente se vuole tornare al menu principale
 
 	-Caso 3 (Visualizza sconti): 
-	- Chiedi all'utente se vuole vedere gli sconti per orari specifici oppure per giornata intera:
+	- Chiedi all'utente se vuole vedere gli sconti per orari specifici
 	- Mostri all'utente gli sconti in base a cosa ha scelto
 	-Chiedi all'utente se vuole tornare al menu principale
 
@@ -120,4 +124,4 @@
 
 	-Caso 6 (Annulla prenotazione):
 	-Chiedi all'utente di inserire l'ID della prenotazione da concellare
-	-Cancella prenotazione e torna al menu principale
+	-Cancella prenotazione e torna al menu principale //aggiornare file txt
