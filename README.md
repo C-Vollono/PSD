@@ -1,4 +1,4 @@
--- ADT Veicolo: Array di Struct (Veicolo) --
+-- ADT Veicolo --
 	
 	struct Vettura{
 	Tipo di veicolo: Stringa
@@ -40,44 +40,21 @@
 
 ---------------------------------------------------------------------------------------------------------------------------------------------
 
- -- ADT Prenotazione: Tabella Hash  --
+ -- ADT Prenotazione --
 	
-	struct Hash prenotazione {
-
-		int size;
-		struct item **table;
-	}
-
-	typedef struct hash* hashtable;
-
 	struct item {
 
-		int *key;
-		char* NomeCognomeUtente;
-		// Da valutare inserimento campi utente (data di nascita, codice fiscale ecc...)
-		char* (stampare tutti i dati del veicolo eccetto la disponibilità di orari)
-		char* OrarioScelto;
-		Float PagamentoNoleggio;
-		Char* ID prenotazione;
-		struct item *next;
+		char* key; //ID prenotazione
+		char* NomeUtente;
+		veicolo v;
+		char* OrarioScelto; //Da valutare il tipo di dato del campo
+		Float CostoNoleggioFinale;
 
 	}
 
 -- Funzioni ADT Prenotazione --
 
-	hashtable NuovaHashtable (int size);
-
-	int InsertHAsh (hashtable, item);
-
-	struct item *hashSearch (hashtable, char *key);
-
-	struct item *HashDelete (hashtable, vhar *key);
-
-	void DestroyHashtable (hashtable);
-
-	confronta orari prenotazione
-
-	// poi devono essere inserite le funzioni richieste nella traccia
+	// Da discutere
 
 ---------------------------------------------------------------------------------------------------------------------------------------------
 
