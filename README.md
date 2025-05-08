@@ -22,7 +22,7 @@
 
 	modificaDisponibilita(veicolo, int k) -> void; // Cambia la disponibilità di una fascia oraria occupata nella struct Orari
 
-	CostoNoleggio (veicolo, int k) -> float; //Calcola il costo complessivo del noleggio con eventuali sconti applicati all'orario
+	costoNoleggio (veicolo, int k) -> float; //Calcola il costo complessivo del noleggio con eventuali sconti applicati all'orario
 
 	riempiVeicoli (veicolo, char* nomefile) -> void; //prende i dati dal file Veicoli.txt e li inserisce nell'array di struct dell'ADT Veicolo
 
@@ -33,8 +33,6 @@
 	verificaDisponibilità(veicolo, int k) -> void //stampa a video se un veicolo è disponibile o meno in una determinata fascia oraria
 
 	verificaSconto(veicolo, int k) -> float //Restituisce la percentuale di sconto da applicare nel costo del noleggio in determinati orari altrimenti nessuno
-
-	aggiornaOrari(veicolo, char* nomefile, int i, int k) -> void //Aggiorna gli orari nel file Orari.txt dopo una prenotazione effettuata
 
 	liberaVeicoli(veicolo) -> void //Deallocazione della memoria
 
@@ -78,6 +76,12 @@
 	confronta orari prenotazione
 
 	// poi devono essere inserite le funzioni richieste nella traccia
+
+-- Funzioni Interfaccia utente --
+
+	menu_accesso() -> void //crea il menu di accesso e se va a buon fine richiama la funzione del menu per le varie operazioni
+
+	menu_utente(char* nome_utente, veicolo, int indice_veicolo) -> menu delle varie operazioni che può eseguire l'utente
 
 ---------------------------------------------------------------------------------------------------------------------------------------------
 
