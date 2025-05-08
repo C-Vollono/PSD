@@ -25,67 +25,7 @@ struct Vettura{
     float CostoNoleggioOrario; // Costo ad ORA
 };
 
-<<<<<<< HEAD
-
-void stampaVeicolo (veicolo v, int i){
-
-    printf ("VEICOLO:\nTipo Veicolo: %s\nModello: %s\nColore: %s\nTarga: %s\nPosti Omologati: %d\nCombustibile: %s\nAnno di immatricolazione: %d\nCosto Noleggio: %.2f€/h", v->tipoVeicolo, v[i].modello, v[i].colore, v[i].targa, v[i].postiOmologati, v[i].Combustibile,v[i].annoDiImmatricolazione, v[i].CostoNoleggioOrario);
-
-    printf ("Fasce Orarie: ");
-    
-    stampaOrari (v, i);
-}
-
-void stampaOrari (veicolo v, int i){
-
-        for (int k=0; k<8; k++){
-
-        printf ("%.2f-%.2f ", v[i].orari[k].inizio, v[i].orari[k].fine);
-
-        verificaDisponibilità(v, i, k);
-        }
-}
-
-void verificaDisponibilità (veicolo v, int i, int k){
-
-    if ((v[i].orari[k].Disponibilità)%2 == 1){
-
-        printf ("Non Disponibile\n");
-    }
-    else{
-
-        printf ("Disponibile\n");
-    } 
-}
-
-float costoNoleggio (veicolo v, int i, int k){
-
-    int ore, minuti, tempoNoleggio;
-
-    float inizio = v[i].orari[k].inizio, fine = v[i].orari[k].fine;
-
-    minuti = (inizio - (int)inizio)*100;
-
-    ore = (int)inizio;
-
-    tempoNoleggio = ore*3600 + minuti*60;
-
-    minuti = (fine - (int)fine)*100;
-
-    ore = (int)fine;
-
-    tempoNoleggio = ((ore*3600 + minuti*60) - tempoNoleggio)/3600;
-
-    return (tempoNoleggio * v[i].CostoNoleggioOrario) * verificaSconto(v);
-}
-
-void modificaDisponibilità (veicolo v, int i, int k){
-
-    v[i].orari[k].Disponibilità = 1;
-}
-=======
 // -- FUNZIONI RELATIVE AI VEICOLI --
->>>>>>> d8999f68e23ce8a11d2ee8e96a39899dbfe05952
 
 void riempiVeicoli (veicolo v, char* nomefile){
 
@@ -102,91 +42,88 @@ void riempiVeicoli (veicolo v, char* nomefile){
 
     while (fgets (buffer, sizeof (buffer), file) != '\n'){
 
-        for (int i=0; i<10; i++){
-
         char* token = strtok (buffer, ";");
 
-        v[i].tipoVeicolo = malloc (strlen (token)+1 * sizeof (char));
+        v->tipoVeicolo = malloc (strlen (token)+1 * sizeof (char));
 
-        if (v[i].tipoVeicolo == NULL){
+        if (v->tipoVeicolo == NULL){
 
             perror ("ERRORE TIPO VEICOLO");
             exit (1);
         }
 
-        strcpy (v[i].tipoVeicolo, token);
+        strcpy (v->tipoVeicolo, token);
 
         token = strtok (NULL, ";");
 
-        v[i].modello = malloc (strlen (token)+1 * sizeof (char));
+        v->modello = malloc (strlen (token)+1 * sizeof (char));
 
-        if (v[i].modello == NULL){
+        if (v->modello == NULL){
 
             perror ("ERRORE MODELLO");
-            free (v[i].tipoVeicolo);
+            free (v->tipoVeicolo);
             exit(1);
         }
 
-        strcpy (v[i].modello, token);
+        strcpy (v->modello, token);
 
         token = strtok (NULL, ";");
 
-        v[i].colore = malloc (strlen (token)+1 * sizeof (char));
+        v->colore = malloc (strlen (token)+1 * sizeof (char));
 
-        if (v[i].colore == NULL){
+        if (v->colore == NULL){
 
             perror ("ERRORE COLORE");
-            free (v[i].modello);
-            free (v[i].tipoVeicolo);
+            free (v->modello);
+            free (v->tipoVeicolo);
             exit (1);
         }
 
-        strcpy (v[i].colore, token);
+        strcpy (v->colore, token);
 
         token = strtok (NULL, ";");
 
-        v[i].targa = malloc (strlen (token)+1 * sizeof (char));
+        v->targa = malloc (strlen (token)+1 * sizeof (char));
 
-        if (v[i].targa == NULL){
+        if (v->targa == NULL){
 
             perror ("ERRORE TARGA");
-            free (v[i].modello);
-            free (v[i].tipoVeicolo);
-            free (v[i].colore);
+            free (v->modello);
+            free (v->tipoVeicolo);
+            free (v->colore);
             exit (1);
         }
 
-        strcpy (v[i].targa, token);
+        strcpy (v->targa, token);
 
         token = strtok (NULL, ";");
 
-        v[i].postiOmologati = atoi (token);
+        v->postiOmologati = atoi (token);
 
         token = strtok (NULL, ";");
 
-        v[i].Combustibile = malloc (strlen(token)+1 * sizeof (char));
+        v->Combustibile = malloc (strlen(token)+1 * sizeof (char));
 
-        if (v[i].Combustibile == NULL){
+        if (v->Combustibile == NULL){
 
             perror ("ERRORE COMBUSTIBILE");
-            free (v[i].modello);
-            free (v[i].tipoVeicolo);
-            free (v[i].colore);
-            free (v[i].targa);
+            free (v->modello);
+            free (v->tipoVeicolo);
+            free (v->colore);
+            free (v->targa);
             exit (1);
         }
 
         token = strtok (NULL, ";");
 
-        v[i].annoDiImmatricolazione = atoi (token);
+        v->annoDiImmatricolazione = atoi (token);
 
         token = strtok (NULL, ";");
 
-        v[i].CostoNoleggioOrario = atoi (token);
+        v->CostoNoleggioOrario = atoi (token);
     }
-}
 
-    file = fclose (file);
+    fclose (file);
 
     if (file != EOF){
 
@@ -194,42 +131,37 @@ void riempiVeicoli (veicolo v, char* nomefile){
         exit (1);
     }
 }
-/* Discuterne l'utilitá e la non rindondanza
-void aggiornaVeicoli (veicolo v, char* nomefile){
-    FILE *file = fopen(nomefile, "r+");
 
-} */
+void stampaVeicolo (veicolo v){
 
-void stampaVeicolo (veicolo v, int i){
-
-    printf("VEICOLO:\nTipo Veicolo: %s\nModello: %s\nColore: %s\nTarga: %s\nPosti Omologati: %d\nCombustibile: %s\nAnno di immatricolazione: %d\nCosto Noleggio: %.2f€/h", v[i].tipoVeicolo, v[i].modello, v[i].colore, v[i].targa, v[i].postiOmologati, v[i].Combustibile,v[i].annoDiImmatricolazione, v[i].CostoNoleggioOrario);
+    printf("VEICOLO:\nTipo Veicolo: %s\nModello: %s\nColore: %s\nTarga: %s\nPosti Omologati: %d\nCombustibile: %s\nAnno di immatricolazione: %d\nCosto Noleggio: %.2f€/h", v->tipoVeicolo, v->modello, v->colore, v->targa, v->postiOmologati, v->Combustibile,v->annoDiImmatricolazione, v->CostoNoleggioOrario);
 
     printf ("Fasce Orarie: ");
-    stampaOrari (v, i);
+    stampaOrari (v);
 }
 
 void liberaVeicoli (veicolo v){
 
     for (int i=0; i<10; i++){
 
-        free (v[i].annoDiImmatricolazione);
-        free (v[i].colore);
-        free (v[i].Combustibile);
-        free (v[i].modello);
-        free (v[i].targa);
-        free (v[i].tipoVeicolo);
-        free (v[i].orari);
+        free (v->annoDiImmatricolazione);
+        free (v->colore);
+        free (v->Combustibile);
+        free (v->modello);
+        free (v->targa);
+        free (v->tipoVeicolo);
+        free (v->orari);
     }
 
     free (v);
 }
 // -- FUNZIONI RELATIVE AL NOLEGGIO --
 
-float costoNoleggio (veicolo v, int i, int k){
+float costoNoleggio (veicolo v, int k){
 
     int ore, minuti, tempoNoleggio;
 
-    float inizio = v[i].orari[k].inizio, fine = v[i].orari[k].fine;
+    float inizio = v->orari[k].inizio, fine = v->orari[k].fine;
 
     minuti = (inizio - (int)inizio)*100;
 
@@ -243,11 +175,11 @@ float costoNoleggio (veicolo v, int i, int k){
 
     tempoNoleggio = ((ore*3600 + minuti*60) - tempoNoleggio)/3600;
 
-    return (tempoNoleggio * v[i].CostoNoleggioOrario) * verificaSconto(v);
+    return (tempoNoleggio * v->CostoNoleggioOrario) * verificaSconto(v, k);
 }
 
-float verificaSconto (veicolo v, int i, int k){ // Restituisce float tra 0.0 a 1.0 che corrisponde alla percentuale di sconto (1- verificaSconto);
-      float orario = v[i].orari[k].inizio;
+float verificaSconto (veicolo v, int k){ // Restituisce float tra 0.0 a 1.0 che corrisponde alla percentuale di sconto (1- verificaSconto);
+      float orario = v->orari[k].inizio;
       if (orario >= 20.00 ){
         return 0.7;
       } else if (orario < 9) {
@@ -275,21 +207,19 @@ void riempiOrari (veicolo v, char* nomefile){
 
         char* token = strtok (buffer, ";");
 
-        for (int i=0; i<10; i++){
-
             for (int k=0; k<8; k++){
 
-                v[i].orari[k].inizio = atof (token);
+                v->orari[k].inizio = atof (token);
 
                 token = strtok (NULL, ";");
 
-                v[i].orari[k].fine = atof (token);
+                v->orari[k].fine = atof (token);
 
                 token = strtok (NULL, ";");
 
-                v[i].orari[k].Disponibilità = atoi (token);
+                v->orari[k].Disponibilità = atoi (token);
             }
-        }
+    }
 
         file = fclose (file);
 
@@ -299,7 +229,7 @@ void riempiOrari (veicolo v, char* nomefile){
             exit (1);
         }
     }
-}
+
 
 void aggiornaOrari (veicolo v, char* nomefile, int i, int k){
 
@@ -328,9 +258,9 @@ void aggiornaOrari (veicolo v, char* nomefile, int i, int k){
     }
 
     token_int = atoi (token);
-    if ( token_int != v[i].orari[k].Disponibilità){
+    if ( token_int != v->orari[k].Disponibilità){
 
-        token = itoa (token_int, v[i].orari[k].Disponibilità, 10);
+        token = itoa (token_int, v->orari[k].Disponibilità, 10);
 
         fprintf (file, "%s", token);
     }
@@ -342,9 +272,9 @@ void aggiornaOrari (veicolo v, char* nomefile, int i, int k){
     }
 }
 
-void verificaDisponibilità (veicolo v, int i, int k){
+void verificaDisponibilità (veicolo v, int k){
 
-    if ((v[i].orari[k].Disponibilità)%2 == 1){
+    if ((v->orari[k].Disponibilità)%2 == 1){
 
         printf ("Non Disponibile\n");
     }
@@ -354,18 +284,18 @@ void verificaDisponibilità (veicolo v, int i, int k){
     }
 }
 
-void modificaDisponibilità (veicolo v, int i, int k){
+void modificaDisponibilità (veicolo v, int k){
 
-    v[i].orari[k].Disponibilità = 1;
+    v->orari[k].Disponibilità = 1;
 }
 
-void stampaOrari (veicolo v, int i){
+void stampaOrari (veicolo v){
 
         for (int k=0; k<8; k++){
 
-        printf ("%.2f-%.2f ", v[i].orari[k].inizio, v[i].orari[k].fine);
+        printf ("%.2f-%.2f ", v->orari[k].inizio, v->orari[k].fine);
 
-        verificaDisponibilità(v, i, k);
+        verificaDisponibilità(v, k);
         }
 }
 
