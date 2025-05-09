@@ -202,7 +202,7 @@ struct Vettura{
 /*
  * Funzione: liberaVeicoli
  * -----------------------
- *  
+ *  Libera la memoria dell'oggetto veicolo
  * 
  * Specifica sintattica:
  *      void liberaVeicoli(veicolo) -> void
@@ -327,9 +327,9 @@ float costoNoleggio (veicolo v, int k){
 float verificaSconto (veicolo v, int k){ // Restituisce float tra 0.0 a 1.0 che corrisponde alla percentuale di sconto (1- verificaSconto);
       float orario = v->orari[k].inizio;
       if (orario >= 20.00 ){
-        return 0.7;
+        return 0.7; //Sconto del 30% se l'orario prenotato è dalle 20.00 in poi
       } else if (orario < 9) {
-        return 0.85;
+        return 0.85; //Sconto del 15% se l'orario prenotato è prima delle 9.00
       } else return 1.0;
 
 }
@@ -337,24 +337,33 @@ float verificaSconto (veicolo v, int k){ // Restituisce float tra 0.0 a 1.0 che 
 /*-- FUNZIONI RELATIVE AGLI ORARI --*/
 
 /*
- * Funzione:
+ * Funzione: riempiOrari
  * -----------------------
- * 
+ * Prende in input l'oggetto veicolo e il puntatore al file .txt contenente i dati degli intervalli orari
+ * Riempie l'oggetto veicolo con i dati contenuti nel file 
  * 
  * Specifica sintattica:
+ *      void riempiOrari(veicolo,char*)->void
  *
  * Parametri:
+ *             v: oggetto veicolo
+ *      nomefile: file Orari.tx
  * 
  * Specifica semantica:
+ *      riempiOrari(v, nomefile)-> void
  *       
  * Pre-condizione:
- *       
+ *       Il file txt deve contenere i vari dati degli Orari e l'oggetto veicolo esistere
+ * 
  * Post-condizione:
+ *      Non ritorna nessun valore, oggetto Orari riempito
  * 
  * Ritorna: 
+ *      Nessun valore
  * 
  * Effetti collaterali:
- *       
+ *      Modifica il contenuto nell'oggetto veicolo
+ *      Se il file è vuoto, la funzione potrebbe dare comportamento indefinito senza opportuni controlli
  */
 
 void riempiOrari (veicolo v, char* nomefile){
@@ -398,24 +407,32 @@ void riempiOrari (veicolo v, char* nomefile){
     }
 
 /*
- * Funzione:
+ * Funzione: verificaDisponibilità
  * -----------------------
- * 
+ * Verifica che un veicolo in un determinato orario sia disponibile attraverso un modulo 2 (se 1 allora non disponibile altrimenti disponibile)
+ * Stampa a video disponibile o meno
  * 
  * Specifica sintattica:
+ *      void verificaDisponibilità (veicolo, int) -> void
  *
  * Parametri:
+ *      v: oggetto veicolo
+ *      k: indice orario scelto
  * 
  * Specifica semantica:
+ *      verificaDisponibilità(v, k) -> void
  *       
  * Pre-condizione:
+ *      L'oggetto veicolo deve esistere e contenere i dati della struct Orari
  *       
  * Post-condizione:
+ *      Non ritorna nessun valore
  * 
  * Ritorna: 
+ *      Nessun valore
  * 
  * Effetti collaterali:
- *       
+ *      Nessun effetto collaterale       
  */
 
 void verificaDisponibilità (veicolo v, int k){
@@ -431,24 +448,31 @@ void verificaDisponibilità (veicolo v, int k){
 }
 
 /*
- * Funzione:
+ * Funzione: modificaDisponibilità
  * -----------------------
- * 
+ * Va a modificare nel campo disponibilità il suo valore a 1 quando chiamata
  * 
  * Specifica sintattica:
+ *      void modificaDisponibilità(veicolo, int) -> void
  *
  * Parametri:
+ *      v: oggetto veicolo
+ *      k: indice orario scelto
  * 
  * Specifica semantica:
- *       
+ *       modificaDisponibilità(v, k) -> void
+ * 
  * Pre-condizione:
+ *      L'oggetto veicolo deve esistere e contenere dati nella struct Orari
  *       
  * Post-condizione:
+ *      Non ritorna nessun valore, Campo Disponibilità cambiato
  * 
  * Ritorna: 
+ *      Nessun valore
  * 
  * Effetti collaterali:
- *       
+ *       Cambiato il valore nel campo Disponibilità della struct Orario
  */
 
 void modificaDisponibilità (veicolo v, int k){
@@ -457,24 +481,31 @@ void modificaDisponibilità (veicolo v, int k){
 }
 
 /*
- * Funzione:
+ * Funzione: stampaOrari
  * -----------------------
- * 
+ * Stampa a video l'intervallo orario scelto dall'utente con la sua disponibilità (Non disponibile o Disponibile)
  * 
  * Specifica sintattica:
+ *      void stampaOrari(veicolo) -> void
  *
  * Parametri:
+ *      v: oggetto veicolo
  * 
  * Specifica semantica:
+ *      stampaOrari(v) -> void
  *       
  * Pre-condizione:
+ *      L'oggetto deve esistere e contenere dati
+ *      verificaDisponibilità deve esistere 
  *       
  * Post-condizione:
+ *      Nessun valore di ritorno
  * 
  * Ritorna: 
+ *      Nessun valore
  * 
  * Effetti collaterali:
- *       
+ *      Nessun effetto collaterale      
  */
 
 void stampaOrari (veicolo v){
