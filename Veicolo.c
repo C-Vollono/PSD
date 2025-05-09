@@ -3,31 +3,62 @@
 #include <string.h>
 #include "Veicolo.h"
 
-// DEFINIZIONE STRUTTURA ORARIO
+/*DEFINIZIONE STRUCT ORARIO*/
 typedef struct Orario {
 
-    float inizio;
-    float fine;
-    int Disponibilità; // 0 non disponibile 1 disponibile
+    float inizio; //inizio dell'intervallo orario della possibile prenotazione
+    float fine; //fine dell'intervallo orario della possibile prenotazione
+    int Disponibilità; // 0 = non disponibile oppure 1 = disponibile
 
 }Orario;
-// DEFINIZIONE STRUCT VETTURA
+
+/*DEFINIZIONE STRUCT VETTURA*/
 struct Vettura{
 
     char* tipoVeicolo;
     char* modello;
     char* colore;
     char* targa;
-    Orario orari[8];
+    Orario orari[8]; //Struct annidata per gli orari
     int postiOmologati;
     char* Combustibile;
     int annoDiImmatricolazione;
     float CostoNoleggioOrario; // Costo ad ORA
 };
 
-// -- FUNZIONI RELATIVE AI VEICOLI --
+/*-- FUNZIONI RELATIVE AI VEICOLI --*/
 
-void riempiVeicoli (veicolo v, char* nomefile){
+/*
+ * Funzione: riempiVeicoli
+ * -----------------------
+ * Prende in input l'oggetto veicolo e il puntatore al file .txt contenente i dati dei veicoli
+ * Riempie l'oggetto veicolo con i dati contenuti nel file 
+ * 
+ * Specifica sintattica:
+ *      void riempiVeicoli(veicolo, char*) -> void
+ *
+ * Parametri:
+ *      v:        oggetto veicolo
+ *      nomefile: file Veicoli.txt
+ * 
+ * Specifica semantica:
+ *      riempiVeicoli(v, nomefile) -> void
+ * 
+ * Pre-condizione:
+ *      Il file txt deve contenere i vari dati dei Veicoli e l'oggetto veicolo esistere
+ * 
+ * Post-condizione:
+ *      Non ritorna nessun valore, oggetto veicolo riempito
+ * 
+ * Ritorna:
+ *      Nessun valore 
+ * 
+ * Effetti collaterali:
+ *      Modifica il contenuto nell'oggetto veicolo
+ *      Se il file è vuoto, la funzione potrebbe dare comportamento indefinito senza opportuni controlli
+ */
+
+ void riempiVeicoli (veicolo v, char* nomefile){
 
     FILE *file;
     char buffer [200];
@@ -132,13 +163,68 @@ void riempiVeicoli (veicolo v, char* nomefile){
     }
 }
 
-void stampaVeicolo (veicolo v){
+/*
+ * Funzione: stampaVeicoli
+ * -----------------------
+ * Stampa a video i dati di un oggetto veicolo tra cui anche gli intervalli orari con la loro disponibilità (richiamo ad altre due funzioni) 
+ * 
+ * Specifica sintattica:
+ *      void stampaVeicoli(veicolo) -> void
+ *
+ * Parametri:
+ *      v: oggetto veicolo
+ * 
+ * Specifica semantica:
+ *      stampaVeicoli(v) -> void
+ * 
+ * Pre-condizione:
+ *      L'oggetto veicolo deve contenere dei dati diversi da NULL
+ *      La funzione stampaOrari deve esistere
+ * 
+ * Post-condizione:
+ *      Non ritorna nessun valore
+ * 
+ * Ritorna:
+ *      Nessun valore 
+ * 
+ * Effetti collaterali:
+ *      Nessun effetto collaterale
+ */
+
+ void stampaVeicolo (veicolo v){
 
     printf("VEICOLO:\nTipo Veicolo: %s\nModello: %s\nColore: %s\nTarga: %s\nPosti Omologati: %d\nCombustibile: %s\nAnno di immatricolazione: %d\nCosto Noleggio: %.2f€/h", v->tipoVeicolo, v->modello, v->colore, v->targa, v->postiOmologati, v->Combustibile,v->annoDiImmatricolazione, v->CostoNoleggioOrario);
 
     printf ("Fasce Orarie: ");
     stampaOrari (v);
 }
+
+/*
+ * Funzione: liberaVeicoli
+ * -----------------------
+ *  
+ * 
+ * Specifica sintattica:
+ *      void liberaVeicoli(veicolo) -> void
+ *
+ * Parametri:
+ *      v: oggetto veicolo
+ *  
+ * Specifica semantica:
+ *      liberaVeicoli(v) -> void
+ * 
+ * Pre-condizione:
+ *      Memoria allocata per l'oggetto veicolo
+ * 
+ * Post-condizione:
+ *      Memoria liberata correttamente
+ * 
+ * Ritorna:
+ *      Nessun valore 
+ * 
+ * Effetti collaterali:
+ *      L'oggetto veicolo non ha più dati presenti in memoria
+ */
 
 void liberaVeicoli (veicolo v){
 
@@ -155,7 +241,37 @@ void liberaVeicoli (veicolo v){
 
     free (v);
 }
-// -- FUNZIONI RELATIVE AL NOLEGGIO --
+
+/*-- FUNZIONI RELATIVE AL NOLEGGIO --*/
+
+/*
+ * Funzione: costoNoleggio
+ * -----------------------
+ * Calcola quanto costa il noleggio in un orario scelto dall'utente con eventuale sconto 
+ * 
+ * Specifica sintattica:
+ *      float costoNoleggio(veicolo, int) -> float
+ *
+ * Parametri:
+ *      v: oggetto veicolo
+ *      k: indice dell'orario scelto
+ * 
+ * Specifica semantica:
+ *      costoNoleggio(v, k) -> costo_del_Noleggio
+ * 
+ * Pre-condizione:
+ *      L'oggetto veicolo deve esistere e contenere dati sugli intervalli orari
+ *      La funzione verificaSconto deve esistere (oppure eliminata in caso di sconti non applicabili)
+ * 
+ * Post-condizione:
+ *      Restituisce il costo totale del noleggio dell'orario scelto dall'utente
+ * 
+ * Ritorna:
+ *      Ritorna un tipo float del costo totale
+ * 
+ * Effetti collaterali: 
+ *      Nessun effetto collaterale
+ */
 
 float costoNoleggio (veicolo v, int k){
 
@@ -178,6 +294,36 @@ float costoNoleggio (veicolo v, int k){
     return (tempoNoleggio * v->CostoNoleggioOrario) * verificaSconto(v, k);
 }
 
+/*
+ * Funzione: verificaSconto
+ * -----------------------
+ * La funzione verifica la possibilità di un sconto in determinati intervalli orari prestabiliti e restituisce un tipo float
+ * riguardante lo sconto da applicare al calcolo del costo totale del noleggio
+ * 
+ * Specifica sintattica:
+ *      float verificaSconto(veicolo, int) -> float
+ *
+ * Parametri:
+ *      v: oggetto veicolo
+ *      k: indice dell'orario scelto
+ * 
+ * Specifica semantica:
+ *      verificaSconto(v, k) -> Percentuale_di_Sconto
+ * Pre-condizione:
+ *      L'oggetto veicolo deve esistere e contenere i dati sugli intervalli orari
+ *      
+ * Post-condizione:
+ *      Restituisce la percentuale di sconto se l'orario della prenotazione corrisponde all'intervallo
+ *      Altrimenti restituisce 1
+ * 
+ * Ritorna:
+ *      Restituisce un tipo float della percentuale di sconto
+ *      Altrimenti float di 1.0
+ *      
+ * Effetti collaterali:
+ *      Nessun effetto collaterale 
+ */
+
 float verificaSconto (veicolo v, int k){ // Restituisce float tra 0.0 a 1.0 che corrisponde alla percentuale di sconto (1- verificaSconto);
       float orario = v->orari[k].inizio;
       if (orario >= 20.00 ){
@@ -188,7 +334,28 @@ float verificaSconto (veicolo v, int k){ // Restituisce float tra 0.0 a 1.0 che 
 
 }
 
-// -- FUNZIONI RELATIVE AGLI ORARI --
+/*-- FUNZIONI RELATIVE AGLI ORARI --*/
+
+/*
+ * Funzione:
+ * -----------------------
+ * 
+ * 
+ * Specifica sintattica:
+ *
+ * Parametri:
+ * 
+ * Specifica semantica:
+ *       
+ * Pre-condizione:
+ *       
+ * Post-condizione:
+ * 
+ * Ritorna: 
+ * 
+ * Effetti collaterali:
+ *       
+ */
 
 void riempiOrari (veicolo v, char* nomefile){
 
@@ -230,47 +397,26 @@ void riempiOrari (veicolo v, char* nomefile){
         }
     }
 
-
-void aggiornaOrari (veicolo v, char* nomefile, int i, int k){
-
-    FILE *file;
-    char buffer [600];
-    int token_int;
-
-    file = fopen (nomefile, "r+");
-
-    if (file == NULL){
-
-        perror ("Errore nell'apertura del file.");
-        exit (1);
-    }
-
-    for (int j=0; j <= i; j++){
-
-        fgets (buffer, sizeof (buffer), file);
-    }
-
-    char* token = strtok (buffer, ";");
-
-    for (int j=0; j < k*3+1; j++){  // Parte dalla prima colonna (;) si muove x3 (formato inizio/fine/disponibilita), +1 per stare sempre sulla disponibilitá
-
-        token = strtok (NULL, ";");
-    }
-
-    token_int = atoi (token);
-    if ( token_int != v->orari[k].Disponibilità){
-
-        token = itoa (token_int, v->orari[k].Disponibilità, 10);
-
-        fprintf (file, "%s", token);
-    }
-
-    if ( (fclose (file)) == 1){
-
-        perror ("Errore nella chiusura del file.");
-        exit (1);
-    }
-}
+/*
+ * Funzione:
+ * -----------------------
+ * 
+ * 
+ * Specifica sintattica:
+ *
+ * Parametri:
+ * 
+ * Specifica semantica:
+ *       
+ * Pre-condizione:
+ *       
+ * Post-condizione:
+ * 
+ * Ritorna: 
+ * 
+ * Effetti collaterali:
+ *       
+ */
 
 void verificaDisponibilità (veicolo v, int k){
 
@@ -284,10 +430,52 @@ void verificaDisponibilità (veicolo v, int k){
     }
 }
 
+/*
+ * Funzione:
+ * -----------------------
+ * 
+ * 
+ * Specifica sintattica:
+ *
+ * Parametri:
+ * 
+ * Specifica semantica:
+ *       
+ * Pre-condizione:
+ *       
+ * Post-condizione:
+ * 
+ * Ritorna: 
+ * 
+ * Effetti collaterali:
+ *       
+ */
+
 void modificaDisponibilità (veicolo v, int k){
 
     v->orari[k].Disponibilità = 1;
 }
+
+/*
+ * Funzione:
+ * -----------------------
+ * 
+ * 
+ * Specifica sintattica:
+ *
+ * Parametri:
+ * 
+ * Specifica semantica:
+ *       
+ * Pre-condizione:
+ *       
+ * Post-condizione:
+ * 
+ * Ritorna: 
+ * 
+ * Effetti collaterali:
+ *       
+ */
 
 void stampaOrari (veicolo v){
 
@@ -298,14 +486,3 @@ void stampaOrari (veicolo v){
         verificaDisponibilità(v, k);
         }
 }
-
-
-
-
-
-
-
-
-
-
-

@@ -4,22 +4,20 @@
 
 typedef struct Vettura *veicolo;
 
-void stampaVeicolo (veicolo v); // Check
+void stampaVeicolo (veicolo v);
 
-void modificaDisponibilità (veicolo v, int k); // Check
+void modificaDisponibilità (veicolo v, int k);
 
-float costoNoleggio (veicolo v, int k); // Check
+float costoNoleggio (veicolo v, int k);
 
-void riempiVeicoli (veicolo v, char* nomefile); // Check
+void riempiVeicoli (veicolo v, char* nomefile);
 
-void riempiOrari (veicolo v, char* nomefile); // Check
+void riempiOrari (veicolo v, char* nomefile);
 
-void stampaOrari (veicolo v); // Check
+void stampaOrari (veicolo v);
 
-void verificaDisponibilità (veicolo v, int k); // Check
+void verificaDisponibilità (veicolo v, int k);
 
-float verificaSconto (veicolo v, int k); // Check
+float verificaSconto (veicolo v, int k);
 
-void aggiornaOrari (veicolo v, char* nomefile, int i, int k); // Check
-
-void liberaVeicoli (veicolo v); // Check
+void liberaVeicoli (veicolo v);
