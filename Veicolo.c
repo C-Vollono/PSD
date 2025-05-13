@@ -3,29 +3,6 @@
 #include <string.h>
 #include "Veicolo.h"
 
-/*DEFINIZIONE STRUCT ORARIO*/
-typedef struct Orario {
-
-    float inizio; //inizio dell'intervallo orario della possibile prenotazione
-    float fine; //fine dell'intervallo orario della possibile prenotazione
-    int Disponibilità; // 0 = non disponibile oppure 1 = disponibile
-
-}Orario;
-
-/*DEFINIZIONE STRUCT VETTURA*/
-struct Vettura{
-
-    char* tipoVeicolo;
-    char* modello;
-    char* colore;
-    char* targa;
-    Orario orari[8]; //Struct annidata per gli orari
-    int postiOmologati;
-    char* Combustibile;
-    int annoDiImmatricolazione;
-    float CostoNoleggioOrario; // Costo ad ORA
-};
-
 /*-- FUNZIONI RELATIVE AI VEICOLI --*/
 
 /*
@@ -396,6 +373,8 @@ void riempiOrari (veicolo v, char* nomefile){
                 v->orari[k].Disponibilità = atoi (token);
             }
     }
+
+        rewind (file);
 
         file = fclose (file);
 

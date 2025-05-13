@@ -10,9 +10,9 @@ TabellaHash NuovaTabellaHash (int taglia); //crea e alloca memoria per una tabel
 
 int FunzioneHash (int ID, int taglia); //funzione hash che restituisce l'indice nella tabella hash collegato alla chiave, che è l'id
 
-Prenotazione NuovaPrenotazione (int ID, char* NomeUtente, veicolo v, float CostoNoleggioFinale, char* OrarioScelto); //Crea una nuova prenotazione
+Prenotazione NuovaPrenotazione (int ID, char* NomeUtente, veicolo c, float CostoNoleggioFinale, int i); //Crea una nuova prenotazione
 
-int InserisciPrenotazione (TabellaHash t, Prenotazione p); //Inserisce una prenotazione nella tabella hash
+int InserisciPrenotazione (TabellaHash t, Prenotazione p, int i); //Inserisce una prenotazione nella tabella hash
 
 Prenotazione EliminaPrenotazione (TabellaHash t, int ID); //Elimina una prenotazione dalla tabella hash
 
