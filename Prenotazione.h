@@ -18,3 +18,5 @@ Prenotazione EliminaPrenotazione (TabellaHash t, int ID); //Elimina una prenotaz
 
 void LiberaTabellaHash (TabellaHash t); //Dealloca la memoria occupata dalla tabella hash
 
+static void LiberaLista (Prenotazione p); // Dealloca una lista collegata nella tabella hash
+
