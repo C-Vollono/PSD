@@ -30,11 +30,12 @@ void menu_accesso(){
              }
          }
        }
+       // aggiungere la funzione che verifica se l'utente è gia registrato
      if (corretto) {
          nome_utente = malloc((strlen(buffer) + 1) * sizeof(char));
          if (nome_utente == NULL) {
            printf("!!! Nome utente non memorizzato correttamente");
-           exit(1)
+           exit(1);
          }
          strcpy(nome_utente, buffer);
          break;
