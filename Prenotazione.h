@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 #include "Veicolo.h"
 
 typedef struct hash* TabellaHash;
@@ -20,3 +21,4 @@ void LiberaTabellaHash (TabellaHash t); //Dealloca la memoria occupata dalla tab
 
 static void LiberaLista (Prenotazione p); // Dealloca una lista collegata nella tabella hash
 
+void AggiornaStorico (Prenotazione p); //Aggiorna lo storico prenotazioni con l'ultima prenotazione effettuata

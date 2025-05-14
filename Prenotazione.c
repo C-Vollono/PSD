@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 #include "Veicolo.h"
 #include "Prenotazione.h"
 
@@ -166,4 +167,28 @@ static void LiberaLista (Prenotazione p){
         free (p);
         p = nuovap;
     }
+}
+
+void AggiornaStorico (Prenotazione p){
+
+    FILE* file;
+
+    file = fopen ("StoricoPrenotazioni.txt", "a");
+
+    if (file == NULL){
+
+        perror ("Errore nell'apertura dello storico");
+        exit (1);
+    }
+
+    time_t t = time (NULL); //ottengo i secondi dal 1 gennaio 1970
+
+    struct tm* data = localtime (&t); //ottengo la data corrente, ma bisogna formattarla
+
+    char buffer[20];
+
+    strftime (buffer, sizeof (buffer), "%d/%m/%Y", data); //formatta la data nel buffer
+
+    // ora bisogna solo decidere l'ordine di come viene scritta la prenotazione nel file
+
 }
