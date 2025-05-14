@@ -189,6 +189,13 @@ void AggiornaStorico (Prenotazione p){
 
     strftime (buffer, sizeof (buffer), "%d/%m/%Y", data); //formatta la data nel buffer
 
-    // ora bisogna solo decidere l'ordine di come viene scritta la prenotazione nel file
+    fprintf (file, "%s-%s-%.2f/%.2f-%s-%s", p->nomeUtente, buffer, p->OrarioSceltoInizio, p->OrarioSceltoFine, p->v->modello, p->v->targa);
 
+    fclose (file);
+
+    if (file != EOF){
+
+        perror ("Errore nella chiusura dello storico.");
+        exit (1);
+    }
 }

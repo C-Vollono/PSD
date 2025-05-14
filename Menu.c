@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include "Menu.h"
+#include "Prenotazione.h"
+#include "Veicolo.h"
 
 void menu_accesso(){
  char *nome_utente;
@@ -17,7 +19,7 @@ void menu_accesso(){
      if (strlen(buffer) > 25){
          corretto = 0;
          printf("!!! Nome non valido, lunghezza massima consentita di 25 caratteri alfanumerici \n\n");
-         break;
+         
      } else {
          for (ptr_utente = buffer; *ptr_utente != '\0'; ptr_utente++){
              if (!((*ptr_utente  >= 'a' && *ptr_utente  <= 'z') ||
@@ -41,34 +43,39 @@ void menu_accesso(){
          break;
      }
  }
-  menu_utente(nome_utente, v, indice_veicolo);
+
 }
 
-/* void menu_utente(nome_utente, veicolo v, int indice_veicolo){
-     int op_utente;
-     while (1){
-     printf("=== Menu utente - Benvenuto %s ==\n", nome_utente);
-     printf("1. Nuova prenotazione \n");
-     printf("2. Visualizza veicoli disponibili\n");
-     printf("3. Visualizza storico prenotazioni\n");
-     printf("4. Visualizza sconti\n");
-     printf("5. Elimina prenotazione \n");
-     printf("6. Esci dalla sessione utente\n");
-     // Considerare una 7. opzione per un preventivo del noleggio
-     switch(op_utente){
-       case 1: prenotazione(nome_utente); break;
-       case 2: {
-              for (int i=0; i < indice_veicolo; i++){
-                  stampaVeicolo(v[i]);
-              }
-       } break;
-       case 3: visualizzastorico(nome_utente, ...); break;
-       case 4: da discutere; break;
-       case 5: hashdelete(hashtable, char* key);
-       case 6: return;
-       default: printf("Operazione non consentita"); break;
-      }
-     }
-} */
+void main (char* nome_utente){
+
+    printf ("===== BENVENUT* %s NEL NOSTRO CAR-SHARING =====", nome_utente);
+    printf ("=== MENU ===");
+
+    printf ("1) Nuova Prenotazione\n2) Visualizza storico prenotazione\n3) Visualizza Sconti\n4) Visualizza Veicoli\n5) Annulla Prenotazione\n6) Logout\n");
+
+    int scelta;
+
+    printf ("Scelga l'operazione da effettuare (da 1-6): ");
+    scanf ("%d", &scelta);
+
+    switch (scelta){
+
+        case 1:
+            printf ("Bene, innanzitutto scelga il veicolo che le interessa: ");
+
+            for (int i=0; i<10; i++){
+
+                stampaVeicolo ()
+            }
+    }
+
+
+
+
+
+
+
+}
+
 
 
