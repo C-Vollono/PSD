@@ -22,6 +22,9 @@ struct hash{
     struct item **tabella; // Puntatore a un array di puntatori a item, che poi andrà a definire le varie liste collegate
 };
 
+
+//Per commentare queste funzioni e capire il loro funzionamento, fare riferimento al codice della prof su e-learning della lezione sulla tabella hash
+
 TabellaHash NuovaTabellaHash (int taglia){
 
     TabellaHash t = malloc (sizeof (struct hash)); //Alloco memoria per la tabella hash
@@ -118,6 +121,49 @@ Prenotazione EliminaPrenotazione (TabellaHash t, int ID){
     indice = FunzioneHash (ID, t->taglia);
 
     precedente = corrente = testa = t->tabella[indice];
-
     
+    while (corrente){
+
+        if (!strcmp (corrente->ID, ID)){
+            if (corrente == testa){
+                t->tabella[indice] = corrente->next;
+            }
+            else {
+                precedente->next = corrente->next;
+            }
+
+            return (corrente);
+        }
+
+        precedente = corrente;
+        corrente = corrente->next;
+    }
+
+    return NULL;
+}
+
+void LiberaTabellaHash (TabellaHash t){
+
+    int i;
+
+    for (int i=0; i< t->taglia; i++){
+
+        LiberaLista (t->tabella[i]);
+    }
+
+    free (t->tabella);
+
+    free (t);
+}
+
+static void LiberaLista (Prenotazione p){
+
+    Prenotazione nuovap;
+
+    while (p != NULL){
+
+        nuovap = p->next;
+        free (p);
+        p = nuovap;
+    }
 }
