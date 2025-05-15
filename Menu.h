@@ -4,6 +4,6 @@
 #include "Veicolo.h"
 #include "Prenotazione.h"
 
-void menuAcccesso();
+int operazioneAccesso (int operazione, char **nome_utente); // Elaborazione dell'username dell'utente
 
-void menuUtente ();
+char* menu_accesso(); // Funzione principale per l'accesso
