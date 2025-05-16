@@ -187,7 +187,7 @@ void AggiornaStorico (Prenotazione p){
 
     char buffer[20];
 
-    strftime (buffer, sizeof (buffer), "%d/%m/%Y", data); //formatta la data nel buffer
+    strftime (buffer, sizeof (buffer), "%d / %m / %Y", data); //formatta la data nel buffer
 
     fprintf (file, "%s-%s-%.2f/%.2f-%s-%s", p->nomeUtente, buffer, p->OrarioSceltoInizio, p->OrarioSceltoFine, p->v->modello, p->v->targa);
 

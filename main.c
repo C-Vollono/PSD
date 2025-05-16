@@ -133,7 +133,13 @@ void main () {
         case 2: { // da implementare la visualizza delle prenotazioni odierne (tramite tabella hash) o passate (tramite file)
 
             printf ("=== STORICO PRENOTAZIONI DI %s ===", nomeUtente);
-            
+
+            char p;
+
+            printf ("Vuole controllare le prenotazioni effettuate in questa sessione o quelle fatte precedentemente? (scelga O oppure P)");
+
+            scanf ("%c", &p);
+
             FILE* file = fopen ("StoricoPrenotazioni.txt", "r");
 
             if (file == NULL){
