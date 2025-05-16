@@ -39,6 +39,8 @@
 
     FILE *file;
     char buffer [200];
+    static int i=0;
+    int j = 0;
 
     file = fopen ("Veicoli.txt", "r");
 
@@ -47,8 +49,10 @@
         perror ("Errore nell'apertura del file.");
         exit (1);
     }
-
-    while (fgets (buffer, sizeof (buffer), file) != NULL){
+    do{
+        fgets (buffer, sizeof (buffer), file);
+        j++;
+    }while (j <= i);
 
         char* token = strtok (buffer, ";");
         controlloToken (token, v, file);
@@ -128,6 +132,8 @@
             exit (1);
         }
 
+        strcpy (v->Combustibile, token);
+
         token = strtok (NULL, ";");
         controlloToken (token, v, file);
 
@@ -137,9 +143,9 @@
         controlloToken (token, v, file);
 
         v->CostoNoleggioOrario = atoi (token);
-    }
+    
 
-    riempiOrari (v);
+        riempiOrari (v);
 
     
     if (fclose (file) != 0){
@@ -147,6 +153,7 @@
         perror ("Errore nella chiusura del file.");
         exit (1);
     }
+    i++;
 }
 
 /*
@@ -356,12 +363,14 @@ void riempiOrari (veicolo v){
         exit (1);
     }
 
-    while (fgets (buffer, sizeof (buffer), file) != NULL){
+        
+
+        while (fgets (buffer, sizeof (buffer), file) != NULL){
 
         char* token = strtok (buffer, ";");
         controlloToken (token, v, file);
 
-            for (int k=0; k<8; k++){
+                for (int k=0; k<8; k++){
 
                 v->orari[k].inizio = atof (token);
 
@@ -374,10 +383,11 @@ void riempiOrari (veicolo v){
                 controlloToken (token, v, file);
 
                 v->orari[k].Disponibilità = atoi (token);
-            }
-    }
 
-        rewind (file);
+                token = strtok (NULL, ";");
+                controlloToken (token, v, file);
+                }
+        }
 
         if (fclose (file) != 0){
 
@@ -385,6 +395,7 @@ void riempiOrari (veicolo v){
             exit (1);
         }
     }
+
 
 /*
  * Funzione: verificaDisponibilità

@@ -26,6 +26,7 @@ void main () {
             perror ("Errore nell'allocazione della memoria.");
             exit (1);
         }
+
         riempiVeicoli (V[i]);
     }
 
@@ -52,11 +53,12 @@ void main () {
 
         switch (scelta){
             case 1: {
-                printf ("Bene, innanzitutto scelga il veicolo che le interessa tra quelli in catalogo (da 0 a 9): ");
-
+                
                 for (int i=0; i<10; i++){
                     stampaVeicolo (V[i]);
                 }
+
+                printf ("Bene, innanzitutto scelga il veicolo che le interessa tra quelli in catalogo (da 0 a 9): \n");
 
                 int s1;
                 while (1){
@@ -68,7 +70,7 @@ void main () {
                     }
                 }
 
-                printf ("Ora scelga un orario tra quelli disponibili per il noleggio del veicolo: ");
+                printf ("Ora scelga un orario tra quelli disponibili per il noleggio del veicolo: \n");
                 stampaOrari (V[s1]);
 
                 int s2;
@@ -160,8 +162,8 @@ void main () {
 
             case 3:{
                 printf ("=== SCONTI ===");
-                printf ("- Sconto del 30%% se la prenotazione viene effettuata dopo le 20:00"); //messo il doppio %% in modo che la printf lo vede come un carattere e non come specificatore di formato
-                printf ("- Sconto del 15%% se la prenotazione viene effettuata prima delle 9:00");
+                printf ("- Sconto del 30%% se la prenotazione viene effettuata dopo le 20:00\n"); //messo il doppio %% in modo che la printf lo vede come un carattere e non come specificatore di formato
+                printf ("- Sconto del 15%% se la prenotazione viene effettuata prima delle 9:00\n");
 
             char s;
             printf ("Vuole tornare al menu principale? (Y o N)");
@@ -188,10 +190,11 @@ void main () {
                 }
 
                 char s;
-                printf ("Vuole tornare al menu principale? (Y o N)");
+                printf ("Vuole tornare al menu principale? (Y o N): ");
 
                 while (1){
-                    scanf ("%c",&s);
+                        getchar ();
+                        s = getchar ();
                         if (s == 'Y' || s == 'y'){
                             goto inizio;
                         } else if (s == 'N' || s == 'n') {
