@@ -35,22 +35,23 @@
  *      Se il file è vuoto, la funzione potrebbe dare comportamento indefinito senza opportuni controlli
  */
 
- void riempiVeicoli (veicolo v, char* nomefile){
+ void riempiVeicoli (veicolo v){
 
     FILE *file;
     char buffer [200];
 
-    file = fopen ("nomefile", "r");
+    file = fopen ("Veicoli.txt", "r");
 
     if (file == NULL){
 
-        printf ("Errore nell'apertura del file.");
+        perror ("Errore nell'apertura del file.");
         exit (1);
     }
 
-    while (fgets (buffer, sizeof (buffer), file) != '\n'){
+    while (fgets (buffer, sizeof (buffer), file) != NULL){
 
         char* token = strtok (buffer, ";");
+        controlloToken (token, v, file);
 
         v->tipoVeicolo = malloc (strlen (token)+1 * sizeof (char));
 
@@ -63,6 +64,7 @@
         strcpy (v->tipoVeicolo, token);
 
         token = strtok (NULL, ";");
+        controlloToken (token, v, file);
 
         v->modello = malloc (strlen (token)+1 * sizeof (char));
 
@@ -76,6 +78,7 @@
         strcpy (v->modello, token);
 
         token = strtok (NULL, ";");
+        controlloToken (token, v, file);
 
         v->colore = malloc (strlen (token)+1 * sizeof (char));
 
@@ -90,6 +93,7 @@
         strcpy (v->colore, token);
 
         token = strtok (NULL, ";");
+        controlloToken (token, v, file);
 
         v->targa = malloc (strlen (token)+1 * sizeof (char));
 
@@ -105,10 +109,12 @@
         strcpy (v->targa, token);
 
         token = strtok (NULL, ";");
+        controlloToken (token, v, file);
 
         v->postiOmologati = atoi (token);
 
         token = strtok (NULL, ";");
+        controlloToken (token, v, file);
 
         v->Combustibile = malloc (strlen(token)+1 * sizeof (char));
 
@@ -123,19 +129,20 @@
         }
 
         token = strtok (NULL, ";");
+        controlloToken (token, v, file);
 
         v->annoDiImmatricolazione = atoi (token);
 
         token = strtok (NULL, ";");
+        controlloToken (token, v, file);
 
         v->CostoNoleggioOrario = atoi (token);
     }
 
-    riempiOrari (v, "Orari.txt");
+    riempiOrari (v);
 
-    fclose (file);
-
-    if (file != EOF){
+    
+    if (fclose (file) != 0){
 
         perror ("Errore nella chiusura del file.");
         exit (1);
@@ -172,7 +179,7 @@
 
  void stampaVeicolo (veicolo v){
 
-    printf("Tipo Veicolo: %s\nModello: %s\nColore: %s\nTarga: %s\nPosti Omologati: %d\nCombustibile: %s\nAnno di immatricolazione: %d\nCosto Noleggio: %.2f€/h", v->tipoVeicolo, v->modello, v->colore, v->targa, v->postiOmologati, v->Combustibile,v->annoDiImmatricolazione, v->CostoNoleggioOrario);
+    printf("Tipo Veicolo: %s\nModello: %s\nColore: %s\nTarga: %s\nPosti Omologati: %d\nCombustibile: %s\nAnno di immatricolazione: %d\nCosto Noleggio: %.2f euro/h\n\n", v->tipoVeicolo, v->modello, v->colore, v->targa, v->postiOmologati, v->Combustibile,v->annoDiImmatricolazione, v->CostoNoleggioOrario);
     
 }
 
@@ -205,18 +212,11 @@
 
 void liberaVeicoli (veicolo v){
 
-    for (int i=0; i<10; i++){
-
-        free (v->annoDiImmatricolazione);
         free (v->colore);
         free (v->Combustibile);
         free (v->modello);
         free (v->targa);
         free (v->tipoVeicolo);
-        free (v->orari);
-    }
-
-    free (v);
 }
 
 /*-- FUNZIONI RELATIVE AL NOLEGGIO --*/
@@ -343,12 +343,12 @@ float verificaSconto (veicolo v, int k){ // Restituisce float tra 0.0 a 1.0 che 
  *      Se il file è vuoto, la funzione potrebbe dare comportamento indefinito senza opportuni controlli
  */
 
-void riempiOrari (veicolo v, char* nomefile){
+void riempiOrari (veicolo v){
 
     FILE *file;
     char buffer [200];
 
-    file = fopen ("nomefile", "r");
+    file = fopen ("Orari.txt", "r");
 
     if (file == NULL){
 
@@ -356,19 +356,22 @@ void riempiOrari (veicolo v, char* nomefile){
         exit (1);
     }
 
-    while (fgets (buffer, sizeof (buffer), file) != '\n'){
+    while (fgets (buffer, sizeof (buffer), file) != NULL){
 
         char* token = strtok (buffer, ";");
+        controlloToken (token, v, file);
 
             for (int k=0; k<8; k++){
 
                 v->orari[k].inizio = atof (token);
 
                 token = strtok (NULL, ";");
+                controlloToken (token, v, file);
 
                 v->orari[k].fine = atof (token);
 
                 token = strtok (NULL, ";");
+                controlloToken (token, v, file);
 
                 v->orari[k].Disponibilità = atoi (token);
             }
@@ -376,9 +379,7 @@ void riempiOrari (veicolo v, char* nomefile){
 
         rewind (file);
 
-        file = fclose (file);
-
-        if (file != EOF){
+        if (fclose (file) != 0){
 
             perror ("Errore nella chiusura del file.");
             exit (1);
@@ -495,4 +496,17 @@ void stampaOrari (veicolo v){
 
         verificaDisponibilità(v, k);
         }
+}
+
+void controlloToken (char* token, veicolo v, FILE* file){
+
+    if (token == NULL){
+
+    printf("Errore nella lettura dei dati.\n");
+        liberaVeicoli(v); // Nuova funzione per deallocare
+        fclose(file);
+        exit(1);
+    
+    }
+
 }

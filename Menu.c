@@ -99,8 +99,9 @@ char* menuAccesso(){
     	printf(" (1) Registrazione\n");
     	printf(" (2) Login\n");
     	printf(" (3) Esci\n");
- 		printf("Digiti l'operazione da effettuare: \n");
+ 		printf("Digiti l'operazione da effettuare: ");
     	scanf("%d", &operazione);
+		getchar ();
     	if (operazioneAccesso(operazione, &nomeUtente)){
         	break;
       	} else {

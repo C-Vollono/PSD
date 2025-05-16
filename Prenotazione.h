@@ -15,8 +15,6 @@ Prenotazione NuovaPrenotazione (int ID, char* NomeUtente, veicolo c, float Costo
 
 int InserisciPrenotazione (TabellaHash t, Prenotazione p); //Inserisce una prenotazione nella tabella hash
 
-Prenotazione EliminaPrenotazione (TabellaHash t, int ID); //Elimina una prenotazione dalla tabella hash
-
 void LiberaTabellaHash (TabellaHash t); //Dealloca la memoria occupata dalla tabella hash
 
 static void LiberaLista (Prenotazione p); // Dealloca una lista collegata nella tabella hash
@@ -24,3 +22,5 @@ static void LiberaLista (Prenotazione p); // Dealloca una lista collegata nella 
 void AggiornaStorico (Prenotazione p); //Aggiorna lo storico prenotazioni con l'ultima prenotazione effettuata
 
 void stampaPrenotazione (Prenotazione p); // stampa i dettagli di una prenotazione
+
+Prenotazione TrovaPrenotazione (TabellaHash t, int ID, int taglia); //cerca una prenotazione nella tabella hash in base all'id

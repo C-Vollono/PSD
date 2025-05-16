@@ -101,7 +101,7 @@ int InserisciPrenotazione (TabellaHash t, Prenotazione p){
 
     while (corrente){
 
-        if (strcmp (corrente->ID, p->ID) == 0){
+        if (corrente->ID == p->ID){
 
             return 0;
         }
@@ -112,35 +112,6 @@ int InserisciPrenotazione (TabellaHash t, Prenotazione p){
     t->tabella[indice]->next = testa;
 
     return 1;
-}
-
-Prenotazione EliminaPrenotazione (TabellaHash t, int ID){
-
-    int indice;
-    Prenotazione precedente, corrente, testa, temporaneo;
-
-    indice = FunzioneHash (ID, t->taglia);
-
-    precedente = corrente = testa = t->tabella[indice];
-    
-    while (corrente){
-
-        if (!strcmp (corrente->ID, ID)){
-            if (corrente == testa){
-                t->tabella[indice] = corrente->next;
-            }
-            else {
-                precedente->next = corrente->next;
-            }
-
-            return (corrente);
-        }
-
-        precedente = corrente;
-        corrente = corrente->next;
-    }
-
-    return NULL;
 }
 
 void LiberaTabellaHash (TabellaHash t){
@@ -187,13 +158,11 @@ void AggiornaStorico (Prenotazione p){
 
     char buffer[20];
 
-    strftime (buffer, sizeof (buffer), "%d/%m/%Y", data); //formatta la data nel buffer
+    strftime (buffer, sizeof (buffer), "%d / %m / %Y", data); //formatta la data nel buffer
 
-    fprintf (file, "%s-%s-%.2f/%.2f-%s-%s", p->nomeUtente, buffer, p->OrarioSceltoInizio, p->OrarioSceltoFine, p->v->modello, p->v->targa);
+    fprintf (file, "%s-%s-%.2f-%.2f-%d-%s-%s", p->nomeUtente, buffer, p->OrarioSceltoInizio, p->OrarioSceltoFine, p->ID, p->v->modello, p->v->targa);
 
-    fclose (file);
-
-    if (file != EOF){
+    if (fclose (file) == 0){
 
         perror ("Errore nella chiusura dello storico.");
         exit (1);
@@ -204,4 +173,23 @@ void stampaPrenotazione (Prenotazione p){
 
     printf ("ID prenotazione: %d\nOrario Selezionato: %.2f-%.2f\nCosto Noleggio: %f\n", p->ID, p->OrarioSceltoInizio, p->OrarioSceltoFine, p->CostoNoleggioFinale);
     
+}
+
+Prenotazione TrovaPrenotazione (TabellaHash t, int ID, int taglia){
+
+    int indice = FunzioneHash (ID, taglia);
+
+    Prenotazione p = t->tabella[indice];
+
+    while (p != NULL){
+
+        if (p->ID == ID){
+            
+            return p;
+        }
+        p = p->next;
+
+    }
+
+    return NULL;
 }
