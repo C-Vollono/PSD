@@ -2,8 +2,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include "Menu.h"
-#include "Prenotazione.h"
-#include "Veicolo.h"
 
 // REGISTRAZIONE LOGIN ESCI
 int operazioneAccesso (int operazione, char **nome_utente){
@@ -40,6 +38,7 @@ int operazioneAccesso (int operazione, char **nome_utente){
              }
          }
        }
+
 
      if (corretto) { // Username segue le condizioni
             while (fgets(buffer_file, sizeof(buffer_file), utenti) != NULL){
