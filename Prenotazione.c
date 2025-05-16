@@ -90,7 +90,7 @@ Prenotazione NuovaPrenotazione (int ID, char* NomeUtente, veicolo c, float Costo
 
 }
 
-int InserisciPrenotazione (TabellaHash t, Prenotazione p, int i){
+int InserisciPrenotazione (TabellaHash t, Prenotazione p){
 
     int indice;
     Prenotazione testa, corrente;
@@ -108,7 +108,7 @@ int InserisciPrenotazione (TabellaHash t, Prenotazione p, int i){
         corrente = corrente->next;
     }
 
-    t->tabella[indice] = NuovaPrenotazione (p->ID, p->nomeUtente, p->v, p->CostoNoleggioFinale, i);
+    t->tabella[indice] = p;
     t->tabella[indice]->next = testa;
 
     return 1;
@@ -189,6 +189,19 @@ void AggiornaStorico (Prenotazione p){
 
     strftime (buffer, sizeof (buffer), "%d/%m/%Y", data); //formatta la data nel buffer
 
-    // ora bisogna solo decidere l'ordine di come viene scritta la prenotazione nel file
+    fprintf (file, "%s-%s-%.2f/%.2f-%s-%s", p->nomeUtente, buffer, p->OrarioSceltoInizio, p->OrarioSceltoFine, p->v->modello, p->v->targa);
 
+    fclose (file);
+
+    if (file != EOF){
+
+        perror ("Errore nella chiusura dello storico.");
+        exit (1);
+    }
+}
+
+void stampaPrenotazione (Prenotazione p){
+
+    printf ("ID prenotazione: %d\nOrario Selezionato: %.2f-%.2f\nCosto Noleggio: %f\n", p->ID, p->OrarioSceltoInizio, p->OrarioSceltoFine, p->CostoNoleggioFinale);
+    
 }

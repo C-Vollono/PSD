@@ -13,7 +13,7 @@ int FunzioneHash (int ID, int taglia); //funzione hash che restituisce l'indice 
 
 Prenotazione NuovaPrenotazione (int ID, char* NomeUtente, veicolo c, float CostoNoleggioFinale, int i); //Crea una nuova prenotazione
 
-int InserisciPrenotazione (TabellaHash t, Prenotazione p, int i); //Inserisce una prenotazione nella tabella hash
+int InserisciPrenotazione (TabellaHash t, Prenotazione p); //Inserisce una prenotazione nella tabella hash
 
 Prenotazione EliminaPrenotazione (TabellaHash t, int ID); //Elimina una prenotazione dalla tabella hash
 
@@ -22,3 +22,5 @@ void LiberaTabellaHash (TabellaHash t); //Dealloca la memoria occupata dalla tab
 static void LiberaLista (Prenotazione p); // Dealloca una lista collegata nella tabella hash
 
 void AggiornaStorico (Prenotazione p); //Aggiorna lo storico prenotazioni con l'ultima prenotazione effettuata
+
+void stampaPrenotazione (Prenotazione p); // stampa i dettagli di una prenotazione

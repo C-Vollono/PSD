@@ -131,6 +131,8 @@
         v->CostoNoleggioOrario = atoi (token);
     }
 
+    riempiOrari (v, "Orari.txt");
+
     fclose (file);
 
     if (file != EOF){
@@ -170,10 +172,8 @@
 
  void stampaVeicolo (veicolo v){
 
-    printf("VEICOLO:\nTipo Veicolo: %s\nModello: %s\nColore: %s\nTarga: %s\nPosti Omologati: %d\nCombustibile: %s\nAnno di immatricolazione: %d\nCosto Noleggio: %.2f€/h", v->tipoVeicolo, v->modello, v->colore, v->targa, v->postiOmologati, v->Combustibile,v->annoDiImmatricolazione, v->CostoNoleggioOrario);
-
-    printf ("Fasce Orarie: ");
-    stampaOrari (v);
+    printf("Tipo Veicolo: %s\nModello: %s\nColore: %s\nTarga: %s\nPosti Omologati: %d\nCombustibile: %s\nAnno di immatricolazione: %d\nCosto Noleggio: %.2f€/h", v->tipoVeicolo, v->modello, v->colore, v->targa, v->postiOmologati, v->Combustibile,v->annoDiImmatricolazione, v->CostoNoleggioOrario);
+    
 }
 
 /*

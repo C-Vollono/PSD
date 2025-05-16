@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "Menu.h"
+
 // REGISTRAZIONE LOGIN ESCI
 int operazioneAccesso (int operazione, char **nome_utente){
   char buffer[1024];
@@ -37,6 +38,7 @@ int operazioneAccesso (int operazione, char **nome_utente){
              }
          }
        }
+
 
      if (corretto) { // Username segue le condizioni
             while (fgets(buffer_file, sizeof(buffer_file), utenti) != NULL){
@@ -97,10 +99,9 @@ int operazioneAccesso (int operazione, char **nome_utente){
      }
 	}
         }
-    }
-}
 
-char* menu_accesso(){
+
+char* menu_accesso() {
  char *nome_utente;
  int operazione;
  while (1){
@@ -117,32 +118,4 @@ char* menu_accesso(){
      }
   return nome_utente;
 }
-
-/* void menu_utente(nome_utente, veicolo v, int indice_veicolo){
-     int op_utente;
-     while (1){
-     printf("=== Menu utente - Benvenuto %s ==\n", nome_utente);
-     printf("1. Nuova prenotazione \n");
-     printf("2. Visualizza veicoli disponibili\n");
-     printf("3. Visualizza storico prenotazioni\n");
-     printf("4. Visualizza sconti\n");
-     printf("5. Elimina prenotazione \n");
-     printf("6. Esci dalla sessione utente\n");
-     // Considerare una 7. opzione per un preventivo del noleggio
-     switch(op_utente){
-       case 1: prenotazione(nome_utente); break;
-       case 2: {
-              for (int i=0; i < indice_veicolo; i++){
-                  stampaVeicolo(v[i]);
-              }
-       } break;
-       case 3: visualizzastorico(nome_utente, ...); break;
-       case 4: da discutere; break;
-       case 5: hashdelete(hashtable, char* key);
-       case 6: return;
-       default: printf("Operazione non consentita"); break;
-      }
-     }
-} */
-
-
+}
