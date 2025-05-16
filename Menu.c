@@ -16,6 +16,8 @@ int operazioneAccesso (int operazione, char **nomeUtente){
     printf("Errore nell'apertura dei file utenti");
     return 0;
   }
+
+  // da sistemare l'opzione 3 del menu di accesso
   while (1){
   	corretto = 1;
  	printf("Inserisca il suo nome utente: "); // Ottiene il nome utente

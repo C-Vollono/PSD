@@ -162,7 +162,7 @@ void AggiornaStorico (Prenotazione p){
 
     fprintf (file, "%s-%s-%.2f-%.2f-%d-%s-%s", p->nomeUtente, buffer, p->OrarioSceltoInizio, p->OrarioSceltoFine, p->ID, p->v->modello, p->v->targa);
 
-    if (fclose (file) == 0){
+    if (fclose (file) != 0){
 
         perror ("Errore nella chiusura dello storico.");
         exit (1);
@@ -171,7 +171,7 @@ void AggiornaStorico (Prenotazione p){
 
 void stampaPrenotazione (Prenotazione p){
 
-    printf ("ID prenotazione: %d\nOrario Selezionato: %.2f-%.2f\nCosto Noleggio: %f\n", p->ID, p->OrarioSceltoInizio, p->OrarioSceltoFine, p->CostoNoleggioFinale);
+    printf ("ID prenotazione: %d\nOrario Selezionato: %.2f-%.2f\nCosto Noleggio: %.2f euro\n", p->ID, p->OrarioSceltoInizio, p->OrarioSceltoFine, p->CostoNoleggioFinale);
     
 }
 
