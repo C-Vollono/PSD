@@ -6,5 +6,5 @@
 
 int operazioneAccesso (int operazione, char **nome_utente); // Elaborazione dell'username dell'utente
 
-char* menu_accesso(); // Funzione principale per l'accesso
+char* menuAccesso(); // Funzione principale per l'accesso
 

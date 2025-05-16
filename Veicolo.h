@@ -1,6 +1,6 @@
+#ifndef VEICOLO_H
+#define VEICOLO_H
 #include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 
 /*DEFINIZIONE STRUCT ORARIO*/
 typedef struct Orario {
@@ -33,9 +33,9 @@ void modificaDisponibilità (veicolo v, int k);
 
 float costoNoleggio (veicolo v, int k);
 
-void riempiVeicoli (veicolo v, char* nomefile);
+void riempiVeicoli (veicolo v);
 
-void riempiOrari (veicolo v, char* nomefile);
+void riempiOrari (veicolo v);
 
 void stampaOrari (veicolo v);
 
@@ -44,3 +44,7 @@ void verificaDisponibilità (veicolo v, int k);
 float verificaSconto (veicolo v, int k);
 
 void liberaVeicoli (veicolo v);
+
+void controlloToken (char* token, veicolo v, FILE* file);
+
+#endif

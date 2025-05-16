@@ -7,6 +7,7 @@
 #include "Menu.h"
 
 #define HASH_TAGLIA 5
+#define VEICOLI_TAGLIA 10
 
 /*
  * funzione controllo menuPrincipale
@@ -14,21 +15,29 @@
 void main () {
 
     char* nomeUtente;
-    veicolo V[10];
+    veicolo V[VEICOLI_TAGLIA];
 
-    for (int i=0; i<10; i++){
-        riempiVeicoli (V[i], "Veicoli.txt");
+    for (int i=0; i < VEICOLI_TAGLIA; i++){
+
+        V[i] = malloc(sizeof(struct Vettura));
+
+        if (V[i] == NULL){
+
+            perror ("Errore nell'allocazione della memoria.");
+            exit (1);
+        }
+        riempiVeicoli (V[i]);
     }
 
-    nomeUtente = menuAcccesso();
+    nomeUtente = menuAccesso();
     TabellaHash T = NuovaTabellaHash (HASH_TAGLIA);
 
-    printf ("===== BENVENUT* %s NEL NOSTRO CAR-SHARING =====", nomeUtente);
+    printf ("===== BENVENUT* %s NEL NOSTRO CAR-SHARING =====\n", nomeUtente);
 
     inizio:
         int scelta;
-        printf ("=== MENU ===");
-        printf ("1) Nuova Prenotazione\n2) Visualizza storico prenotazione\n3) Visualizza Sconti\n4) Visualizza Veicoli\n5) Annulla Prenotazione\n6) Logout\n");
+        printf ("=== MENU ===\n");
+        printf ("1) Nuova Prenotazione\n2) Visualizza storico prenotazione\n3) Visualizza Sconti\n4) Visualizza Veicoli\n5)Trova Prenotazione\n6) Esci\n");
         printf ("Scelga l'operazione da effettuare (da 1-6): ");
         scanf ("%d", &scelta);
 
@@ -39,6 +48,7 @@ void main () {
             } else {
                 break;
             }
+        }
 
         switch (scelta){
             case 1: {
@@ -88,6 +98,7 @@ void main () {
                     scanf ("%c", &s);
                     if (s == 'Y' || s== 'y') {
                         int z = InserisciPrenotazione (T, p1);
+                        AggiornaStorico (p1);
                         printf ("Bene, la sua prenotazione è completa");
                         printf ("\n\n\n\n\n\n\n");
                         goto inizio;
@@ -101,33 +112,36 @@ void main () {
                 }
             }
 
-        case 2: { // da implementare la visualizza delle prenotazioni odierne (tramite tabella hash) o passate (tramite file)
-
-            printf ("=== STORICO PRENOTAZIONI DI %s ===", nomeUtente);
-            
-            FILE* file = fopen ("StoricoPrenotazioni.txt", "r");
-
-            if (file == NULL){
-
-                perror ("Errore nella visualizzazione dello storico.");
-                exit (1);
-            }
+            case 2: { 
+                FILE* file = fopen ("StoricoPrenotazioni.txt", "r");
+                char buffer [200];
+                if (file == NULL){
+                    perror ("Errore nella visualizzazione dello storico.");
+                    exit (1);
+                }
 
                 printf ("=== STORICO PRENOTAZIONI DI %s ===", nomeUtente);
 
-                while (fgets (buffer, sizeof (buffer), file) != EOF){
+                while (fgets (buffer, sizeof (buffer), file) != NULL){
                      char *token = strtok (buffer, "-");
                      if (strcmp (token, nomeUtente) == 0){
                          token = strtok (NULL, "-");
                          printf ("DATA: %s", token);
                          token = strtok (NULL, "-");
-                         printf ("ORARIO SELEZIONATO: %s", token);
+                         printf ("ORARIO DI INIZIO: %s", token);
+                         token = strtok (NULL, "-");
+                         printf ("ORARIO DI FINE: %s", token);
+                         token = strtok (NULL, "-");
+                         printf ("ID: %s", token);
                          token = strtok (NULL, "-");
                          printf ("MODELLO: %s", token);
                          token = strtok (NULL, "-");
                          printf ("TARGA: %s", token);
                      }
                 }
+
+                fclose (file);
+
 
                 char s;
                 printf ("Vuole tornare al menu principale? (Y o N)");
@@ -165,9 +179,11 @@ void main () {
         }
 
         case 4: {
-            printf ("=== CATALOGO VEICOLI ===");
+            printf ("=== CATALOGO VEICOLI ===\n");
+
                 for (int i=0; i<10; i++){
-                    printf ("VEICOLO %d", i+1);
+
+                    printf ("VEICOLO %d\n", i+1);
                     stampaVeicolo (V[i]);
                 }
 
@@ -188,8 +204,63 @@ void main () {
 
         case 5: {
 
+            printf ("Inserisca l'ID della prenotazione che vuole vedere: ");
+            int id;
+            scanf ("%d", &id);
 
+            Prenotazione p = TrovaPrenotazione (T, id, HASH_TAGLIA);
+
+            if (p == NULL){
+
+                FILE* file = fopen ("StoricoPrenotazioni.txt", "r");
+
+                if (file == NULL){
+
+                    perror ("Errore nell'apertura dello storico.");
+                    exit (1);
+                }
+
+                char buffer [200];
+
+                while (fgets (buffer, sizeof (buffer), file) != NULL){
+
+                    char* token = strtok (buffer, "-");
+
+                    if (strcmp (token, nomeUtente) == 0){
+
+                        token = strtok (NULL, "-");
+                        token = strtok (NULL, "-");
+                        token = strtok (NULL, "-");
+                        token = strtok (NULL, "-");
+
+                        int tokenID = atoi (token);
+
+                        if (tokenID == id){
+
+                            printf ("Ecco la sua prenotazione con ID %d: ", id);
+                            printf ("%s", buffer); //Implementare per questione estetica di nuovo la lettura della riga da file con strtok
+                        }
+
+                    }
+                    // implementare printf di prenotazione non trovata in base sia all'id che all'utente
+                }
+            }
+
+            }
+
+            
+
+        case 6: 
+
+            printf ("Grazie mille per aver scelto il nostro servizio!");
+
+            for (int i=0; i < VEICOLI_TAGLIA; i++){
+
+                liberaVeicoli (V[i]);
+
+            }
+            LiberaTabellaHash (T);
+            exit (0);
         }
     }
 
-}
