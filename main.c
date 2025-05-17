@@ -191,7 +191,9 @@ void main () {
                 scanf ("%d", &id);
 
                 Prenotazione p = TrovaPrenotazione (T, id, HASH_TAGLIA);
-
+                if (p != NULL){
+                    stampaPrenotazione(p);
+                }
                 if (p == NULL){
 
                     FILE* file = fopen ("StoricoPrenotazioni.txt", "r");
