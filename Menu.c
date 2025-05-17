@@ -30,7 +30,10 @@ int operazioneAccesso (int operazione, char **nomeUtente){
 				system("cls");
        			printf("Uscita dal programma\n");
        			exit(0);
-        }
+        } else if (operazione < 1 || operazione > 3){\
+			system("cls");
+			return 3;
+		}
 
   while (1){
   	corretto = 1;
@@ -66,6 +69,7 @@ int operazioneAccesso (int operazione, char **nomeUtente){
     	switch (operazione){
     		case 1:
       			if (utenteCorrisponde){
+					system("cls");
        				return 0;
        			} else {
             		*nomeUtente = malloc((strlen(buffer) + 1) * sizeof(char));
@@ -149,7 +153,7 @@ char* menuAccesso(){
 }
 
 int menuPrincipale(char scelta){
-	printf ("Vuole tornare al menu principale? (Y o N): ");
+	printf ("\nVuole tornare al menu principale? (Y o N): ");
 
 	while (1){
         if (scanf (" %c", &scelta) != 1 || getchar() != '\n'){

@@ -187,6 +187,7 @@ void main () {
 
                 printf ("Inserisca l'ID della prenotazione che vuole vedere: ");
                 int id;
+                char s;
                 scanf ("%d", &id);
 
                 Prenotazione p = TrovaPrenotazione (T, id, HASH_TAGLIA);
@@ -202,33 +203,42 @@ void main () {
                     }
 
                     char buffer [200];
-
-                    while (fgets (buffer, sizeof (buffer), file) != NULL){
-
-                        char* token = strtok (buffer, "-");
-
-                        if (strcmp (token, nomeUtente) == 0){
-
-                            token = strtok (NULL, "-");
-                            token = strtok (NULL, "-");
-                            token = strtok (NULL, "-");
-                            token = strtok (NULL, "-");
-
-                            int tokenID = atoi (token);
-
-                            if (tokenID == id){
-
-                                printf ("Ecco la sua prenotazione con ID %d: ", id);
-                                printf ("%s", buffer); //Implementare per questione estetica di nuovo la lettura della riga da file con strtok
-                            }
-
+                    if (fgetc(file) == EOF){
+                        printf("Lo storico non presenta alcuna prenotazione.\n");
+                        fclose(file);
+                        if (menuPrincipale(s) == 0){
+                                goto inizio;
                         }
-                        // implementare printf di prenotazione non trovata in base sia all'id che all'utente
+                    }
+                    rewind(file);
+                    while (fgets (buffer, sizeof (buffer), file) != NULL){
+                        char bufferCopia[200];
+                        strcpy(bufferCopia, buffer);
+                        char* token = strtok (buffer, "-");
+                        // controllo token
+                        if (strcmp (token, nomeUtente) == 0){
+                            int i=0;
+                            while (i < 4){
+                            token = strtok (NULL, "-");
+                            // controllo token
+                            i++;
+                            }
+                            int tokenID = atoi(token);
+                            if (tokenID == id){
+                                printf ("Ecco la sua prenotazione con ID %d: \n%s", id, bufferCopia);
+                                if (menuPrincipale(s) == 0){
+                                goto inizio;
+                                }
+                            }
+                        }
+                        }
+                         printf("Non e' stata trovata la prenotazione ID %d a nome di %s\n", id, nomeUtente);
+                        if (menuPrincipale(s) == 0){
+                            goto inizio;
                     }
                 }
-
+                break;
             }
-
 
 
             case 6:

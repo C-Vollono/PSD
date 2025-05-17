@@ -160,7 +160,7 @@ void AggiornaStorico (Prenotazione p){
 
     strftime (buffer, sizeof (buffer), "%d / %m / %Y", data); //formatta la data nel buffer
 
-    fprintf (file, "%s-%s-%.2f-%.2f-%d-%s-%s\n\n", p->nomeUtente, buffer, p->OrarioSceltoInizio, p->OrarioSceltoFine, p->ID, p->v->modello, p->v->targa);
+    fprintf (file, "%s-%s-%.2f-%.2f-%d-%s-%s", p->nomeUtente, buffer, p->OrarioSceltoInizio, p->OrarioSceltoFine, p->ID, p->v->modello, p->v->targa);
 
     if (fclose (file) != 0){
         system("cls");
