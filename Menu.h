@@ -8,3 +8,4 @@ int operazioneAccesso (int operazione, char **nome_utente); // Elaborazione dell
 
 char* menuAccesso(); // Funzione principale per l'accesso
 
+int menuPrincipale(char scelta);
