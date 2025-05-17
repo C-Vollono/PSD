@@ -31,7 +31,7 @@ TabellaHash NuovaTabellaHash (int taglia){
     TabellaHash t = malloc (sizeof (struct hash)); //Alloco memoria per la tabella hash
 
     if (t == NULL){
-
+        system("cls");
         perror ("Errore nell'allocazione della memoria tabella hash.");
         exit (1);
     }
@@ -59,7 +59,7 @@ Prenotazione NuovaPrenotazione (int ID, char* NomeUtente, veicolo c, float Costo
     Prenotazione p = malloc (sizeof (struct item));
 
     if (p == NULL){
-
+        system("cls");
         perror ("Errore nella creazione della prenotazione.");
         exit (1);
     }
@@ -69,7 +69,7 @@ Prenotazione NuovaPrenotazione (int ID, char* NomeUtente, veicolo c, float Costo
     p->nomeUtente = malloc (strlen (NomeUtente)+1);
 
     if (p->nomeUtente == NULL){
-
+        system("cls");
         perror ("ERRORE!");
         exit (1);
     }
@@ -147,7 +147,7 @@ void AggiornaStorico (Prenotazione p){
     file = fopen ("StoricoPrenotazioni.txt", "a");
 
     if (file == NULL){
-
+        system("cls");
         perror ("Errore nell'apertura dello storico");
         exit (1);
     }
@@ -160,17 +160,17 @@ void AggiornaStorico (Prenotazione p){
 
     strftime (buffer, sizeof (buffer), "%d / %m / %Y", data); //formatta la data nel buffer
 
-    fprintf (file, "%s-%s-%.2f-%.2f-%d-%s-%s", p->nomeUtente, buffer, p->OrarioSceltoInizio, p->OrarioSceltoFine, p->ID, p->v->modello, p->v->targa);
+    fprintf (file, "%s-%s-%.2f-%.2f-%d-%s-%s\n\n", p->nomeUtente, buffer, p->OrarioSceltoInizio, p->OrarioSceltoFine, p->ID, p->v->modello, p->v->targa);
 
     if (fclose (file) != 0){
-
+        system("cls");
         perror ("Errore nella chiusura dello storico.");
         exit (1);
     }
 }
 
 void stampaPrenotazione (Prenotazione p){
-
+    system("cls");
     printf ("ID prenotazione: %d\nOrario Selezionato: %.2f-%.2f\nCosto Noleggio: %.2f euro\n", p->ID, p->OrarioSceltoInizio, p->OrarioSceltoFine, p->CostoNoleggioFinale);
     
 }
