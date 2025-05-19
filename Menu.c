@@ -1,3 +1,8 @@
+/*ATTENZIONE: Nel codice sono presenti comandi system
+              Implementati per la pulizia del terminale
+              Potrebbero creare conflitti o problemi di vari natura
+              "Annullarli" nel caso della presenza di quest'ultimi*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -12,6 +17,35 @@
  *  2: Utente non registrato
  *  3: Operazione non valida
 */
+
+/*---------------------------------------------------------------------------------------------------------------- 
+ * Funzione: operazioneAccesso
+ * -----------------------
+ *  
+ * 
+ * Specifica sintattica:
+ *      
+ *
+ * Parametri:
+ *      
+ * 
+ * Specifica semantica:
+ *      
+ * 
+ * Pre-condizione:
+ *      
+ * 
+ * Post-condizione:
+ *      
+ * 
+ * Ritorna:
+ *      
+ * 
+ * Effetti collaterali:
+ *      
+ * ---------------------------------------------------------------------------------------------------------------- 
+ */
+
 int operazioneAccesso (int operazione, char **nomeUtente){
   char buffer[1024];
   char bufferFile[1024];
@@ -114,6 +148,34 @@ int operazioneAccesso (int operazione, char **nomeUtente){
   }
 }
 
+/*---------------------------------------------------------------------------------------------------------------- 
+ * Funzione: menuAccesso
+ * -----------------------
+ *  
+ * 
+ * Specifica sintattica:
+ *      
+ *
+ * Parametri:
+ *      
+ * 
+ * Specifica semantica:
+ *      
+ * 
+ * Pre-condizione:
+ *      
+ * 
+ * Post-condizione:
+ *      
+ * 
+ * Ritorna:
+ *      
+ * 
+ * Effetti collaterali:
+ *      
+ * ---------------------------------------------------------------------------------------------------------------- 
+ */
+
 char* menuAccesso(){
 	char *nomeUtente;
 	char inputAzione[100];
@@ -153,6 +215,34 @@ char* menuAccesso(){
 		}
 	}
 }
+
+/*---------------------------------------------------------------------------------------------------------------- 
+ * Funzione: menuPrincipale
+ * -----------------------
+ *  
+ * 
+ * Specifica sintattica:
+ *      
+ *
+ * Parametri:
+ *      
+ * 
+ * Specifica semantica:
+ *      
+ * 
+ * Pre-condizione:
+ *      
+ * 
+ * Post-condizione:
+ *      
+ * 
+ * Ritorna:
+ *      
+ * 
+ * Effetti collaterali:
+ *      
+ * ---------------------------------------------------------------------------------------------------------------- 
+ */
 
 int menuPrincipale(char scelta){
 	printf ("\nVuole tornare al menu principale? (Y o N): ");
