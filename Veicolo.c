@@ -5,7 +5,7 @@
 
 /*-- FUNZIONI RELATIVE AI VEICOLI --*/
 
-/*
+/*---------------------------------------------------------------------------------------------------------------- 
  * Funzione: riempiVeicoli
  * -----------------------
  * Prende in input l'oggetto veicolo e il puntatore al file .txt contenente i dati dei veicoli
@@ -33,6 +33,7 @@
  * Effetti collaterali:
  *      Modifica il contenuto nell'oggetto veicolo
  *      Se il file è vuoto, la funzione potrebbe dare comportamento indefinito senza opportuni controlli
+ * ---------------------------------------------------------------------------------------------------------------- 
  */
 
  void riempiVeicoli (veicolo v){
@@ -156,7 +157,7 @@
     i++;
 }
 
-/*
+/*---------------------------------------------------------------------------------------------------------------- 
  * Funzione: stampaVeicoli
  * -----------------------
  * Stampa a video i dati di un oggetto veicolo tra cui anche gli intervalli orari con la loro disponibilità (richiamo ad altre due funzioni) 
@@ -182,6 +183,7 @@
  * 
  * Effetti collaterali:
  *      Nessun effetto collaterale
+ * ---------------------------------------------------------------------------------------------------------------- 
  */
 
  void stampaVeicolo (veicolo v){
@@ -189,7 +191,7 @@
     
 }
 
-/*
+/*---------------------------------------------------------------------------------------------------------------- 
  * Funzione: liberaVeicoli
  * -----------------------
  *  Libera la memoria dell'oggetto veicolo
@@ -214,6 +216,7 @@
  * 
  * Effetti collaterali:
  *      L'oggetto veicolo non ha più dati presenti in memoria
+ * ---------------------------------------------------------------------------------------------------------------- 
  */
 
 void liberaVeicoli (veicolo v){
@@ -227,7 +230,7 @@ void liberaVeicoli (veicolo v){
 
 /*-- FUNZIONI RELATIVE AL NOLEGGIO --*/
 
-/*
+/*---------------------------------------------------------------------------------------------------------------- 
  * Funzione: costoNoleggio
  * -----------------------
  * Calcola quanto costa il noleggio in un orario scelto dall'utente con eventuale sconto 
@@ -254,6 +257,7 @@ void liberaVeicoli (veicolo v){
  * 
  * Effetti collaterali: 
  *      Nessun effetto collaterale
+ * ---------------------------------------------------------------------------------------------------------------- 
  */
 
 float costoNoleggio (veicolo v, int k){
@@ -277,7 +281,7 @@ float costoNoleggio (veicolo v, int k){
     return (tempoNoleggio * v->CostoNoleggioOrario) * verificaSconto(v, k);
 }
 
-/*
+/*---------------------------------------------------------------------------------------------------------------- 
  * Funzione: verificaSconto
  * -----------------------
  * La funzione verifica la possibilità di un sconto in determinati intervalli orari prestabiliti e restituisce un tipo float
@@ -305,6 +309,7 @@ float costoNoleggio (veicolo v, int k){
  *      
  * Effetti collaterali:
  *      Nessun effetto collaterale 
+ * ---------------------------------------------------------------------------------------------------------------- 
  */
 
 float verificaSconto (veicolo v, int k){ // Restituisce float tra 0.0 a 1.0 che corrisponde alla percentuale di sconto (1- verificaSconto);
@@ -319,7 +324,7 @@ float verificaSconto (veicolo v, int k){ // Restituisce float tra 0.0 a 1.0 che 
 
 /*-- FUNZIONI RELATIVE AGLI ORARI --*/
 
-/*
+/*---------------------------------------------------------------------------------------------------------------- 
  * Funzione: riempiOrari
  * -----------------------
  * Prende in input l'oggetto veicolo e il puntatore al file .txt contenente i dati degli intervalli orari
@@ -347,6 +352,7 @@ float verificaSconto (veicolo v, int k){ // Restituisce float tra 0.0 a 1.0 che 
  * Effetti collaterali:
  *      Modifica il contenuto nell'oggetto veicolo
  *      Se il file è vuoto, la funzione potrebbe dare comportamento indefinito senza opportuni controlli
+ * ---------------------------------------------------------------------------------------------------------------- 
  */
 
 void riempiOrari (veicolo v){
@@ -396,7 +402,7 @@ void riempiOrari (veicolo v){
     }
 
 
-/*
+/*---------------------------------------------------------------------------------------------------------------- 
  * Funzione: verificaDisponibilità
  * -----------------------
  * Verifica che un veicolo in un determinato orario sia disponibile attraverso un modulo 2 (se 1 allora non disponibile altrimenti disponibile)
@@ -422,7 +428,8 @@ void riempiOrari (veicolo v){
  *      Nessun valore
  * 
  * Effetti collaterali:
- *      Nessun effetto collaterale       
+ *      Nessun effetto collaterale   
+ * ----------------------------------------------------------------------------------------------------------------     
  */
 
 void verificaDisponibilità (veicolo v, int k){
@@ -437,7 +444,7 @@ void verificaDisponibilità (veicolo v, int k){
     }
 }
 
-/*
+/*---------------------------------------------------------------------------------------------------------------- 
  * Funzione: modificaDisponibilità
  * -----------------------
  * Va a modificare nel campo disponibilità il suo valore a 1 quando chiamata
@@ -463,6 +470,7 @@ void verificaDisponibilità (veicolo v, int k){
  * 
  * Effetti collaterali:
  *       Cambiato il valore nel campo Disponibilità della struct Orario
+ * ---------------------------------------------------------------------------------------------------------------- 
  */
 
 void modificaDisponibilità (veicolo v, int k){
@@ -470,9 +478,9 @@ void modificaDisponibilità (veicolo v, int k){
     v->orari[k].Disponibilità = 1;
 }
 
-/*
+/*-----------------------------------------------------------------------------------------------------------------
  * Funzione: stampaOrari
- * -----------------------
+ * ----------------------------------------------------------------------------------------------------------------
  * Stampa a video l'intervallo orario scelto dall'utente con la sua disponibilità (Non disponibile o Disponibile)
  * 
  * Specifica sintattica:
@@ -495,7 +503,8 @@ void modificaDisponibilità (veicolo v, int k){
  *      Nessun valore
  * 
  * Effetti collaterali:
- *      Nessun effetto collaterale      
+ *      Nessun effetto collaterale     
+ * ---------------------------------------------------------------------------------------------------------------- 
  */
 
 void stampaOrari (veicolo v){
@@ -507,6 +516,38 @@ void stampaOrari (veicolo v){
         verificaDisponibilità(v, k);
         }
 }
+
+/*--Funzioni di supporto--*/
+
+/*-----------------------------------------------------------------------------------------------------------------
+ * Funzione: controllotoken
+ * ----------------------------------------------------------------------------------------------------------------
+ * Controllo di eventuali errori nella funzione strtok della libreria string.h 
+ * 
+ * Specifica sintattica:
+ *      void controllotoken(char*, veicolo, FILE*)-> void
+ *
+ * Parametri:
+ *      token: stringa
+ *      v: oggetto veicolo
+ *      file: puntatore a file
+ * 
+ * Specifica semantica:
+ *      controllotoken(token, v, file)-> void 
+ *       
+ * Pre-condizione:
+ *      token deve esistere
+ *       
+ * Post-condizione:
+ *      Se token == NULL, libera memoria e chiude file
+ * 
+ * Ritorna: 
+ *      Nessun valore     
+ * 
+ * Effetti collaterali:
+ *      Nessun effetto collaterale
+ * ---------------------------------------------------------------------------------------------------------------- 
+ */
 
 void controlloToken (char* token, veicolo v, FILE* file){
 
