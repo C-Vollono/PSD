@@ -7,7 +7,7 @@
 
 struct item {
 
-    int ID; //chiave dell'elemento (da valutare il tipo, se char* oppure int)
+    int ID; //chiave dell'item prenotazione
     char* nomeUtente;
     veicolo v;
     float CostoNoleggioFinale;
