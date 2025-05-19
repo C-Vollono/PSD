@@ -45,7 +45,7 @@
     file = fopen ("Veicoli.txt", "r");
 
     if (file == NULL){
-        system("cls");
+        system("cls | clear");
         perror ("Errore nell'apertura del file.");
         exit (1);
     }
@@ -60,7 +60,7 @@
         v->tipoVeicolo = malloc (strlen (token)+1 * sizeof (char));
 
         if (v->tipoVeicolo == NULL){
-            system("cls");
+            system("cls | clear");
             perror ("ERRORE TIPO VEICOLO");
             exit (1);
         }
@@ -73,7 +73,7 @@
         v->modello = malloc (strlen (token)+1 * sizeof (char));
 
         if (v->modello == NULL){
-            system("cls");
+            system("cls | clear");
             perror ("ERRORE MODELLO");
             free (v->tipoVeicolo);
             exit(1);
@@ -87,7 +87,7 @@
         v->colore = malloc (strlen (token)+1 * sizeof (char));
 
         if (v->colore == NULL){
-            system("cls");
+            system("cls | clear");
             perror ("ERRORE COLORE");
             free (v->modello);
             free (v->tipoVeicolo);
@@ -102,7 +102,7 @@
         v->targa = malloc (strlen (token)+1 * sizeof (char));
 
         if (v->targa == NULL){
-            system("cls");
+            system("cls | clear");
             perror ("ERRORE TARGA");
             free (v->modello);
             free (v->tipoVeicolo);
@@ -123,7 +123,7 @@
         v->Combustibile = malloc (strlen(token)+1 * sizeof (char));
 
         if (v->Combustibile == NULL){
-            system("cls");
+            system("cls | clear");
             perror ("ERRORE COMBUSTIBILE");
             free (v->modello);
             free (v->tipoVeicolo);
@@ -149,7 +149,7 @@
 
     
     if (fclose (file) != 0){
-        system("cls");
+        system("cls | clear");
         perror ("Errore nella chiusura del file.");
         exit (1);
     }
@@ -357,7 +357,7 @@ void riempiOrari (veicolo v){
     file = fopen ("Orari.txt", "r");
 
     if (file == NULL){
-        system("cls");
+        system("cls | clear");
         perror ("Errore nell'apertura del file.");
         exit (1);
     }
@@ -389,7 +389,7 @@ void riempiOrari (veicolo v){
         }
 
         if (fclose (file) != 0){
-            system("cls");
+            system("cls | clear");
             perror ("Errore nella chiusura del file.");
             exit (1);
         }
@@ -511,12 +511,11 @@ void stampaOrari (veicolo v){
 void controlloToken (char* token, veicolo v, FILE* file){
 
     if (token == NULL){
-        system("cls");
+        system("cls | clear");
         printf("Errore nella lettura dei dati.\n");
         liberaVeicoli(v); // Nuova funzione per deallocare
         fclose(file);
         exit(1);
-    
     }
 
 }

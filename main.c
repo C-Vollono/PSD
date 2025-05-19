@@ -22,7 +22,7 @@ void main () {
         V[i] = malloc(sizeof(struct Vettura));
 
         if (V[i] == NULL){
-            system("cls");
+            system("cls | clear");
             perror ("Errore nell'allocazione della memoria.");
             exit (1);
         }
@@ -103,7 +103,8 @@ void main () {
                     } else if (s == 'Y' || s== 'y') {
                         int z = InserisciPrenotazione (T, p1);
                         AggiornaStorico (p1);
-                        printf ("Bene, la sua prenotazione e' completa");
+                        system("cls | clear");
+                        printf ("Bene, la sua prenotazione %d e' completa", ID);
                         printf ("\n\n\n\n");
                         goto inizio;
                     } else if (s == 'n' || s == 'N') {
@@ -123,7 +124,7 @@ void main () {
                     perror ("Errore nella visualizzazione dello storico.");
                     exit (1);
                 }
-                system("cls");
+                system("cls | clear");
                 printf ("=== STORICO PRENOTAZIONI DI %s === \n\n", nomeUtente);
 
                 while (fgets (buffer, sizeof (buffer), file) != NULL){
@@ -156,7 +157,7 @@ void main () {
             }
 
             case 3:{
-                system("cls");
+                system("cls | clear");
                 printf ("=== SCONTI ===\n\n");
                 printf ("- 30%% off se la prenotazione viene effettuata dopo le 20:00\n"); //messo il doppio %% in modo che la printf lo vede come un carattere e non come specificatore di formato
                 printf ("- 15%% off se la prenotazione viene effettuata prima delle 9:00\n\n");
@@ -168,7 +169,7 @@ void main () {
             }
 
             case 4: {
-                system("cls");
+                system("cls | clear");
                 printf ("=== CATALOGO VEICOLI ===\n");
 
                 for (int i=0; i<10; i++){
@@ -192,7 +193,11 @@ void main () {
 
                 Prenotazione p = TrovaPrenotazione (T, id, HASH_TAGLIA);
                 if (p != NULL){
+                    system("cls | clear");
                     stampaPrenotazione(p);
+                    if (menuPrincipale(s) == 0){
+                            goto inizio;
+                    }
                 }
                 if (p == NULL){
 
@@ -244,7 +249,7 @@ void main () {
 
 
             case 6:
-                system("cls");
+                system("cls | clear");
                 printf ("Grazie mille per aver scelto il nostro servizio!");
 
                 for (int i=0; i < VEICOLI_TAGLIA; i++){
@@ -255,7 +260,7 @@ void main () {
                 LiberaTabellaHash (T);
                 exit (0);
             default:
-                system("cls");
+                system("cls | clear");
                 printf("Vi e' stato qualche errore durante l'associazione dell'operazione da effettuare\n");
                 for (int i=0; i < VEICOLI_TAGLIA; i++){
 

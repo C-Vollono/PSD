@@ -27,11 +27,11 @@ int operazioneAccesso (int operazione, char **nomeUtente){
   }
 
   if (operazione == 3){
-				system("cls");
+			system("cls | clear");
        			printf("Uscita dal programma\n");
        			exit(0);
         } else if (operazione < 1 || operazione > 3){\
-			system("cls");
+			system("cls | clear");
 			return 3;
 		}
 
@@ -42,7 +42,7 @@ int operazioneAccesso (int operazione, char **nomeUtente){
     buffer[strcspn(buffer, "\n")] = '\0';
     if (strlen(buffer) > 25) {
     	corretto = 0;
-		system("cls");
+		system("cls | clear");
     	printf("Nome non valido, lunghezza massima consentita di 25 caratteri alfanumerici \n\n"); // Controlla se il nome utente >25
     } else {
     	for (ptrUtente = buffer; *ptrUtente != '\0'; ptrUtente++){ // Controllo alfanumerico
@@ -51,7 +51,7 @@ int operazioneAccesso (int operazione, char **nomeUtente){
             	(*ptrUtente  >= '0' && *ptrUtente  <= '9')))
 			{
             	corretto = 0;
-				system("cls");
+				system("cls | clear");
             	printf("Nome non valido, utilizzare solo caratteri alfanumerici! \n\n");
             	break;
             }
@@ -69,45 +69,45 @@ int operazioneAccesso (int operazione, char **nomeUtente){
     	switch (operazione){
     		case 1:
       			if (utenteCorrisponde){
-					system("cls");
+					system("cls | clear");
        				return 0;
        			} else {
             		*nomeUtente = malloc((strlen(buffer) + 1) * sizeof(char));
          			if (*nomeUtente == NULL) {
-						system("cls");
+						system("cls | clear");
         	   			printf("Nome utente non memorizzato correttamente\n\n");
         	   			return -1;
          			}
         		strcpy(*nomeUtente, buffer);
 				nuovoUtente = fopen("utente.txt", "a");
              	if (nuovoUtente == NULL){
-					system("cls");
+					system("cls | clear");
             		printf("Errore nell'apertura dei file utente\n\n");
 					free(*nomeUtente);
             		return -1;
             	}
             	fprintf(nuovoUtente, "%s\n", *nomeUtente);
 				fclose(nuovoUtente);
-				system("cls");
+				system("cls | clear");
         		return 1;
                 }
        	    case 2: 
         		if (utenteCorrisponde){ 
          			*nomeUtente = malloc((strlen(buffer) + 1) * sizeof(char));
          			if (*nomeUtente == NULL) {
-						system("cls");
+						system("cls | clear");
         	   			printf("Nome utente non memorizzato correttamente\n\n");
         	   			return -1;
          			}
         	 		strcpy(*nomeUtente, buffer);
-					system("cls");
+					system("cls | clear");
         	 		return 1; 
        			} else {
-					system("cls");
+					system("cls | clear");
          			return 2; 
        			}
        		default:
-				system("cls");
+				system("cls | clear");
        			return 3;
      	}
     }
@@ -116,6 +116,7 @@ int operazioneAccesso (int operazione, char **nomeUtente){
 
 char* menuAccesso(){
 	char *nomeUtente;
+	char inputAzione[100];
 	int operazione;
 	int risultatoOperazione;
 	while (1){
@@ -124,8 +125,9 @@ char* menuAccesso(){
     	printf(" (2) Login\n");
     	printf(" (3) Esci\n");
  		printf("Digiti l'operazione da effettuare: ");
-    	scanf("%d", &operazione);
-		getchar ();
+		fgets(inputAzione, sizeof(inputAzione), stdin);
+		inputAzione[strlen(inputAzione)-1] = '\0';
+		operazione = atoi(inputAzione);
 		risultatoOperazione = operazioneAccesso(operazione, &nomeUtente);
     	switch (risultatoOperazione){
 			case 1: {
@@ -160,7 +162,7 @@ int menuPrincipale(char scelta){
 			printf("Scelta non valida, riprova: ");
 			for (; getchar() != '\n';);
 		} else if (scelta == 'Y' || scelta == 'y'){
-			system("cls");
+			system("cls | clear");
             return 0;
         } else if (scelta == 'N' || scelta == 'n') {
                 printf ("Quando vuole tornare al menu principale inserisca 'Y': ");
