@@ -80,6 +80,7 @@ void main () {
                 int s2;
                 while (1){
                     scanf ("%d", &s2);
+                    //Aggiungere controllo per verificare la disponibilita`
                     if (s2 < 0 || s2 >8 ){
                         printf ("\nIndice non valido, riprovi: ");
                     }
@@ -122,6 +123,8 @@ void main () {
             }
 
             case 2: { //Visualizza storico prenotazioni
+
+                /*MODIFICARE PER LA STAMPA DA TABELLA HASH*/
                 FILE* file = fopen ("StoricoPrenotazioni.txt", "r");
                 char buffer [200];
                 if (file == NULL){

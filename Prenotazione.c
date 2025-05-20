@@ -15,6 +15,7 @@ struct item {
     int ID; //chiave dell'item prenotazione
     char* nomeUtente;
     veicolo v;
+    char* data;
     float CostoNoleggioFinale;
     float OrarioSceltoInizio;
     float OrarioSceltoFine;
@@ -107,9 +108,12 @@ TabellaHash NuovaTabellaHash (int taglia){
  * ---------------------------------------------------------------------------------------------------------------- 
  */
 
-int FunzioneHash (int ID, int taglia){
-
-    return ID % taglia;
+int FunzioneHash(int ID, int taglia) {
+    int hash = 0;
+    
+    hash = (31 * ID) % taglia;
+    
+    return hash;
 }
 
 /*---------------------------------------------------------------------------------------------------------------- 
@@ -156,13 +160,30 @@ Prenotazione NuovaPrenotazione (int ID, char* NomeUtente, veicolo c, float Costo
 
     if (p->nomeUtente == NULL){
         system("cls | clear");
-        perror ("ERRORE!");
+        perror ("ERRORE NEL NOME UTENTE!");
         exit (1);
     }
 
     strcpy (p->nomeUtente, NomeUtente);
 
     p->v = c;
+
+    time_t t = time (NULL); //ottengo i secondi dal 1 gennaio 1970
+
+    struct tm* data = localtime (&t); //ottengo la data corrente, ma bisogna formattarla
+
+    char buffer[20];
+
+    strftime (buffer, sizeof (buffer), "%d / %m / %Y", data); //formatta la data nel buffer
+
+    p->data = malloc (strlen(buffer) + 1);
+    if(p->data==NULL){
+        system("cls|clear");
+        perror("ERRORE IN DATA!");
+        exit(1);
+    }
+
+    strcpy(p->data, buffer);
 
     p->CostoNoleggioFinale = CostoNoleggioFinale;
 
@@ -305,6 +326,8 @@ static void LiberaLista (Prenotazione p){
     while (p != NULL){
 
         nuovap = p->next;
+        free(p->nomeUtente);
+        free(p->data);
         free (p);
         p = nuovap;
     }
@@ -350,15 +373,9 @@ void AggiornaStorico (Prenotazione p){
         exit (1);
     }
 
-    time_t t = time (NULL); //ottengo i secondi dal 1 gennaio 1970
-
-    struct tm* data = localtime (&t); //ottengo la data corrente, ma bisogna formattarla
-
-    char buffer[20];
-
-    strftime (buffer, sizeof (buffer), "%d / %m / %Y", data); //formatta la data nel buffer
-
-    fprintf (file, "\n%s-%s-%.2f-%.2f-%d-%s-%s", p->nomeUtente, buffer, p->OrarioSceltoInizio, p->OrarioSceltoFine, p->ID, p->v->modello, p->v->targa);
+   
+    //DA MODIFICARE PER CARICARE DA TABELLA HASH
+    fprintf (file, "\n%s-%s-%.2f-%.2f-%d-%s-%s", p->nomeUtente, p->data, p->OrarioSceltoInizio, p->OrarioSceltoFine, p->ID, p->v->modello, p->v->targa);
 
     if (fclose (file) != 0){
         system("cls | clear");
