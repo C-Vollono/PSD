@@ -392,7 +392,7 @@ void riempiOrari (veicolo v){
                 token = strtok (NULL, ";");
                 controlloToken (token, v, file);
 
-                v->orari[k].Disponibilità = atoi (token);
+                v->orari[k].Disponibilita = atoi (token);
 
                 token = strtok (NULL, ";");
                 controlloToken (token, v, file);
@@ -437,9 +437,9 @@ void riempiOrari (veicolo v){
  * ----------------------------------------------------------------------------------------------------------------     
  */
 
-void verificaDisponibilità (veicolo v, int k){
+void verificaDisponibilita (veicolo v, int k){
 
-    if ((v->orari[k].Disponibilità)%2 == 1){
+    if ((v->orari[k].Disponibilita)%2 == 1){
 
         printf ("Non Disponibile\n");
     }
@@ -478,9 +478,9 @@ void verificaDisponibilità (veicolo v, int k){
  * ---------------------------------------------------------------------------------------------------------------- 
  */
 
-void modificaDisponibilità (veicolo v, int k){
+void modificaDisponibilita (veicolo v, int k){
 
-    v->orari[k].Disponibilità = 1;
+    v->orari[k].Disponibilita = 1;
 }
 
 /*-----------------------------------------------------------------------------------------------------------------
@@ -518,7 +518,7 @@ void stampaOrari (veicolo v){
 
         printf (" (%d) %.2f-%.2f ", k, v->orari[k].inizio, v->orari[k].fine);
 
-        verificaDisponibilità(v, k);
+        verificaDisponibilita(v, k);
         }
 }
 

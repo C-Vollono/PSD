@@ -11,7 +11,6 @@
 #include "Prenotazione.h"
 #include "Menu.h"
 
-#define HASH_TAGLIA 5
 #define VEICOLI_TAGLIA 10
 
 /*--Funzione controllo menuPrincipale--*/
@@ -35,7 +34,7 @@ void main () {
     }
 
     nomeUtente = menuAccesso(); //Richiamo alla funzine menuAccesso per login o registrazione
-    TabellaHash T = NuovaTabellaHash (HASH_TAGLIA);
+    TabellaHash T = NuovaTabellaHash (HASH_TAGLIA); //Da modificare a causa di RiempiTabellaHashDaFile
 
     printf ("===== BENVENUT* %s NEL NOSTRO CAR-SHARING =====\n", nomeUtente);
 
@@ -92,8 +91,9 @@ void main () {
                 srand (time(NULL));
                 int ID = rand();
 
-                float c = costoNoleggio (V[s1], s2);
-                Prenotazione p1 = NuovaPrenotazione (ID, nomeUtente, V[s1], c, s2);
+                // funzione che restituisce la data corrente
+
+                Prenotazione p1 = NuovaPrenotazione (ID, nomeUtente, /*data*/ V[s1], s2);
 
                 printf ("Ecco il riepilogo della sua prenotazione: ");
                 stampaPrenotazione (p1);
@@ -106,6 +106,7 @@ void main () {
                         printf("Scelta non valida, riprova: ");
                         for (; getchar() != '\n';);
                     } else if (s == 'Y' || s== 'y') {
+                        modificaDisponibilita (V[s1], s2);
                         int z = InserisciPrenotazione (T, p1);
                         AggiornaStorico (p1);
                         system("cls | clear");

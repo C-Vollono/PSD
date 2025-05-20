@@ -10,6 +10,8 @@
 #include "Veicolo.h"
 #include "Prenotazione.h"
 
+#define HASH_TAGLIA 30
+
 struct item {
 
     int ID; //chiave dell'item prenotazione
@@ -67,9 +69,9 @@ TabellaHash NuovaTabellaHash (int taglia){
         exit (1);
     }
 
-    t->taglia = taglia;
+    t->taglia = taglia+HASH_TAGLIA;
 
-    t->tabella = calloc (taglia, sizeof (struct item *)); //Alloco memoria e inizializzo a NULL tutti i puntatori a item
+    t->tabella = calloc ((taglia+HASH_TAGLIA), sizeof (struct item *)); //Alloco memoria e inizializzo a NULL tutti i puntatori a item
 
     if (t->tabella == NULL){
 
@@ -144,7 +146,7 @@ int FunzioneHash(int ID, int taglia) {
  * ---------------------------------------------------------------------------------------------------------------- 
  */
 
-Prenotazione NuovaPrenotazione (int ID, char* NomeUtente, veicolo c, float CostoNoleggioFinale, int i){ // MODIFICARE IN BASE ALL'IMPLEMENTAZIONE DI CARICA FILE
+Prenotazione NuovaPrenotazione (int ID, char* NomeUtente, veicolo c, int i){ // MODIFICARE IN BASE ALL'IMPLEMENTAZIONE DI CARICA FILE
  
     Prenotazione p = malloc (sizeof (struct item));
 
@@ -185,7 +187,7 @@ Prenotazione NuovaPrenotazione (int ID, char* NomeUtente, veicolo c, float Costo
 
     strcpy(p->data, buffer);
 
-    p->CostoNoleggioFinale = CostoNoleggioFinale;
+    p->CostoNoleggioFinale = costoNoleggio (c, i);
 
     p->OrarioSceltoInizio = p->v->orari[i].inizio;
     
@@ -481,4 +483,90 @@ Prenotazione TrovaPrenotazione (TabellaHash t, int ID, int taglia){
 
     }
     return NULL;
+}
+
+TabellaHash RiempiTabellaHashDaFile (veicolo *v){
+
+    FILE* file = fopen ("StoricoPrenotazioni.txt", "r");
+
+    if (file == NULL){
+
+        perror ("Errore nella lettura dello storico.");
+        exit (1);
+    }
+
+    char buffer [200];
+    int z=0; //variabile che viene incrementata ogni volta che legge una prenotazione dal file, così alla fine si ha la grandezza necessaria per contenere le prenotazioni precedenti 
+
+    while (fgets (buffer, sizeof (buffer), file) != NULL){
+
+        z++;
+    }
+
+    rewind (file);
+
+    TabellaHash t = NuovaTabellaHash (z);
+
+    if (z == 0){
+
+        return t;
+    }
+
+    while (fgets (buffer, sizeof (buffer), file) != NULL){
+
+        char* token = strtok (buffer, "-");
+        // controllo token (senza veicolo)
+
+        char* nomeUtente = strdup (token);
+
+        if (nomeUtente == NULL){
+
+            perror ("Errore.");
+            exit (1);
+        }
+
+        token = strtok (NULL, "-");
+        //controllo token
+
+        char* data = strdup (token);
+
+        if (data == NULL){
+
+            perror ("Errore.");
+            exit (1);
+        }
+
+        token = strtok (NULL, "-");
+        //controllo token
+        
+        token = strtok (NULL, "-");
+        //controllo token
+
+        token = strtok (NULL, "-");
+        //controllo token
+
+        int ID = atoi (token);
+
+        token = strtok (NULL, "-");
+        //controllo token
+
+        token = strtok (NULL, "-");
+        //controllo token
+
+        token = strtok (NULL, "-");
+        //controllo token
+
+        int IndiceVeicoloScelto = atoi (token);
+
+        token = strtok (NULL, "-");
+        //controllo token
+
+        // chiamare funzione per ottenere data corrente e fare i controlli per eventualmente modificare la disponibilità di alcuni veicoli
+
+        int IndiceOrarioScelto = atoi (token);
+
+        Prenotazione p = NuovaPrenotazione (ID, nomeUtente, v[IndiceVeicoloScelto], IndiceOrarioScelto);
+    }    
+
+
 }

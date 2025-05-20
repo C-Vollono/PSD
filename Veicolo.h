@@ -7,7 +7,7 @@ typedef struct Orario {
 
     float inizio; //inizio dell'intervallo orario della possibile prenotazione
     float fine; //fine dell'intervallo orario della possibile prenotazione
-    int Disponibilità; // 0 = disponibile oppure 1 = non disponibile
+    int Disponibilita; // 0 = disponibile oppure 1 = non disponibile
 
 }Orario;
 
@@ -253,7 +253,7 @@ void riempiOrari (veicolo v);
  * ----------------------------------------------------------------------------------------------------------------     
  */
 
-void verificaDisponibilità (veicolo v, int k);
+void verificaDisponibilita (veicolo v, int k);
 
 /*---------------------------------------------------------------------------------------------------------------- 
  * Funzione: modificaDisponibilità
@@ -284,7 +284,7 @@ void verificaDisponibilità (veicolo v, int k);
  * ---------------------------------------------------------------------------------------------------------------- 
  */
 
-void modificaDisponibilità (veicolo v, int k);
+void modificaDisponibilita (veicolo v, int k);
 
 /*-----------------------------------------------------------------------------------------------------------------
  * Funzione: stampaOrari
