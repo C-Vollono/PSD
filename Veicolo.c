@@ -1,3 +1,8 @@
+/*ATTENZIONE: Nel codice sono presenti comandi system
+              Implementati per la pulizia del terminale
+              Potrebbero creare conflitti o problemi di vari natura
+              "Annullarli" nel caso della presenza di quest'ultimi*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
