@@ -7,7 +7,7 @@ typedef struct Orario {
 
     float inizio; //inizio dell'intervallo orario della possibile prenotazione
     float fine; //fine dell'intervallo orario della possibile prenotazione
-    int Disponibilità; // 0 = non disponibile oppure 1 = disponibile
+    int Disponibilità; // 0 = disponibile oppure 1 = non disponibile
 
 }Orario;
 

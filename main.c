@@ -1,3 +1,8 @@
+/*ATTENZIONE: Nel codice sono presenti comandi system
+              Implementati per la pulizia del terminale
+              Potrebbero creare conflitti o problemi di vari natura
+              "Annullarli" nel caso della presenza di quest'ultimi*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -9,9 +14,8 @@
 #define HASH_TAGLIA 5
 #define VEICOLI_TAGLIA 10
 
-/*
- * funzione controllo menuPrincipale
-*/
+/*--Funzione controllo menuPrincipale--*/
+
 void main () {
 
     char* nomeUtente;
@@ -30,7 +34,7 @@ void main () {
         riempiVeicoli (V[i]);
     }
 
-    nomeUtente = menuAccesso();
+    nomeUtente = menuAccesso(); //Richiamo alla funzine menuAccesso per login o registrazione
     TabellaHash T = NuovaTabellaHash (HASH_TAGLIA);
 
     printf ("===== BENVENUT* %s NEL NOSTRO CAR-SHARING =====\n", nomeUtente);
@@ -52,7 +56,7 @@ void main () {
         }
 
         switch (scelta) {
-            case 1: {
+            case 1: { //Nuova Prenotazione
                 
                 for (int i=0; i<10; i++){
                     stampaVeicolo (V[i]);
@@ -76,6 +80,7 @@ void main () {
                 int s2;
                 while (1){
                     scanf ("%d", &s2);
+                    //Aggiungere controllo per verificare la disponibilita`
                     if (s2 < 0 || s2 >8 ){
                         printf ("\nIndice non valido, riprovi: ");
                     }
@@ -117,7 +122,9 @@ void main () {
                 }
             }
 
-            case 2: {
+            case 2: { //Visualizza storico prenotazioni
+
+                /*MODIFICARE PER LA STAMPA DA TABELLA HASH*/
                 FILE* file = fopen ("StoricoPrenotazioni.txt", "r");
                 char buffer [200];
                 if (file == NULL){
@@ -156,7 +163,7 @@ void main () {
                 
             }
 
-            case 3:{
+            case 3:{ //Visualizza sconti
                 system("cls | clear");
                 printf ("=== SCONTI ===\n\n");
                 printf ("- 30%% off se la prenotazione viene effettuata dopo le 20:00\n"); //messo il doppio %% in modo che la printf lo vede come un carattere e non come specificatore di formato
@@ -168,7 +175,7 @@ void main () {
                 }
             }
 
-            case 4: {
+            case 4: { //Visualizza veicoli
                 system("cls | clear");
                 printf ("=== CATALOGO VEICOLI ===\n");
 
@@ -184,7 +191,7 @@ void main () {
                 }
             }
 
-            case 5: {
+            case 5: { //Trova prenotazione
 
                 printf ("Inserisca l'ID della prenotazione che vuole vedere: ");
                 int id;
@@ -248,7 +255,7 @@ void main () {
             }
 
 
-            case 6:
+            case 6: { //Esci
                 system("cls | clear");
                 printf ("Grazie mille per aver scelto il nostro servizio!");
 
@@ -259,7 +266,8 @@ void main () {
                 }
                 LiberaTabellaHash (T);
                 exit (0);
-            default:
+            }
+            default: { //Errore in caso non si inserisca un numero corretto
                 system("cls | clear");
                 printf("Vi e' stato qualche errore durante l'associazione dell'operazione da effettuare\n");
                 for (int i=0; i < VEICOLI_TAGLIA; i++){
@@ -269,6 +277,7 @@ void main () {
                 }
                 LiberaTabellaHash (T);
                 exit (1);
+            }
         }
     }
 

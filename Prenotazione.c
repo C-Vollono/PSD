@@ -1,3 +1,8 @@
+/*ATTENZIONE: Nel codice sono presenti comandi system
+              Implementati per la pulizia del terminale
+              Potrebbero creare conflitti o problemi di vari natura
+              "Annullarli" nel caso della presenza di quest'ultimi*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -7,9 +12,10 @@
 
 struct item {
 
-    int ID; //chiave dell'elemento (da valutare il tipo, se char* oppure int)
+    int ID; //chiave dell'item prenotazione
     char* nomeUtente;
     veicolo v;
+    char* data;
     float CostoNoleggioFinale;
     float OrarioSceltoInizio;
     float OrarioSceltoFine;
@@ -23,8 +29,33 @@ struct hash{
     struct item **tabella; // Puntatore a un array di puntatori a item, che poi andrà a definire le varie liste collegate
 };
 
-
-//Per commentare queste funzioni e capire il loro funzionamento, fare riferimento al codice della prof su e-learning della lezione sulla tabella hash
+/*---------------------------------------------------------------------------------------------------------------- 
+ * Funzione: NuovaTabellaHash
+ * -----------------------
+ *  
+ * 
+ * Specifica sintattica:
+ *      
+ *
+ * Parametri:
+ *      
+ * 
+ * Specifica semantica:
+ *      
+ * 
+ * Pre-condizione:
+ *      
+ * 
+ * Post-condizione:
+ *      
+ * 
+ * Ritorna:
+ *      
+ * 
+ * Effetti collaterali:
+ *      
+ * ---------------------------------------------------------------------------------------------------------------- 
+ */
 
 TabellaHash NuovaTabellaHash (int taglia){
 
@@ -49,10 +80,69 @@ TabellaHash NuovaTabellaHash (int taglia){
     return t;
 }
 
-int FunzioneHash (int ID, int taglia){
+/*---------------------------------------------------------------------------------------------------------------- 
+ * Funzione: FunzioneHash
+ * -----------------------
+ *  
+ * 
+ * Specifica sintattica:
+ *      
+ *
+ * Parametri:
+ *      
+ * 
+ * Specifica semantica:
+ *      
+ * 
+ * Pre-condizione:
+ *      
+ * 
+ * Post-condizione:
+ *      
+ * 
+ * Ritorna:
+ *      
+ * 
+ * Effetti collaterali:
+ *      
+ * ---------------------------------------------------------------------------------------------------------------- 
+ */
 
-    return ID % taglia;
+int FunzioneHash(int ID, int taglia) {
+    int hash = 0;
+    
+    hash = (31 * ID) % taglia;
+    
+    return hash;
 }
+
+/*---------------------------------------------------------------------------------------------------------------- 
+ * Funzione: NuovaPrenotazione
+ * -----------------------
+ *  
+ * 
+ * Specifica sintattica:
+ *      
+ *
+ * Parametri:
+ *      
+ * 
+ * Specifica semantica:
+ *      
+ * 
+ * Pre-condizione:
+ *      
+ * 
+ * Post-condizione:
+ *      
+ * 
+ * Ritorna:
+ *      
+ * 
+ * Effetti collaterali:
+ *      
+ * ---------------------------------------------------------------------------------------------------------------- 
+ */
 
 Prenotazione NuovaPrenotazione (int ID, char* NomeUtente, veicolo c, float CostoNoleggioFinale, int i){ // MODIFICARE IN BASE ALL'IMPLEMENTAZIONE DI CARICA FILE
  
@@ -70,13 +160,30 @@ Prenotazione NuovaPrenotazione (int ID, char* NomeUtente, veicolo c, float Costo
 
     if (p->nomeUtente == NULL){
         system("cls | clear");
-        perror ("ERRORE!");
+        perror ("ERRORE NEL NOME UTENTE!");
         exit (1);
     }
 
     strcpy (p->nomeUtente, NomeUtente);
 
     p->v = c;
+
+    time_t t = time (NULL); //ottengo i secondi dal 1 gennaio 1970
+
+    struct tm* data = localtime (&t); //ottengo la data corrente, ma bisogna formattarla
+
+    char buffer[20];
+
+    strftime (buffer, sizeof (buffer), "%d / %m / %Y", data); //formatta la data nel buffer
+
+    p->data = malloc (strlen(buffer) + 1);
+    if(p->data==NULL){
+        system("cls|clear");
+        perror("ERRORE IN DATA!");
+        exit(1);
+    }
+
+    strcpy(p->data, buffer);
 
     p->CostoNoleggioFinale = CostoNoleggioFinale;
 
@@ -89,6 +196,34 @@ Prenotazione NuovaPrenotazione (int ID, char* NomeUtente, veicolo c, float Costo
     return p;
 
 }
+
+/*---------------------------------------------------------------------------------------------------------------- 
+ * Funzione: InserisciPrenotazione
+ * -----------------------
+ *  
+ * 
+ * Specifica sintattica:
+ *      
+ *
+ * Parametri:
+ *      
+ * 
+ * Specifica semantica:
+ *      
+ * 
+ * Pre-condizione:
+ *      
+ * 
+ * Post-condizione:
+ *      
+ * 
+ * Ritorna:
+ *      
+ * 
+ * Effetti collaterali:
+ *      
+ * ---------------------------------------------------------------------------------------------------------------- 
+ */
 
 int InserisciPrenotazione (TabellaHash t, Prenotazione p){
 
@@ -114,6 +249,34 @@ int InserisciPrenotazione (TabellaHash t, Prenotazione p){
     return 1;
 }
 
+/*---------------------------------------------------------------------------------------------------------------- 
+ * Funzione: LiberaTabellaHash
+ * -----------------------
+ *  
+ * 
+ * Specifica sintattica:
+ *      
+ *
+ * Parametri:
+ *      
+ * 
+ * Specifica semantica:
+ *      
+ * 
+ * Pre-condizione:
+ *      
+ * 
+ * Post-condizione:
+ *      
+ * 
+ * Ritorna:
+ *      
+ * 
+ * Effetti collaterali:
+ *      
+ * ---------------------------------------------------------------------------------------------------------------- 
+ */
+
 void LiberaTabellaHash (TabellaHash t){
 
     int i;
@@ -128,6 +291,34 @@ void LiberaTabellaHash (TabellaHash t){
     free (t);
 }
 
+/*---------------------------------------------------------------------------------------------------------------- 
+ * Funzione: LiberaLista
+ * -----------------------
+ *  
+ * 
+ * Specifica sintattica:
+ *      
+ *
+ * Parametri:
+ *      
+ * 
+ * Specifica semantica:
+ *      
+ * 
+ * Pre-condizione:
+ *      
+ * 
+ * Post-condizione:
+ *      
+ * 
+ * Ritorna:
+ *      
+ * 
+ * Effetti collaterali:
+ *      
+ * ---------------------------------------------------------------------------------------------------------------- 
+ */
+
 static void LiberaLista (Prenotazione p){
 
     Prenotazione nuovap;
@@ -135,10 +326,40 @@ static void LiberaLista (Prenotazione p){
     while (p != NULL){
 
         nuovap = p->next;
+        free(p->nomeUtente);
+        free(p->data);
         free (p);
         p = nuovap;
     }
 }
+
+/*---------------------------------------------------------------------------------------------------------------- 
+ * Funzione: AggiornaStorico
+ * -----------------------
+ *  
+ * 
+ * Specifica sintattica:
+ *      
+ *
+ * Parametri:
+ *      
+ * 
+ * Specifica semantica:
+ *      
+ * 
+ * Pre-condizione:
+ *      
+ * 
+ * Post-condizione:
+ *      
+ * 
+ * Ritorna:
+ *      
+ * 
+ * Effetti collaterali:
+ *      
+ * ---------------------------------------------------------------------------------------------------------------- 
+ */
 
 void AggiornaStorico (Prenotazione p){
 
@@ -152,15 +373,9 @@ void AggiornaStorico (Prenotazione p){
         exit (1);
     }
 
-    time_t t = time (NULL); //ottengo i secondi dal 1 gennaio 1970
-
-    struct tm* data = localtime (&t); //ottengo la data corrente, ma bisogna formattarla
-
-    char buffer[20];
-
-    strftime (buffer, sizeof (buffer), "%d / %m / %Y", data); //formatta la data nel buffer
-
-    fprintf (file, "\n%s-%s-%.2f-%.2f-%d-%s-%s", p->nomeUtente, buffer, p->OrarioSceltoInizio, p->OrarioSceltoFine, p->ID, p->v->modello, p->v->targa);
+   
+    //DA MODIFICARE PER CARICARE DA TABELLA HASH
+    fprintf (file, "\n%s-%s-%.2f-%.2f-%d-%s-%s", p->nomeUtente, p->data, p->OrarioSceltoInizio, p->OrarioSceltoFine, p->ID, p->v->modello, p->v->targa);
 
     if (fclose (file) != 0){
         system("cls | clear");
@@ -168,6 +383,34 @@ void AggiornaStorico (Prenotazione p){
         exit (1);
     }
 }
+
+/*---------------------------------------------------------------------------------------------------------------- 
+ * Funzione: stampaPrenotazione
+ * -----------------------
+ *  
+ * 
+ * Specifica sintattica:
+ *      
+ *
+ * Parametri:
+ *      
+ * 
+ * Specifica semantica:
+ *      
+ * 
+ * Pre-condizione:
+ *      
+ * 
+ * Post-condizione:
+ *      
+ * 
+ * Ritorna:
+ *      
+ * 
+ * Effetti collaterali:
+ *      
+ * ---------------------------------------------------------------------------------------------------------------- 
+ */
 
 void stampaPrenotazione (Prenotazione p){ //funzione da sistemare per il caricamento da file della tabella hash
     FILE *filePrenotazioni = fopen("StoricoPrenotazioni.txt", "r");
@@ -195,6 +438,34 @@ void stampaPrenotazione (Prenotazione p){ //funzione da sistemare per il caricam
         // Caso in cui stampo i dati per confermare la prenotazione
         printf("\nID Prenotazione: %d\nOrario selezionato: %.2f/%.2f\nCosto noleggio: %.2f euro\n", p->ID, p->OrarioSceltoInizio, p->OrarioSceltoFine, p->CostoNoleggioFinale);
 }
+
+/*---------------------------------------------------------------------------------------------------------------- 
+ * Funzione: TrovaPrenotazione
+ * -----------------------
+ *  
+ * 
+ * Specifica sintattica:
+ *      
+ *
+ * Parametri:
+ *      
+ * 
+ * Specifica semantica:
+ *      
+ * 
+ * Pre-condizione:
+ *      
+ * 
+ * Post-condizione:
+ *      
+ * 
+ * Ritorna:
+ *      
+ * 
+ * Effetti collaterali:
+ *      
+ * ---------------------------------------------------------------------------------------------------------------- 
+ */
 
 Prenotazione TrovaPrenotazione (TabellaHash t, int ID, int taglia){
 
