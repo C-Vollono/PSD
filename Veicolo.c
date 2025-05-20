@@ -5,7 +5,7 @@
 
 /*-- FUNZIONI RELATIVE AI VEICOLI --*/
 
-/*
+/*---------------------------------------------------------------------------------------------------------------- 
  * Funzione: riempiVeicoli
  * -----------------------
  * Prende in input l'oggetto veicolo e il puntatore al file .txt contenente i dati dei veicoli
@@ -33,6 +33,7 @@
  * Effetti collaterali:
  *      Modifica il contenuto nell'oggetto veicolo
  *      Se il file è vuoto, la funzione potrebbe dare comportamento indefinito senza opportuni controlli
+ * ---------------------------------------------------------------------------------------------------------------- 
  */
 
  void riempiVeicoli (veicolo v){
@@ -45,7 +46,7 @@
     file = fopen ("Veicoli.txt", "r");
 
     if (file == NULL){
-
+        system("cls | clear");
         perror ("Errore nell'apertura del file.");
         exit (1);
     }
@@ -60,7 +61,7 @@
         v->tipoVeicolo = malloc (strlen (token)+1 * sizeof (char));
 
         if (v->tipoVeicolo == NULL){
-
+            system("cls | clear");
             perror ("ERRORE TIPO VEICOLO");
             exit (1);
         }
@@ -73,7 +74,7 @@
         v->modello = malloc (strlen (token)+1 * sizeof (char));
 
         if (v->modello == NULL){
-
+            system("cls | clear");
             perror ("ERRORE MODELLO");
             free (v->tipoVeicolo);
             exit(1);
@@ -87,7 +88,7 @@
         v->colore = malloc (strlen (token)+1 * sizeof (char));
 
         if (v->colore == NULL){
-
+            system("cls | clear");
             perror ("ERRORE COLORE");
             free (v->modello);
             free (v->tipoVeicolo);
@@ -102,7 +103,7 @@
         v->targa = malloc (strlen (token)+1 * sizeof (char));
 
         if (v->targa == NULL){
-
+            system("cls | clear");
             perror ("ERRORE TARGA");
             free (v->modello);
             free (v->tipoVeicolo);
@@ -123,7 +124,7 @@
         v->Combustibile = malloc (strlen(token)+1 * sizeof (char));
 
         if (v->Combustibile == NULL){
-
+            system("cls | clear");
             perror ("ERRORE COMBUSTIBILE");
             free (v->modello);
             free (v->tipoVeicolo);
@@ -149,14 +150,14 @@
 
     
     if (fclose (file) != 0){
-
+        system("cls | clear");
         perror ("Errore nella chiusura del file.");
         exit (1);
     }
     i++;
 }
 
-/*
+/*---------------------------------------------------------------------------------------------------------------- 
  * Funzione: stampaVeicoli
  * -----------------------
  * Stampa a video i dati di un oggetto veicolo tra cui anche gli intervalli orari con la loro disponibilità (richiamo ad altre due funzioni) 
@@ -182,15 +183,15 @@
  * 
  * Effetti collaterali:
  *      Nessun effetto collaterale
+ * ---------------------------------------------------------------------------------------------------------------- 
  */
 
  void stampaVeicolo (veicolo v){
-
     printf("Tipo Veicolo: %s\nModello: %s\nColore: %s\nTarga: %s\nPosti Omologati: %d\nCombustibile: %s\nAnno di immatricolazione: %d\nCosto Noleggio: %.2f euro/h\n\n", v->tipoVeicolo, v->modello, v->colore, v->targa, v->postiOmologati, v->Combustibile,v->annoDiImmatricolazione, v->CostoNoleggioOrario);
     
 }
 
-/*
+/*---------------------------------------------------------------------------------------------------------------- 
  * Funzione: liberaVeicoli
  * -----------------------
  *  Libera la memoria dell'oggetto veicolo
@@ -215,6 +216,7 @@
  * 
  * Effetti collaterali:
  *      L'oggetto veicolo non ha più dati presenti in memoria
+ * ---------------------------------------------------------------------------------------------------------------- 
  */
 
 void liberaVeicoli (veicolo v){
@@ -228,7 +230,7 @@ void liberaVeicoli (veicolo v){
 
 /*-- FUNZIONI RELATIVE AL NOLEGGIO --*/
 
-/*
+/*---------------------------------------------------------------------------------------------------------------- 
  * Funzione: costoNoleggio
  * -----------------------
  * Calcola quanto costa il noleggio in un orario scelto dall'utente con eventuale sconto 
@@ -255,6 +257,7 @@ void liberaVeicoli (veicolo v){
  * 
  * Effetti collaterali: 
  *      Nessun effetto collaterale
+ * ---------------------------------------------------------------------------------------------------------------- 
  */
 
 float costoNoleggio (veicolo v, int k){
@@ -278,7 +281,7 @@ float costoNoleggio (veicolo v, int k){
     return (tempoNoleggio * v->CostoNoleggioOrario) * verificaSconto(v, k);
 }
 
-/*
+/*---------------------------------------------------------------------------------------------------------------- 
  * Funzione: verificaSconto
  * -----------------------
  * La funzione verifica la possibilità di un sconto in determinati intervalli orari prestabiliti e restituisce un tipo float
@@ -306,6 +309,7 @@ float costoNoleggio (veicolo v, int k){
  *      
  * Effetti collaterali:
  *      Nessun effetto collaterale 
+ * ---------------------------------------------------------------------------------------------------------------- 
  */
 
 float verificaSconto (veicolo v, int k){ // Restituisce float tra 0.0 a 1.0 che corrisponde alla percentuale di sconto (1- verificaSconto);
@@ -320,7 +324,7 @@ float verificaSconto (veicolo v, int k){ // Restituisce float tra 0.0 a 1.0 che 
 
 /*-- FUNZIONI RELATIVE AGLI ORARI --*/
 
-/*
+/*---------------------------------------------------------------------------------------------------------------- 
  * Funzione: riempiOrari
  * -----------------------
  * Prende in input l'oggetto veicolo e il puntatore al file .txt contenente i dati degli intervalli orari
@@ -348,6 +352,7 @@ float verificaSconto (veicolo v, int k){ // Restituisce float tra 0.0 a 1.0 che 
  * Effetti collaterali:
  *      Modifica il contenuto nell'oggetto veicolo
  *      Se il file è vuoto, la funzione potrebbe dare comportamento indefinito senza opportuni controlli
+ * ---------------------------------------------------------------------------------------------------------------- 
  */
 
 void riempiOrari (veicolo v){
@@ -358,7 +363,7 @@ void riempiOrari (veicolo v){
     file = fopen ("Orari.txt", "r");
 
     if (file == NULL){
-
+        system("cls | clear");
         perror ("Errore nell'apertura del file.");
         exit (1);
     }
@@ -390,14 +395,14 @@ void riempiOrari (veicolo v){
         }
 
         if (fclose (file) != 0){
-
+            system("cls | clear");
             perror ("Errore nella chiusura del file.");
             exit (1);
         }
     }
 
 
-/*
+/*---------------------------------------------------------------------------------------------------------------- 
  * Funzione: verificaDisponibilità
  * -----------------------
  * Verifica che un veicolo in un determinato orario sia disponibile attraverso un modulo 2 (se 1 allora non disponibile altrimenti disponibile)
@@ -423,7 +428,8 @@ void riempiOrari (veicolo v){
  *      Nessun valore
  * 
  * Effetti collaterali:
- *      Nessun effetto collaterale       
+ *      Nessun effetto collaterale   
+ * ----------------------------------------------------------------------------------------------------------------     
  */
 
 void verificaDisponibilità (veicolo v, int k){
@@ -438,7 +444,7 @@ void verificaDisponibilità (veicolo v, int k){
     }
 }
 
-/*
+/*---------------------------------------------------------------------------------------------------------------- 
  * Funzione: modificaDisponibilità
  * -----------------------
  * Va a modificare nel campo disponibilità il suo valore a 1 quando chiamata
@@ -464,6 +470,7 @@ void verificaDisponibilità (veicolo v, int k){
  * 
  * Effetti collaterali:
  *       Cambiato il valore nel campo Disponibilità della struct Orario
+ * ---------------------------------------------------------------------------------------------------------------- 
  */
 
 void modificaDisponibilità (veicolo v, int k){
@@ -471,9 +478,9 @@ void modificaDisponibilità (veicolo v, int k){
     v->orari[k].Disponibilità = 1;
 }
 
-/*
+/*-----------------------------------------------------------------------------------------------------------------
  * Funzione: stampaOrari
- * -----------------------
+ * ----------------------------------------------------------------------------------------------------------------
  * Stampa a video l'intervallo orario scelto dall'utente con la sua disponibilità (Non disponibile o Disponibile)
  * 
  * Specifica sintattica:
@@ -496,28 +503,60 @@ void modificaDisponibilità (veicolo v, int k){
  *      Nessun valore
  * 
  * Effetti collaterali:
- *      Nessun effetto collaterale      
+ *      Nessun effetto collaterale     
+ * ---------------------------------------------------------------------------------------------------------------- 
  */
 
 void stampaOrari (veicolo v){
 
         for (int k=0; k<8; k++){
 
-        printf ("%.2f-%.2f ", v->orari[k].inizio, v->orari[k].fine);
+        printf (" (%d) %.2f-%.2f ", k, v->orari[k].inizio, v->orari[k].fine);
 
         verificaDisponibilità(v, k);
         }
 }
 
+/*--Funzioni di supporto--*/
+
+/*-----------------------------------------------------------------------------------------------------------------
+ * Funzione: controllotoken
+ * ----------------------------------------------------------------------------------------------------------------
+ * Controllo di eventuali errori nella funzione strtok della libreria string.h 
+ * 
+ * Specifica sintattica:
+ *      void controllotoken(char*, veicolo, FILE*)-> void
+ *
+ * Parametri:
+ *      token: stringa
+ *      v: oggetto veicolo
+ *      file: puntatore a file
+ * 
+ * Specifica semantica:
+ *      controllotoken(token, v, file)-> void 
+ *       
+ * Pre-condizione:
+ *      token deve esistere
+ *       
+ * Post-condizione:
+ *      Se token == NULL, libera memoria e chiude file
+ * 
+ * Ritorna: 
+ *      Nessun valore     
+ * 
+ * Effetti collaterali:
+ *      Nessun effetto collaterale
+ * ---------------------------------------------------------------------------------------------------------------- 
+ */
+
 void controlloToken (char* token, veicolo v, FILE* file){
 
     if (token == NULL){
-
-    printf("Errore nella lettura dei dati.\n");
+        system("cls | clear");
+        printf("Errore nella lettura dei dati.\n");
         liberaVeicoli(v); // Nuova funzione per deallocare
         fclose(file);
         exit(1);
-    
     }
 
 }

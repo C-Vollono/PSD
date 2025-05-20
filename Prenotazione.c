@@ -31,7 +31,7 @@ TabellaHash NuovaTabellaHash (int taglia){
     TabellaHash t = malloc (sizeof (struct hash)); //Alloco memoria per la tabella hash
 
     if (t == NULL){
-
+        system("cls | clear");
         perror ("Errore nell'allocazione della memoria tabella hash.");
         exit (1);
     }
@@ -54,12 +54,12 @@ int FunzioneHash (int ID, int taglia){
     return ID % taglia;
 }
 
-Prenotazione NuovaPrenotazione (int ID, char* NomeUtente, veicolo c, float CostoNoleggioFinale, int i){
-
+Prenotazione NuovaPrenotazione (int ID, char* NomeUtente, veicolo c, float CostoNoleggioFinale, int i){ // MODIFICARE IN BASE ALL'IMPLEMENTAZIONE DI CARICA FILE
+ 
     Prenotazione p = malloc (sizeof (struct item));
 
     if (p == NULL){
-
+        system("cls | clear");
         perror ("Errore nella creazione della prenotazione.");
         exit (1);
     }
@@ -69,7 +69,7 @@ Prenotazione NuovaPrenotazione (int ID, char* NomeUtente, veicolo c, float Costo
     p->nomeUtente = malloc (strlen (NomeUtente)+1);
 
     if (p->nomeUtente == NULL){
-
+        system("cls | clear");
         perror ("ERRORE!");
         exit (1);
     }
@@ -147,7 +147,7 @@ void AggiornaStorico (Prenotazione p){
     file = fopen ("StoricoPrenotazioni.txt", "a");
 
     if (file == NULL){
-
+        system("cls | clear");
         perror ("Errore nell'apertura dello storico");
         exit (1);
     }
@@ -160,36 +160,54 @@ void AggiornaStorico (Prenotazione p){
 
     strftime (buffer, sizeof (buffer), "%d / %m / %Y", data); //formatta la data nel buffer
 
-    fprintf (file, "%s-%s-%.2f-%.2f-%d-%s-%s", p->nomeUtente, buffer, p->OrarioSceltoInizio, p->OrarioSceltoFine, p->ID, p->v->modello, p->v->targa);
+    fprintf (file, "\n%s-%s-%.2f-%.2f-%d-%s-%s", p->nomeUtente, buffer, p->OrarioSceltoInizio, p->OrarioSceltoFine, p->ID, p->v->modello, p->v->targa);
 
     if (fclose (file) != 0){
-
+        system("cls | clear");
         perror ("Errore nella chiusura dello storico.");
         exit (1);
     }
 }
 
-void stampaPrenotazione (Prenotazione p){
-
-    printf ("ID prenotazione: %d\nOrario Selezionato: %.2f-%.2f\nCosto Noleggio: %.2f euro\n", p->ID, p->OrarioSceltoInizio, p->OrarioSceltoFine, p->CostoNoleggioFinale);
-    
+void stampaPrenotazione (Prenotazione p){ //funzione da sistemare per il caricamento da file della tabella hash
+    FILE *filePrenotazioni = fopen("StoricoPrenotazioni.txt", "r");
+    char buffer[200];
+    while (fgets (buffer, sizeof (buffer), filePrenotazioni) != NULL){
+                        char bufferCopia[200];
+                        strcpy(bufferCopia,buffer);
+                        char* token = strtok (buffer, "-");
+                        // controllo token
+                            int i=0;
+                            while (i < 4){
+                            token = strtok (NULL, "-");
+                            // controllo token
+                            i++;
+                            }
+                            int tokenID = atoi(token);
+                            if (tokenID == p->ID){
+                            token = strtok(bufferCopia, "-");
+                            token = strtok(NULL, "-");
+                            printf("Ecco la sua prenotazione con ID %d: \n", p->ID);
+                            printf("%s-%s-%.2f-%.2f-%d-%s-%s\n", p->nomeUtente, token, p->OrarioSceltoInizio, p->OrarioSceltoFine, p->ID, p->v->modello, p->v->targa);
+                            return;   
+                        }
+        }
+        // Caso in cui stampo i dati per confermare la prenotazione
+        printf("\nID Prenotazione: %d\nOrario selezionato: %.2f/%.2f\nCosto noleggio: %.2f euro\n", p->ID, p->OrarioSceltoInizio, p->OrarioSceltoFine, p->CostoNoleggioFinale);
 }
 
 Prenotazione TrovaPrenotazione (TabellaHash t, int ID, int taglia){
 
     int indice = FunzioneHash (ID, taglia);
-
     Prenotazione p = t->tabella[indice];
 
     while (p != NULL){
 
         if (p->ID == ID){
-            
             return p;
         }
         p = p->next;
 
     }
-
     return NULL;
 }
