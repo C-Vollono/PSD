@@ -1,6 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "Veicolo.h"
+#include "Prenotazione.h"
 
-void menu_accesso();
-// void menu_utente(char* nome_utente, veicolo v, int indice_veicolo);
+int operazioneAccesso (int operazione, char **nome_utente); // Elaborazione dell'username dell'utente
+
+char* menuAccesso(); // Funzione principale per l'accesso
+
+int menuPrincipale(char scelta);
