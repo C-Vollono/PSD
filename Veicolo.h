@@ -62,6 +62,8 @@ typedef struct Vettura *veicolo;
 
 void riempiVeicoli (veicolo v);
 
+void controlloToken (char* token, veicolo v, FILE* file);
+
 /*---------------------------------------------------------------------------------------------------------------- 
  * Funzione: stampaVeicoli
  * -----------------------
@@ -448,8 +450,7 @@ void stampaOrari (veicolo v);
  * ---------------------------------------------------------------------------------------------------------------- 
  */
 
-void controlloTokenVeicolo(char* token, veicolo v, FILE* file);
 
-int verificaDisponibilita(veicolo v, int indiceOrario);
+int verificaDisponibilita (veicolo v, int indiceOrario);
 
 #endif
