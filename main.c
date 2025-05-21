@@ -44,14 +44,32 @@ void main () {
         printf ("MENU \n");
         printf ("1) Nuova Prenotazione\n2) Visualizza storico prenotazione\n3) Visualizza Sconti\n4) Visualizza Veicoli\n5) Trova Prenotazione\n6) Esci\n");
         printf ("Scelga l'operazione da effettuare (da 1-6): ");
-        scanf ("%d", &scelta);
 
-        while (1) {
+       while(1){
+
+            int corretto = 1;
+
+            if(scanf ("%d", &scelta)==1){
+
             if (scelta < 1 || scelta > 6){
-                printf ("Scelta non valida, riprovi: ");
-                scanf ("%d", &scelta);
-            } else {
-                break;
+
+                corretto = 0;
+
+            printf ("Scelta non valido, riprovi: ");
+
+            }
+
+            }else{
+
+                corretto = 0;
+
+            printf("Scelta non valida, riprovare: ");
+
+            while((getchar())!='\n');
+
+            }
+            if (corretto){
+            break;
             }
         }
 
@@ -141,6 +159,10 @@ void main () {
 
             case 2: { //Visualizza storico prenotazioni
 
+                system ("cls | clear");
+
+                printf ("=== STORICO PRENOTAZIONI DI %s === \n", nomeUtente);
+
                 StampaPrenotazioneTabellaHash (T, nomeUtente);
 
                 char s;
@@ -180,6 +202,8 @@ void main () {
             }
 
             case 5: { //Trova prenotazione
+
+                system ("cls | clear");
 
                 printf ("Inserisca l'ID della prenotazione che vuole vedere: ");
                 int id;

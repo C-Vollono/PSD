@@ -63,7 +63,7 @@
         }while (j <= indiceVeicolo);
 
         char* token = strtok (buffer, ";");
-        controlloTokenVeicoloen (token, v, file);
+        controlloToken (token, v, file);
 
         v->tipoVeicolo = malloc (strlen (token)+1 * sizeof (char));
 
@@ -77,7 +77,7 @@
         strcpy (v->tipoVeicolo, token);
 
         token = strtok (NULL, ";");
-        controlloTokenVeicoloen (token, v, file);
+        controlloToken (token, v, file);
 
         v->modello = malloc (strlen (token)+1 * sizeof (char));
 
@@ -92,7 +92,7 @@
         strcpy (v->modello, token);
 
         token = strtok (NULL, ";");
-        controlloTokenVeicoloen (token, v, file);
+        controlloToken (token, v, file);
 
         v->colore = malloc (strlen (token)+1 * sizeof (char));
 
@@ -108,7 +108,7 @@
         strcpy (v->colore, token);
 
         token = strtok (NULL, ";");
-        controlloTokenVeicoloen (token, v, file);
+        controlloToken (token, v, file);
 
         v->targa = malloc (strlen (token)+1 * sizeof (char));
 
@@ -125,12 +125,12 @@
         strcpy (v->targa, token);
 
         token = strtok (NULL, ";");
-        controlloTokenVeicoloen (token, v, file);
+        controlloToken (token, v, file);
 
         v->postiOmologati = atoi (token);
 
         token = strtok (NULL, ";");
-        controlloTokenVeicoloen (token, v, file);
+        controlloToken (token, v, file);
 
         v->Combustibile = malloc (strlen(token)+1 * sizeof (char));
 
@@ -148,12 +148,12 @@
         strcpy (v->Combustibile, token);
 
         token = strtok (NULL, ";");
-        controlloTokenVeicoloen (token, v, file);
+        controlloToken (token, v, file);
 
         v->annoDiImmatricolazione = atoi (token);
 
         token = strtok (NULL, ";");
-        controlloTokenVeicoloen (token, v, file);
+        controlloToken (token, v, file);
 
         v->CostoNoleggioOrario = atoi (token);
     
@@ -390,24 +390,24 @@ void riempiOrari (veicolo v){
         while (fgets (buffer, sizeof (buffer), file) != NULL){
 
         char* token = strtok (buffer, ";");
-        controlloTokenVeicoloen (token, v, file);
+        controlloToken (token, v, file);
 
                 for (int k=0; k<8; k++){
 
                 v->orari[k].inizio = atof (token);
 
                 token = strtok (NULL, ";");
-                controlloTokenVeicoloen (token, v, file);
+                controlloToken (token, v, file);
 
                 v->orari[k].fine = atof (token);
 
                 token = strtok (NULL, ";");
-                controlloTokenVeicoloen (token, v, file);
+                controlloToken (token, v, file);
 
                 v->orari[k].Disponibilita = atoi (token);
 
                 token = strtok (NULL, ";");
-                controlloTokenVeicoloen (token, v, file);
+                controlloToken (token, v, file);
                 }
         }
 
@@ -576,7 +576,7 @@ void stampaOrari (veicolo v){
  * ---------------------------------------------------------------------------------------------------------------- 
  */
 
-void controlloTokenVeicoloenVeicolo (char* token, veicolo v, FILE* file){
+void controlloToken (char* token, veicolo v, FILE* file){
 
     if (token == NULL){
 

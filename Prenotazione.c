@@ -635,17 +635,33 @@ void LimitaOrariDisponibili (veicolo *v){
 
 }
 
-void StampaPrenotazioneTabellaHash (TabellaHash t, char* noemUtente){
+void StampaPrenotazioneTabellaHash (TabellaHash t, char* nomeUtente){
     
     
     int g = ottieniTaglia(t);
 
+    int prenotazioniEffettuate = 0;
+
     for (int i=0; i < g; i++){
+
     if (t->tabella[i] != NULL){
 
         Prenotazione P = t->tabella[i];
-        if (strcmp (P->nomeUtente, noemUtente) == 0)
+
+        if (strcmp (P->nomeUtente, nomeUtente) == 0){
+
+        prenotazioniEffettuate++;
+
         stampaPrenotazione (P);
+
+        }
+
         } 
     }
+
+    if (prenotazioniEffettuate == 0){
+
+        printf ("Mi dispiace, non sono presenti prenotazioni a suo nome.\n");
+    }
+
 }
