@@ -253,7 +253,106 @@ void riempiOrari (veicolo v);
  * ----------------------------------------------------------------------------------------------------------------     
  */
 
-void verificaDisponibilita (veicolo v, int k);
+void verificaDisponibilità (veicolo v, int k);
+/*---------------------------------------------------------------------------------------------------------------- 
+ * Funzione: verificaSconto
+ * -----------------------
+ * La funzione verifica la possibilità di un sconto in determinati intervalli orari prestabiliti e restituisce un tipo float
+ * riguardante lo sconto da applicare al calcolo del costo totale del noleggio
+ * 
+ * Specifica sintattica:
+ *      float verificaSconto(veicolo, int) -> float
+ *
+ * Parametri:
+ *      v: oggetto veicolo
+ *      k: indice dell'orario scelto
+ * 
+ * Specifica semantica:
+ *      verificaSconto(v, k) -> Percentuale_di_Sconto
+ * Pre-condizione:
+ *      L'oggetto veicolo deve esistere e contenere i dati sugli intervalli orari
+ *      
+ * Post-condizione:
+ *      Restituisce la percentuale di sconto se l'orario della prenotazione corrisponde all'intervallo
+ *      Altrimenti restituisce 1
+ * 
+ * Ritorna:
+ *      Restituisce un tipo float della percentuale di sconto
+ *      Altrimenti float di 1.0
+ *      
+ * Effetti collaterali:
+ *      Nessun effetto collaterale 
+ * ---------------------------------------------------------------------------------------------------------------- 
+ */
+
+float verificaSconto (veicolo v, int k);
+
+/*-- FUNZIONI RELATIVE AGLI ORARI --*/
+
+/*---------------------------------------------------------------------------------------------------------------- 
+ * Funzione: riempiOrari
+ * -----------------------
+ * Prende in input l'oggetto veicolo e il puntatore al file .txt contenente i dati degli intervalli orari
+ * Riempie l'oggetto veicolo con i dati contenuti nel file 
+ * 
+ * Specifica sintattica:
+ *      void riempiOrari(veicolo,char*)->void
+ *
+ * Parametri:
+ *             v: oggetto veicolo
+ *      nomefile: file Orari.tx
+ * 
+ * Specifica semantica:
+ *      riempiOrari(v, nomefile)-> void
+ *       
+ * Pre-condizione:
+ *       Il file txt deve contenere i vari dati degli Orari e l'oggetto veicolo esistere
+ * 
+ * Post-condizione:
+ *      Non ritorna nessun valore, oggetto Orari riempito
+ * 
+ * Ritorna: 
+ *      Nessun valore
+ * 
+ * Effetti collaterali:
+ *      Modifica il contenuto nell'oggetto veicolo
+ *      Se il file è vuoto, la funzione potrebbe dare comportamento indefinito senza opportuni controlli
+ * ---------------------------------------------------------------------------------------------------------------- 
+ */
+
+void riempiOrari (veicolo v);
+
+/*---------------------------------------------------------------------------------------------------------------- 
+ * Funzione: verificaDisponibilità
+ * -----------------------
+ * Verifica che un veicolo in un determinato orario sia disponibile attraverso un modulo 2 (se 1 allora non disponibile altrimenti disponibile)
+ * Stampa a video disponibile o meno
+ * 
+ * Specifica sintattica:
+ *      void verificaDisponibilità (veicolo, int) -> void
+ *
+ * Parametri:
+ *      v: oggetto veicolo
+ *      k: indice orario scelto
+ * 
+ * Specifica semantica:
+ *      verificaDisponibilità(v, k) -> void
+ *       
+ * Pre-condizione:
+ *      L'oggetto veicolo deve esistere e contenere i dati della struct Orari
+ *       
+ * Post-condizione:
+ *      Non ritorna nessun valore
+ * 
+ * Ritorna: 
+ *      Nessun valore
+ * 
+ * Effetti collaterali:
+ *      Nessun effetto collaterale   
+ * ----------------------------------------------------------------------------------------------------------------     
+ */
+
+void stampaDisponibilita (veicolo v, int k);
 
 /*---------------------------------------------------------------------------------------------------------------- 
  * Funzione: modificaDisponibilità
@@ -350,5 +449,5 @@ void stampaOrari (veicolo v);
  */
 
 void controlloToken (char* token, veicolo v, FILE* file);
-
+int verificaDisponibilita(veicolo v, int indiceOrario);
 #endif

@@ -7,4 +7,4 @@ Utilitaria;Peugeot 208;Verde;ST789WX;5;Benzina;2022;45;
 Elettrica;Tesla Model Y;Bianco;YZ012AB;5;Elettrico;2023;110;
 Furgoncino;Volkswagen Caddy;Blu;CD345EF;5;Diesel;2022;55;
 Sportiva;Ferrari Portofino;Rosso;UV678KL;2;Benzina;2023;250;
-Minivan;Mercedes V-Class;Nero;WX901GH;7;Diesel;2021;80;
+Minivan;Mercedes Class V;Nero;WX901GH;7;Diesel;2021;80;

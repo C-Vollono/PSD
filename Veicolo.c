@@ -437,7 +437,7 @@ void riempiOrari (veicolo v){
  * ----------------------------------------------------------------------------------------------------------------     
  */
 
-void verificaDisponibilita (veicolo v, int k){
+void stampaDisponibilita (veicolo v, int k){
 
     if ((v->orari[k].Disponibilita)%2 == 1){
 
@@ -449,6 +449,12 @@ void verificaDisponibilita (veicolo v, int k){
     }
 }
 
+int verificaDisponibilita(veicolo v, int indiceOrario){
+    if (v->orari[indiceOrario].Disponibilita == 0){
+        return 1;
+    }
+    return 0;
+}
 /*---------------------------------------------------------------------------------------------------------------- 
  * Funzione: modificaDisponibilità
  * -----------------------
@@ -518,7 +524,7 @@ void stampaOrari (veicolo v){
 
         printf (" (%d) %.2f-%.2f ", k, v->orari[k].inizio, v->orari[k].fine);
 
-        verificaDisponibilita(v, k);
+        stampaDisponibilita(v, k);
         }
 }
 

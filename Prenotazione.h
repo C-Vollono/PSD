@@ -19,10 +19,14 @@ void LiberaTabellaHash (TabellaHash t); //Dealloca la memoria occupata dalla tab
 
 static void LiberaLista (Prenotazione p); // Dealloca una lista collegata nella tabella hash
 
-void AggiornaStorico (Prenotazione p); //Aggiorna lo storico prenotazioni con l'ultima prenotazione effettuata
+void AggiornaStorico (Prenotazione p, int indiceVeicolo, int indiceOrario); //Aggiorna lo storico prenotazioni con l'ultima prenotazione effettuata
 
-void stampaPrenotazione (Prenotazione p); // stampa i dettagli di una prenotazione
+void stampaPrenotazione (Prenotazione p); // stampa i dettagli di una prenotazione, da aggiormare con operazione: 1 indica lo stampa per la conferma, 2 indica lo stampa per lo storico
 
 Prenotazione TrovaPrenotazione (TabellaHash t, int ID, int taglia); //cerca una prenotazione nella tabella hash in base all'id
 
-TabellaHash RiempiTabellaHashDaFile (veicolo v); //riempie la tabella hash leggendo le prenotazione dal file StoricoPrenotazioni
+TabellaHash RiempiTabellaHashDaFile (veicolo *v); //riempie la tabella hash leggendo le prenotazione dal file StoricoPrenotazioni
+
+int ottieniTaglia (TabellaHash t); // ottiene la taglia della tabella hash
+
+char* ottieniData(); // restituisce la data formattata
