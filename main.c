@@ -11,8 +11,9 @@
 #include "Prenotazione.h"
 #include "Menu.h"
 
-#define HASH_TAGLIA 5
 #define VEICOLI_TAGLIA 10
+#define OP_DETTAGLI 1
+#define OP_STORICO 2
 
 /*--Funzione controllo menuPrincipale--*/
 
@@ -35,8 +36,9 @@ void main () {
     }
 
     nomeUtente = menuAccesso(); //Richiamo alla funzine menuAccesso per login o registrazione
-    TabellaHash T = NuovaTabellaHash (HASH_TAGLIA);
+    TabellaHash T = RiempiTabellaHashDaFile(V); //Da modificare a causa di RiempiTabellaHashDaFile
 
+    int taglia = ottieniTaglia(T);
     printf ("===== BENVENUT* %s NEL NOSTRO CAR-SHARING =====\n", nomeUtente);
 
     inizio:
@@ -74,13 +76,12 @@ void main () {
                     }
                 }
 
-                printf ("Ora scelga un orario tra quelli disponibili per il noleggio del veicolo: \n");
                 stampaOrari (V[s1]);
+                printf ("Ora scelga un orario tra quelli disponibili per il noleggio del veicolo: \n");
 
                 int s2;
                 while (1){
                     scanf ("%d", &s2);
-                    //Aggiungere controllo per verificare la disponibilita`
                     if (s2 < 0 || s2 >8 ){
                         printf ("\nIndice non valido, riprovi: ");
                     }
@@ -88,12 +89,13 @@ void main () {
                         break;
                     }
                 }
-
+                if (verificaDisponibilita(V[s1],s2)){
                 srand (time(NULL));
                 int ID = rand();
 
-                float c = costoNoleggio (V[s1], s2);
-                Prenotazione p1 = NuovaPrenotazione (ID, nomeUtente, V[s1], c, s2);
+                char* dataCorrente = ottieniData();
+
+                Prenotazione p1 = NuovaPrenotazione (ID, nomeUtente, V[s1], s2);
 
                 printf ("Ecco il riepilogo della sua prenotazione: ");
                 stampaPrenotazione (p1);
@@ -106,8 +108,9 @@ void main () {
                         printf("Scelta non valida, riprova: ");
                         for (; getchar() != '\n';);
                     } else if (s == 'Y' || s== 'y') {
+                        modificaDisponibilita (V[s1], s2);
                         int z = InserisciPrenotazione (T, p1);
-                        AggiornaStorico (p1);
+                        AggiornaStorico (p1, s1, s2);
                         system("cls | clear");
                         printf ("Bene, la sua prenotazione %d e' completa", ID);
                         printf ("\n\n\n\n");
@@ -120,6 +123,14 @@ void main () {
                         printf ("Scelta non valida, riprova: ");
                     }
                 }
+                } else {
+                    printf("Il veicolo da lei selezionato non e' disponibile per l'orario scelto\n");
+                    char s;
+                    if (menuPrincipale(s) == 0){
+                        goto inizio;
+                }
+                }
+
             }
 
             case 2: { //Visualizza storico prenotazioni
@@ -133,7 +144,6 @@ void main () {
                 }
                 system("cls | clear");
                 printf ("=== STORICO PRENOTAZIONI DI %s === \n\n", nomeUtente);
-
                 while (fgets (buffer, sizeof (buffer), file) != NULL){
                     char *token = strtok (buffer, "-");
                     if (strcmp (token, nomeUtente) == 0){
@@ -148,12 +158,11 @@ void main () {
                         token = strtok (NULL, "-");
                         printf (" MODELLO: %s", token);
                         token = strtok (NULL, "-");
-                        printf (" TARGA: %s", token);
+                        printf (" TARGA: %s\n", token);
                     }
                 }
-
                 fclose (file);
-
+                
 
                 char s;
 
@@ -198,7 +207,7 @@ void main () {
                 char s;
                 scanf ("%d", &id);
 
-                Prenotazione p = TrovaPrenotazione (T, id, HASH_TAGLIA);
+                Prenotazione p = TrovaPrenotazione (T, id, taglia);
                 if (p != NULL){
                     system("cls | clear");
                     stampaPrenotazione(p);
