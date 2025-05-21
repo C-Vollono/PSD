@@ -205,8 +205,16 @@ void main () {
                 printf ("Inserisca l'ID della prenotazione che vuole vedere: ");
                 int id;
                 char s;
-                scanf ("%d", &id);
-
+                
+                while(1){
+                    if(scanf("%d", &id)==1){
+                        break;
+                    }else{
+                        printf("ID non valido,riprovare: ");
+                        while((s = getchar())!='\n');
+                    }
+                }
+                
                 Prenotazione p = TrovaPrenotazione (T, id, taglia);
                 if (p != NULL){
                     system("cls | clear");
@@ -255,7 +263,7 @@ void main () {
                             }
                         }
                         }
-                         printf("Non e' stata trovata la prenotazione ID %d a nome di %s\n", id, nomeUtente);
+                         printf("Non e' stata trovata la prenotazione con ID scelto a nome di %s\n", nomeUtente);
                         if (menuPrincipale(s) == 0){
                             goto inizio;
                     }
