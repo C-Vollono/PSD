@@ -12,10 +12,6 @@
 #include "Menu.h"
 
 #define VEICOLI_TAGLIA 10
-#define OP_DETTAGLI 1
-#define OP_STORICO 2
-
-/*--Funzione controllo menuPrincipale--*/
 
 void main () {
 
@@ -27,16 +23,18 @@ void main () {
         V[i] = malloc(sizeof(struct Vettura));
 
         if (V[i] == NULL){
+            
             system("cls | clear");
             perror ("Errore nell'allocazione della memoria.");
+            free (nomeUtente);
             exit (1);
         }
 
         riempiVeicoli (V[i]);
     }
 
-    nomeUtente = menuAccesso(); //Richiamo alla funzine menuAccesso per login o registrazione
-    TabellaHash T = RiempiTabellaHashDaFile(V); //Da modificare a causa di RiempiTabellaHashDaFile
+    nomeUtente = menuAccesso(); //Richiamo alla funzione menuAccesso per login o registrazione
+    TabellaHash T = RiempiTabellaHashDaFile(V);
 
     int taglia = ottieniTaglia(T);
     printf ("===== BENVENUT* %s NEL NOSTRO CAR-SHARING =====\n", nomeUtente);
@@ -61,6 +59,7 @@ void main () {
             case 1: { //Nuova Prenotazione
                 
                 for (int i=0; i<10; i++){
+                    printf ("VEICOLO %d\n", i+1);
                     stampaVeicolo (V[i]);
                 }
 
@@ -76,8 +75,9 @@ void main () {
                     }
                 }
 
+                LimitaOrariDisponibili (V);
                 stampaOrari (V[s1]);
-                printf ("Ora scelga un orario tra quelli disponibili per il noleggio del veicolo: \n");
+                printf ("Ora scelga un orario tra quelli disponibili per il noleggio del veicolo: ");
 
                 int s2;
                 while (1){
@@ -95,7 +95,7 @@ void main () {
 
                 char* dataCorrente = ottieniData();
 
-                Prenotazione p1 = NuovaPrenotazione (ID, nomeUtente, V[s1], s2);
+                Prenotazione p1 = NuovaPrenotazione (ID, nomeUtente, V[s1], s2, dataCorrente);
 
                 printf ("Ecco il riepilogo della sua prenotazione: ");
                 stampaPrenotazione (p1);
@@ -105,9 +105,12 @@ void main () {
 
                 while (1){
                     if (scanf (" %c", &s) != 1 || getchar() != '\n'){
+
                         printf("Scelta non valida, riprova: ");
                         for (; getchar() != '\n';);
+
                     } else if (s == 'Y' || s== 'y') {
+
                         modificaDisponibilita (V[s1], s2);
                         int z = InserisciPrenotazione (T, p1);
                         AggiornaStorico (p1, s1, s2);
@@ -115,10 +118,13 @@ void main () {
                         printf ("Bene, la sua prenotazione %d e' completa", ID);
                         printf ("\n\n\n\n");
                         goto inizio;
+                        
                     } else if (s == 'n' || s == 'N') {
+
                         printf ("Mi dispiace, ma la sua prenotazione e' annullata.");
                         printf ("\n\n\n\n");
                         goto inizio;
+
                     } else {
                         printf ("Scelta non valida, riprova: ");
                     }
@@ -135,34 +141,7 @@ void main () {
 
             case 2: { //Visualizza storico prenotazioni
 
-                /*MODIFICARE PER LA STAMPA DA TABELLA HASH*/
-                FILE* file = fopen ("StoricoPrenotazioni.txt", "r");
-                char buffer [200];
-                if (file == NULL){
-                    perror ("Errore nella visualizzazione dello storico.");
-                    exit (1);
-                }
-                system("cls | clear");
-                printf ("=== STORICO PRENOTAZIONI DI %s === \n\n", nomeUtente);
-                while (fgets (buffer, sizeof (buffer), file) != NULL){
-                    char *token = strtok (buffer, "-");
-                    if (strcmp (token, nomeUtente) == 0){
-                        token = strtok (NULL, "-");
-                        printf ("%s", token);
-                        token = strtok (NULL, "-");
-                        printf (" ORARIO DI INIZIO/FINE: %s", token);
-                        token = strtok (NULL, "-");
-                        printf ("-%s", token);
-                        token = strtok (NULL, "-");
-                        printf (" ID: %s", token);
-                        token = strtok (NULL, "-");
-                        printf (" MODELLO: %s", token);
-                        token = strtok (NULL, "-");
-                        printf (" TARGA: %s\n", token);
-                    }
-                }
-                fclose (file);
-                
+                StampaPrenotazioneTabellaHash (T, nomeUtente);
 
                 char s;
 

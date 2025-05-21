@@ -5,8 +5,8 @@
 /*DEFINIZIONE STRUCT ORARIO*/
 typedef struct Orario {
 
-    float inizio; //inizio dell'intervallo orario della possibile prenotazione
-    float fine; //fine dell'intervallo orario della possibile prenotazione
+    float inizio;
+    float fine;
     int Disponibilita; // 0 = disponibile oppure 1 = non disponibile
 
 }Orario;
@@ -22,7 +22,7 @@ struct Vettura{
     int postiOmologati;
     char* Combustibile;
     int annoDiImmatricolazione;
-    float CostoNoleggioOrario; // Costo ad ORA
+    float CostoNoleggioOrario;
 };
 
 typedef struct Vettura *veicolo;
@@ -448,6 +448,8 @@ void stampaOrari (veicolo v);
  * ---------------------------------------------------------------------------------------------------------------- 
  */
 
-void controlloToken (char* token, veicolo v, FILE* file);
+void controlloTokenVeicolo(char* token, veicolo v, FILE* file);
+
 int verificaDisponibilita(veicolo v, int indiceOrario);
+
 #endif

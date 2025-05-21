@@ -21,24 +21,19 @@ struct item {
     float CostoNoleggioFinale;
     float OrarioSceltoInizio;
     float OrarioSceltoFine;
-    struct item *next; //nodo per gestire eventuali collisioni nelle liste collegate
+    struct item *next; 
 
 };
 
 struct hash{
 
     int taglia;
-    struct item **tabella; // Puntatore a un array di puntatori a item, che poi andrà a definire le varie liste collegate
+    struct item **tabella; 
 };
-
-// funzione per ottenere la taglia della tabella hash, nel caso anche se in reallocazione, per rispettare l'information hiding
 
 int ottieniTaglia (TabellaHash t){
     return t->taglia;
 }
-
-
-// Funzione che permette di ottenere la data locale gia' formattata
 
 char* ottieniData(){ 
 
@@ -53,6 +48,7 @@ char* ottieniData(){
     char* dataFormattata = malloc (strlen(buffer) + 1);
 
     if(dataFormattata == NULL){
+
         system("cls|clear");
         perror("ERRORE IN DATA!");
         exit(1);
@@ -103,7 +99,7 @@ TabellaHash NuovaTabellaHash (int taglia){
 
     t->taglia = taglia+HASH_TAGLIA;
 
-    t->tabella = calloc ((taglia+HASH_TAGLIA), sizeof (struct item *)); //Alloco memoria e inizializzo a NULL tutti i puntatori a item
+    t->tabella = calloc ((taglia+HASH_TAGLIA), sizeof (struct item *)); 
 
     if (t->tabella == NULL){
 
@@ -143,6 +139,7 @@ TabellaHash NuovaTabellaHash (int taglia){
  */
 
 int FunzioneHash(int ID, int taglia) {
+
     int hash = 0;
     
     hash = (31 * ID) % taglia;
@@ -178,11 +175,12 @@ int FunzioneHash(int ID, int taglia) {
  * ---------------------------------------------------------------------------------------------------------------- 
  */
 
-Prenotazione NuovaPrenotazione (int ID, char* NomeUtente, veicolo c, int i){ // MODIFICARE IN BASE ALL'IMPLEMENTAZIONE DI CARICA FILE
- 
+Prenotazione NuovaPrenotazione (int ID, char* NomeUtente, veicolo c, int i, char* dataPrenotazione){
+
     Prenotazione p = malloc (sizeof (struct item));
 
     if (p == NULL){
+
         system("cls | clear");
         perror ("Errore nella creazione della prenotazione.");
         exit (1);
@@ -202,7 +200,15 @@ Prenotazione NuovaPrenotazione (int ID, char* NomeUtente, veicolo c, int i){ // 
 
     p->v = c;
 
-    p->data = ottieniData();
+    p->data = strdup (dataPrenotazione);
+
+    if (p->data == NULL){
+
+        perror ("Errore.");
+        free (p->nomeUtente);
+        free (p);
+        exit(1);
+    }
     
     p->OrarioSceltoInizio = p->v->orari[i].inizio;
     
@@ -247,6 +253,7 @@ Prenotazione NuovaPrenotazione (int ID, char* NomeUtente, veicolo c, int i){ // 
 int InserisciPrenotazione (TabellaHash t, Prenotazione p){
 
     int indice;
+
     Prenotazione testa, corrente;
 
     indice = FunzioneHash (p->ID, t->taglia);
@@ -345,9 +352,13 @@ static void LiberaLista (Prenotazione p){
     while (p != NULL){
 
         nuovap = p->next;
+
         free(p->nomeUtente);
+
         free(p->data);
+
         free (p);
+
         p = nuovap;
     }
 }
@@ -387,6 +398,7 @@ void AggiornaStorico (Prenotazione p, int indiceVeicolo, int indiceOrario){
     file = fopen ("StoricoPrenotazioni.txt", "a");
 
     if (file == NULL){
+
         system("cls | clear");
         perror ("Errore nell'apertura dello storico");
         exit (1);
@@ -396,6 +408,7 @@ void AggiornaStorico (Prenotazione p, int indiceVeicolo, int indiceOrario){
     fprintf (file, "\n%s-%s-%.2f-%.2f-%d-%s-%s-%d-%d", p->nomeUtente, p->data, p->OrarioSceltoInizio, p->OrarioSceltoFine, p->ID, p->v->modello, p->v->targa, indiceVeicolo, indiceOrario); // effettuata modifica per gli indici utili nell'inserimento della tabella hash
 
     if (fclose (file) != 0){
+
         system("cls | clear");
         perror ("Errore nella chiusura dello storico.");
         exit (1);
@@ -433,10 +446,9 @@ void AggiornaStorico (Prenotazione p, int indiceVeicolo, int indiceOrario){
 
 
 
-void stampaPrenotazione (Prenotazione p){ // da aggiungere le operazioni per la stampa relativa allo storico, e quella relativa alla conferma prenotazione
+void stampaPrenotazione (Prenotazione p){ 
 
-        // Caso in cui stampo i dati per confermare la prenotazione
-        printf("\nID Prenotazione: %d\nOrario selezionato: %.2f/%.2f\nCosto noleggio: %.2f euro\n", p->ID, p->OrarioSceltoInizio, p->OrarioSceltoFine, p->CostoNoleggioFinale);
+    printf("\nID Prenotazione: %d\nData: %s\nModello: %s\nOrario selezionato: %.2f/%.2f\nCosto noleggio: %.2f euro\n", p->ID, p->data, p->v->modello, p->OrarioSceltoInizio, p->OrarioSceltoFine, p->CostoNoleggioFinale);
 }
 
 /*---------------------------------------------------------------------------------------------------------------- 
@@ -470,6 +482,7 @@ void stampaPrenotazione (Prenotazione p){ // da aggiungere le operazioni per la 
 Prenotazione TrovaPrenotazione (TabellaHash t, int ID, int taglia){
 
     int indice = FunzioneHash (ID, taglia);
+
     Prenotazione p = t->tabella[indice];
 
     while (p != NULL){
@@ -477,9 +490,11 @@ Prenotazione TrovaPrenotazione (TabellaHash t, int ID, int taglia){
         if (p->ID == ID){
             return p;
         }
+
         p = p->next;
 
     }
+
     return NULL;
 }
 
@@ -494,25 +509,35 @@ TabellaHash RiempiTabellaHashDaFile (veicolo *v){
     }
 
     char buffer [200];
-    int z=0; // variabile che viene incrementata ogni volta che legge una prenotazione dal file, così alla fine si ha la grandezza necessaria per contenere le prenotazioni precedenti 
+    int contatorePrenotazioni=0; // variabile che viene incrementata ogni volta che legge una prenotazione dal file, così alla fine si ha la grandezza necessaria per contenere le prenotazioni precedenti 
 
     while (fgets (buffer, sizeof (buffer), file) != NULL){
 
-        z++;
+        contatorePrenotazioni++;
     }
 
     rewind (file);
 
 
-    TabellaHash t = NuovaTabellaHash (z);
+    TabellaHash t = NuovaTabellaHash (contatorePrenotazioni);
 
-    if (z == 0){
-        fclose(file);
+    if (contatorePrenotazioni == 0){
+
+        if (fclose(file) != 0){
+
+            perror ("Errore.");
+            exit (1);
+        }
+
         return t;
     }
+
     char* dataCorrente = ottieniData();
+
     fgets(buffer, sizeof(buffer), file); // leggo a vuoto per partire dalla riga contenente la prenotazione (line 1: "\n")
+
     while (fgets (buffer, sizeof (buffer), file) != NULL){
+
         char* token = strtok (buffer, "-");
         // controllo token (senza veicolo)
 
@@ -530,6 +555,7 @@ TabellaHash RiempiTabellaHashDaFile (veicolo *v){
         char* dataPrenotazione = strdup (token);
 
         if (dataPrenotazione == NULL){
+
             perror ("Errore. tabella hash data prenotazione");
             exit (1);
         }
@@ -554,24 +580,72 @@ TabellaHash RiempiTabellaHashDaFile (veicolo *v){
         token = strtok (NULL, "-");
         //controllo token
 
-        int IndiceVeicoloScelto = atoi (token); // Primo indice aggiunto dopo la targa
+        int IndiceVeicoloScelto = atoi (token);
 
         token = strtok (NULL, "-");
         //controllo token
 
-        int IndiceOrarioScelto = atoi (token); // Secondo indice aggiunto dopo la targa
+        int IndiceOrarioScelto = atoi (token);
 
-        Prenotazione prenotazioneFile = NuovaPrenotazione (ID, nomeUtente, v[IndiceVeicoloScelto], IndiceOrarioScelto);
+        Prenotazione prenotazioneFile = NuovaPrenotazione (ID, nomeUtente, v[IndiceVeicoloScelto], IndiceOrarioScelto, dataPrenotazione);
+
         InserisciPrenotazione(t,prenotazioneFile);
 
         if (strcmp(dataCorrente, dataPrenotazione) == 0){
+
             modificaDisponibilita(v[IndiceVeicoloScelto], IndiceOrarioScelto);
         }
+
             free(nomeUtente);
+
             free(dataPrenotazione);
         }
-        fclose(file);
+
+        if (fclose (file) != 0){
+
+            perror ("Errore.");
+            exit(1);
+        }
+
         free(dataCorrente);
+
     return t;    
 }
 
+void LimitaOrariDisponibili (veicolo *v){
+
+    time_t t = time (NULL); //ottengo i secondi dal 1 gennaio 1970
+
+    struct tm* data = localtime (&t); //ottengo la data corrente, ma bisogna formattarla
+
+    int oraCorrente = data->tm_hour;
+
+    int minutoCorrente = data->tm_min;
+
+    for (int i=0; i<10; i++){
+
+        for (int k=0; k<8; k++){
+
+            if (v[i]->orari[k].inizio <= oraCorrente){
+
+                modificaDisponibilita (v[i], k);
+            }
+        }
+    }
+
+}
+
+void StampaPrenotazioneTabellaHash (TabellaHash t, char* noemUtente){
+    
+    
+    int g = ottieniTaglia(t);
+
+    for (int i=0; i < g; i++){
+    if (t->tabella[i] != NULL){
+
+        Prenotazione P = t->tabella[i];
+        if (strcmp (P->nomeUtente, noemUtente) == 0)
+        stampaPrenotazione (P);
+        } 
+    }
+}
