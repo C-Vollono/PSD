@@ -433,7 +433,7 @@ void AggiornaStorico (Prenotazione p, int indiceVeicolo, int indiceOrario){
 
 
 
-void stampaPrenotazione (Prenotazione p){ //funzione da sistemare per il caricamento da file della tabella hash
+void stampaPrenotazione (Prenotazione p){ // da aggiungere le operazioni per la stampa relativa allo storico, e quella relativa alla conferma prenotazione
 
         // Caso in cui stampo i dati per confermare la prenotazione
         printf("\nID Prenotazione: %d\nOrario selezionato: %.2f/%.2f\nCosto noleggio: %.2f euro\n", p->ID, p->OrarioSceltoInizio, p->OrarioSceltoFine, p->CostoNoleggioFinale);

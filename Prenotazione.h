@@ -21,7 +21,7 @@ static void LiberaLista (Prenotazione p); // Dealloca una lista collegata nella 
 
 void AggiornaStorico (Prenotazione p, int indiceVeicolo, int indiceOrario); //Aggiorna lo storico prenotazioni con l'ultima prenotazione effettuata
 
-void stampaPrenotazione (Prenotazione p); // stampa i dettagli di una prenotazione, operazione: 1 indica lo stampa per la conferma, 2 indica lo stampa per lo storico
+void stampaPrenotazione (Prenotazione p); // stampa i dettagli di una prenotazione, da aggiormare con operazione: 1 indica lo stampa per la conferma, 2 indica lo stampa per lo storico
 
 Prenotazione TrovaPrenotazione (TabellaHash t, int ID, int taglia); //cerca una prenotazione nella tabella hash in base all'id
 
