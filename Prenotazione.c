@@ -503,7 +503,7 @@ TabellaHash RiempiTabellaHashDaFile (veicolo *v){
         return NULL;
     }
 
-    char buffer [200];
+    char buffer [1024];
     int contatorePrenotazioni=0;
 
     while (fgets (buffer, sizeof (buffer), file) != NULL){

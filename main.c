@@ -63,39 +63,31 @@ void main () {
     printf ("===== BENVENUT* %s NEL NOSTRO CAR-SHARING =====\n\n", nomeUtente);
 
     inizio:
-        int scelta;
+        char scelta;
+        char* endInput;
         printf ("1) Nuova Prenotazione\n2) Visualizza storico prenotazione\n3) Visualizza Sconti\n4) Visualizza Veicoli\n5) Trova Prenotazione\n6) Esci\n");
         printf ("Scelga l'operazione da effettuare (da 1-6): ");
 
-       while(1){
-
+        while (1){
             int corretto = 1;
+        if (scanf (" %c", &scelta) != 1 || getchar() != '\n'){
 
-            if(scanf ("%d", &scelta)==1){
+			printf("Scelta non valida, riprova: ");
+			for (; getchar() != '\n';);
+            corretto = 0;
 
-            if (scelta < 1 || scelta > 6){
+		} else if (scelta < '1' || scelta > '6'){
 
-                corretto = 0;
+			corretto = 0;
+            printf("Scelta non valida, riprova: ");
 
-            printf ("Scelta non valido, riprovi: ");
-
-            }
-
-            }else{
-
-                corretto = 0;
-
-            printf("Scelta non valida, riprovare: ");
-
-            while((getchar())!='\n');
-
-            }
-            if (corretto){
-            break;
+        } 
+            if (corretto) {
+                break;
             }
         }
-
-        switch (scelta) {
+        int sceltaInt = scelta - '0';
+        switch (sceltaInt) {
             case 1: { //Nuova Prenotazione
                 
                 for (int i=0; i<10; i++){

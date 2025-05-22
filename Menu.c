@@ -46,7 +46,7 @@
  * ---------------------------------------------------------------------------------------------------------------- 
  */
 
-int operazioneAccesso (int operazione, char **nomeUtente){
+int operazioneAccesso (char operazione, char **nomeUtente){
   char bufferUtente[1024];
   char bufferFileUtente[1024];
   FILE *utentiRegistrati = fopen("utente.txt", "r");
@@ -60,13 +60,13 @@ int operazioneAccesso (int operazione, char **nomeUtente){
     return -1;
  }
 
-  if (operazione == 3){
+  if (operazione == '3'){
 
 	system("cls | clear");
     printf("Uscita dal programma\n");
     exit(0);
- } 
- else if (operazione < 1 || operazione > 3){
+  } 
+ else if (operazione < '1' || operazione > '3'){
 
 	system("cls | clear");
 	return 3;
@@ -120,8 +120,8 @@ int operazioneAccesso (int operazione, char **nomeUtente){
         	perror ("Errore nella chiusura del file.");
         	exit (1);
 		}
-
-    	switch (operazione){
+		int operazioneInt = operazione - '0';
+    	switch (operazioneInt){
     		case 1:
       			if (utenteCorrisponde){
 					system("cls | clear");
@@ -224,8 +224,7 @@ int operazioneAccesso (int operazione, char **nomeUtente){
 char* menuAccesso(){
 
 	char *nomeUtente;
-	char inputOperazione[10];
-	int operazione;
+	char operazione;
 	int risultatoOperazione;
 
 	while (1){
@@ -236,12 +235,14 @@ char* menuAccesso(){
     	printf(" (3) Esci\n");
 
  		printf("Digiti l'operazione da effettuare: ");
-
-		fgets(inputOperazione, sizeof(inputOperazione), stdin);
-
-		inputOperazione[strlen(inputOperazione)-1] = '\0';
-
-		operazione = atoi(inputOperazione);
+		while (1){
+        if (scanf (" %c", &operazione) != 1 || getchar() != '\n'){
+			printf("Scelta non valida, riprova: ");
+			for (; getchar() != '\n';);
+        } else {
+			break;
+		}
+    	}
 
 		risultatoOperazione = operazioneAccesso(operazione, &nomeUtente);
 

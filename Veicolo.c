@@ -44,7 +44,7 @@
  int riempiVeicoli (veicolo v){
 
     FILE *file;
-    char buffer [200];
+    char buffer [1024];
     static int indiceVeicolo=0; 
     int j = 0;
 
@@ -384,7 +384,7 @@ float verificaSconto (veicolo v, int k){
 int riempiOrari (veicolo v){
 
     FILE *file;
-    char buffer [200];
+    char buffer [1024];
 
     file = fopen ("Orari.txt", "r");
 
