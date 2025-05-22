@@ -17,7 +17,9 @@ void main () {
 
     char* nomeUtente;
     veicolo V[VEICOLI_TAGLIA];
-
+    
+    nomeUtente = menuAccesso(); //Richiamo alla funzione menuAccesso per login o registrazione
+    
     for (int i=0; i < VEICOLI_TAGLIA; i++){
 
         V[i] = malloc(sizeof(struct Vettura));
@@ -25,23 +27,33 @@ void main () {
         if (V[i] == NULL){
             
             system("cls | clear");
-            perror ("Errore nell'allocazione della memoria.");
-            free (nomeUtente);
+            perror ("Errore nell'allocazione della memoria.\n");
+            for (int j=0; j < i; j++){ // Libero tutti i veicoli allocati precedentemente
+                free(V[j]);
+            }
+            free(nomeUtente);
             exit (1);
         }
 
-        riempiVeicoli (V[i]);
+        if (!(riempiVeicoli (V[i]))){ // Controllo del riempimento dei veicoli, dipende anche dal token
+            system("cls | clear");
+            perror ("Errore nell'aggiunta delle informazioni relative ai veicoli.\n");
+            for (int j=0; j < i; j++){
+                liberaVeicolo(V[j]);
+                free(V[j]);
+            }
+            free(nomeUtente);
+            exit(1);
+        }
     }
 
-    nomeUtente = menuAccesso(); //Richiamo alla funzione menuAccesso per login o registrazione
     TabellaHash T = RiempiTabellaHashDaFile(V);
 
     int taglia = ottieniTaglia(T);
-    printf ("===== BENVENUT* %s NEL NOSTRO CAR-SHARING =====\n", nomeUtente);
+    printf ("===== BENVENUT* %s NEL NOSTRO CAR-SHARING =====\n\n", nomeUtente);
 
     inizio:
         int scelta;
-        printf ("MENU \n");
         printf ("1) Nuova Prenotazione\n2) Visualizza storico prenotazione\n3) Visualizza Sconti\n4) Visualizza Veicoli\n5) Trova Prenotazione\n6) Esci\n");
         printf ("Scelga l'operazione da effettuare (da 1-6): ");
 
@@ -77,7 +89,7 @@ void main () {
             case 1: { //Nuova Prenotazione
                 
                 for (int i=0; i<10; i++){
-                    printf ("VEICOLO %d\n", i+1);
+                    printf ("VEICOLO %d\n", i);
                     stampaVeicolo (V[i]);
                 }
 
@@ -191,7 +203,7 @@ void main () {
 
                 for (int i=0; i<10; i++){
 
-                    printf ("VEICOLO %d\n", i+1);
+                    printf ("VEICOLO %d\n", i);
                     stampaVeicolo (V[i]);
                 }
 
@@ -281,7 +293,7 @@ void main () {
 
                 for (int i=0; i < VEICOLI_TAGLIA; i++){
 
-                    liberaVeicoli (V[i]);
+                    liberaVeicolo (V[i]);
 
                 }
                 LiberaTabellaHash (T);
@@ -292,7 +304,7 @@ void main () {
                 printf("Vi e' stato qualche errore durante l'associazione dell'operazione da effettuare\n");
                 for (int i=0; i < VEICOLI_TAGLIA; i++){
 
-                    liberaVeicoli (V[i]);
+                    liberaVeicolo (V[i]);
 
                 }
                 LiberaTabellaHash (T);
