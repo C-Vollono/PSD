@@ -148,6 +148,16 @@ void main () {
 
                 Prenotazione p1 = NuovaPrenotazione (ID, nomeUtente, V[s1], s2, dataCorrente);
 
+                if (p1 == NULL){
+                    free(nomeUtente);
+                    free(dataCorrente);
+                    for (int i=0; i < VEICOLI_TAGLIA; i++){
+                    liberaVeicolo(V[i]);
+                    free(V[i]);
+                    }
+                    LiberaTabellaHash(T);
+                    exit(1);
+                }
                 printf ("Ecco il riepilogo della sua prenotazione: ");
                 stampaPrenotazione (p1);
 

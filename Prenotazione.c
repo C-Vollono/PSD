@@ -94,7 +94,7 @@ TabellaHash NuovaTabellaHash (int taglia){
     if (t == NULL){
         system("cls | clear");
         perror ("Errore nell'allocazione della memoria tabella hash.");
-        exit (1);
+        return NULL;
     }
 
     t->taglia = taglia+HASH_TAGLIA;
@@ -183,7 +183,7 @@ Prenotazione NuovaPrenotazione (int ID, char* NomeUtente, veicolo c, int i, char
 
         system("cls | clear");
         perror ("Errore nella creazione della prenotazione.");
-        exit (1);
+        return NULL;
     }
 
     p->ID = ID;
@@ -193,7 +193,7 @@ Prenotazione NuovaPrenotazione (int ID, char* NomeUtente, veicolo c, int i, char
     if (p->nomeUtente == NULL){
         system("cls | clear");
         perror ("ERRORE NEL NOME UTENTE!");
-        exit (1);
+        return NULL;
     }
 
     strcpy (p->nomeUtente, NomeUtente);
@@ -207,7 +207,7 @@ Prenotazione NuovaPrenotazione (int ID, char* NomeUtente, veicolo c, int i, char
         perror ("Errore.");
         free (p->nomeUtente);
         free (p);
-        exit(1);
+        return NULL;
     }
     
     p->OrarioSceltoInizio = p->v->orari[i].inizio;
@@ -515,7 +515,9 @@ TabellaHash RiempiTabellaHashDaFile (veicolo *v){
 
 
     TabellaHash t = NuovaTabellaHash (contatorePrenotazioni);
-
+    if (t == NULL){
+        return NULL;
+    }
     if (contatorePrenotazioni == 0){
 
         if (!(chiudiFile(file))){
@@ -596,6 +598,13 @@ TabellaHash RiempiTabellaHashDaFile (veicolo *v){
 
         Prenotazione prenotazioneFile = NuovaPrenotazione (ID, nomeUtente, v[IndiceVeicoloScelto], IndiceOrarioScelto, dataPrenotazione);
 
+        if (prenotazioneFile == NULL){
+            printf("L'errore durante il caricamento della prenotazione da file");
+            chiudiFile(file);
+            free(nomeUtente);
+            free(dataPrenotazione);
+            return NULL;
+        }
         InserisciPrenotazione(t,prenotazioneFile);
 
         if (strcmp(dataCorrente, dataPrenotazione) == 0){
