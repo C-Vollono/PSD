@@ -114,7 +114,7 @@ int operazioneAccesso (int operazione, char **nomeUtente){
             }
         }
 
-        if (fclose(utentiRegistrati) !=0){
+        if (fclose(utentiRegistrati) != 0){
 
 			system("cls | clear");
         	perror ("Errore nella chiusura del file.");
@@ -124,7 +124,6 @@ int operazioneAccesso (int operazione, char **nomeUtente){
     	switch (operazione){
     		case 1:
       			if (utenteCorrisponde){
-
 					system("cls | clear");
        				return 0;
 
@@ -154,7 +153,7 @@ int operazioneAccesso (int operazione, char **nomeUtente){
             	fprintf(nuovoUtente, "%s\n", *nomeUtente);
 
 				if (fclose(nuovoUtente) != 0){
-
+					free(*nomeUtente);
 					system("cls | clear");
        				perror ("Errore nella chiusura del file.");
        				exit (1);
