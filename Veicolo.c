@@ -64,14 +64,15 @@
 
         char* token = strtok (buffer, ";");
         if (!(controlloToken (token))){
+            chiudiFile(file);
             return 0;
         }
 
         v->tipoVeicolo = malloc ( (strlen (token)+1) * sizeof (char));
 
         if (v->tipoVeicolo == NULL){
-
             perror ("ERRORE TIPO VEICOLO\n");
+            chiudiFile(file);
             return 0;
         }
 
@@ -79,13 +80,14 @@
 
         token = strtok (NULL, ";");
         if (!(controlloToken (token))){
+            chiudiFile(file);
             return 0;
         }
 
         v->modello = malloc ( (strlen (token)+1) * sizeof (char));
 
         if (v->modello == NULL){
-
+            chiudiFile(file);
             perror ("ERRORE MODELLO\n");
             return 0;
         }
@@ -94,13 +96,14 @@
 
         token = strtok (NULL, ";");
         if (!(controlloToken (token))){
+            chiudiFile(file);
             return 0;
         }
 
         v->colore = malloc ( (strlen (token)+1) * sizeof (char));
 
-        if (v->colore == NULL){
-
+        if (v->colore == NULL){ 
+            chiudiFile(file);
             perror ("ERRORE COLORE\n");
             return 0;
         }
@@ -109,13 +112,14 @@
 
         token = strtok (NULL, ";");
         if (!(controlloToken (token))){
+            chiudiFile(file);
             return 0;
         }
 
         v->targa = malloc ( (strlen (token)+1) * sizeof (char));
 
         if (v->targa == NULL){
-
+            chiudiFile(file);
             perror ("ERRORE TARGA\n");
             return 0;
         }
@@ -124,6 +128,7 @@
 
         token = strtok (NULL, ";");
         if (!(controlloToken (token))){
+            chiudiFile(file);
             return 0;
         }
 
@@ -131,13 +136,14 @@
 
         token = strtok (NULL, ";");
         if (!(controlloToken (token))){
+            chiudiFile(file);
             return 0;
         }
 
         v->Combustibile = malloc ( (strlen(token)+1) * sizeof (char));
 
         if (v->Combustibile == NULL){
-
+            chiudiFile(file);
             perror ("ERRORE COMBUSTIBILE\n");
             return 0;
         }
@@ -146,6 +152,7 @@
 
         token = strtok (NULL, ";");
         if (!(controlloToken (token))){
+            chiudiFile(file);
             return 0;
         }
 
@@ -153,6 +160,7 @@
 
         token = strtok (NULL, ";");
         if (!(controlloToken (token))){
+            chiudiFile(file);
             return 0;
         }
 
@@ -160,6 +168,7 @@
     
 
         if (!(riempiOrari (v))){
+            chiudiFile(file);
             perror("Errore nell'aggiunta degli orari dei veicoli.\n");
             return 0;
         };

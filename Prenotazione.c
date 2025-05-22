@@ -505,11 +505,11 @@ TabellaHash RiempiTabellaHashDaFile (veicolo *v){
     if (file == NULL){
 
         perror ("Errore nella lettura dello storico.");
-        exit (1);
+        return NULL;
     }
 
     char buffer [200];
-    int contatorePrenotazioni=0; // variabile che viene incrementata ogni volta che legge una prenotazione dal file, così alla fine si ha la grandezza necessaria per contenere le prenotazioni precedenti 
+    int contatorePrenotazioni=0;
 
     while (fgets (buffer, sizeof (buffer), file) != NULL){
 
@@ -523,10 +523,8 @@ TabellaHash RiempiTabellaHashDaFile (veicolo *v){
 
     if (contatorePrenotazioni == 0){
 
-        if (fclose(file) != 0){
-
-            perror ("Errore.");
-            exit (1);
+        if (!(chiudiFile(file))){
+            return NULL;
         }
 
         return t;
@@ -539,51 +537,65 @@ TabellaHash RiempiTabellaHashDaFile (veicolo *v){
     while (fgets (buffer, sizeof (buffer), file) != NULL){
 
         char* token = strtok (buffer, "-");
-        // controllo token (senza veicolo)
+        if (!(controlloToken (token))){
+            chiudiFile(file);
+            return NULL;
+        }
 
         char* nomeUtente = strdup (token);
 
         if (nomeUtente == NULL){
-
-            perror ("Errore tabellahash nome utente.");
-            exit (1);
+            chiudiFile(file);
+            perror ("Errore nell'inserimento del nome utente della prenotazione nella tabella Hash.");
+            return NULL;
         }
 
         token = strtok (NULL, "-");
-        //controllo token liberare utente nel caso da qui in poi
+        if (!(controlloToken (token))){
+            chiudiFile(file);
+            free(nomeUtente);
+            return NULL;
+        }
         
         char* dataPrenotazione = strdup (token);
 
         if (dataPrenotazione == NULL){
-
-            perror ("Errore. tabella hash data prenotazione");
-            exit (1);
+            free(nomeUtente);
+            chiudiFile(file);
+            perror ("Errore nell'inserimento della data della prenotazione nella tabella Hash");
+            return NULL;
         }
-
-        token = strtok (NULL, "-");
-        //controllo token liberare utente e dataprenotazione da qui in poi
-        
-        token = strtok (NULL, "-");
-        //controllo token
-
-        token = strtok (NULL, "-");
-        //controllo token
+        for (int k=0; k < 3; k++){
+            token = strtok (NULL, "-");
+            if (!(controlloToken (token))){
+            chiudiFile(file);
+            free(nomeUtente);
+            free(dataPrenotazione);
+            return NULL;
+            }
+        }
 
         int ID = atoi (token);
 
-        token = strtok (NULL, "-");
-        //controllo token
-
-        token = strtok (NULL, "-");
-        //controllo token
-
-        token = strtok (NULL, "-");
-        //controllo token
+        for (int k=0; k < 3; k++){
+            token = strtok (NULL, "-");
+            if (!(controlloToken (token))){
+            chiudiFile(file);
+            free(nomeUtente);
+            free(dataPrenotazione);
+            return NULL;
+            }
+        }
 
         int IndiceVeicoloScelto = atoi (token);
 
         token = strtok (NULL, "-");
-        //controllo token
+        if (!(controlloToken (token))){
+        chiudiFile(file);
+        free(nomeUtente);
+        free(dataPrenotazione);
+        return NULL;
+        }
 
         int IndiceOrarioScelto = atoi (token);
 
@@ -601,10 +613,8 @@ TabellaHash RiempiTabellaHashDaFile (veicolo *v){
             free(dataPrenotazione);
         }
 
-        if (fclose (file) != 0){
-
-            perror ("Errore.");
-            exit(1);
+        if (!(chiudiFile(file))){
+            return NULL;
         }
 
         free(dataCorrente);

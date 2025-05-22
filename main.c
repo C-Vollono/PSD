@@ -49,6 +49,16 @@ void main () {
 
     TabellaHash T = RiempiTabellaHashDaFile(V);
 
+    if (T == NULL){
+        printf("Errore durante l'aggiornamento delle prenotazioni effettuate.\n");
+        free(nomeUtente);
+        for (int i=0; i < VEICOLI_TAGLIA; i++){
+            liberaVeicolo(V[i]);
+            free(V[i]);
+        }
+        exit(1);
+    }
+
     int taglia = ottieniTaglia(T);
     printf ("===== BENVENUT* %s NEL NOSTRO CAR-SHARING =====\n\n", nomeUtente);
 
