@@ -51,7 +51,7 @@ char* ottieniData(){
 
         system("cls|clear");
         perror("ERRORE IN DATA!");
-        exit(1);
+        return NULL;
     }
 
     strcpy(dataFormattata, buffer);
@@ -391,7 +391,7 @@ static void LiberaLista (Prenotazione p){
  * ---------------------------------------------------------------------------------------------------------------- 
  */
 
-void AggiornaStorico (Prenotazione p, int indiceVeicolo, int indiceOrario){
+int AggiornaStorico (Prenotazione p, int indiceVeicolo, int indiceOrario){
 
     FILE* file;
 
@@ -401,18 +401,13 @@ void AggiornaStorico (Prenotazione p, int indiceVeicolo, int indiceOrario){
 
         system("cls | clear");
         perror ("Errore nell'apertura dello storico");
-        exit (1);
+        return 0;
     }
 
    
     fprintf (file, "\n%s-%s-%.2f-%.2f-%d-%s-%s-%d-%d", p->nomeUtente, p->data, p->OrarioSceltoInizio, p->OrarioSceltoFine, p->ID, p->v->modello, p->v->targa, indiceVeicolo, indiceOrario); // effettuata modifica per gli indici utili nell'inserimento della tabella hash
 
-    if (fclose (file) != 0){
-
-        system("cls | clear");
-        perror ("Errore nella chiusura dello storico.");
-        exit (1);
-    }
+    return chiudiFile(file);
 }
 
 /*---------------------------------------------------------------------------------------------------------------- 

@@ -135,6 +135,17 @@ void main () {
 
                 char* dataCorrente = ottieniData();
 
+                if (dataCorrente == NULL){
+                    printf("Errore nell'ottenimento della data locale.\n");
+                    free(nomeUtente);
+                    for (int i=0; i < VEICOLI_TAGLIA; i++){
+                    liberaVeicolo(V[i]);
+                    free(V[i]);
+                    }
+                    LiberaTabellaHash(T);
+                    exit(1);
+                }
+
                 Prenotazione p1 = NuovaPrenotazione (ID, nomeUtente, V[s1], s2, dataCorrente);
 
                 printf ("Ecco il riepilogo della sua prenotazione: ");
@@ -153,7 +164,16 @@ void main () {
 
                         modificaDisponibilita (V[s1], s2);
                         int z = InserisciPrenotazione (T, p1);
-                        AggiornaStorico (p1, s1, s2);
+                        if (!(AggiornaStorico (p1, s1, s2))){
+                            free(nomeUtente);
+                            free(dataCorrente);
+                            for (int i=0; i < VEICOLI_TAGLIA; i++){
+                            liberaVeicolo(V[i]);
+                            free(V[i]);
+                            }
+                            LiberaTabellaHash(T);
+                            exit(1);
+                        }
                         system("cls | clear");
                         printf ("Bene, la sua prenotazione %d e' completa", ID);
                         printf ("\n\n\n\n");
