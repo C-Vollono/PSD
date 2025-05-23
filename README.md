@@ -34,7 +34,7 @@
 
 	verificaSconto(veicolo, int k) -> float //Restituisce la percentuale di sconto da applicare nel costo del noleggio in determinati orari altrimenti nessuno
 
-	liberaVeicoli(veicolo) -> void //Deallocazione della memoria
+	liberaVeicolo(veicolo) -> void //Deallocazione della memoria
 
 ---------------------------------------------------------------------------------------------------------------------------------------------
 

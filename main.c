@@ -17,7 +17,9 @@ void main () {
 
     char* nomeUtente;
     veicolo V[VEICOLI_TAGLIA];
-
+    
+    nomeUtente = menuAccesso(); //Richiamo alla funzione menuAccesso per login o registrazione
+    
     for (int i=0; i < VEICOLI_TAGLIA; i++){
 
         V[i] = malloc(sizeof(struct Vettura));
@@ -25,59 +27,71 @@ void main () {
         if (V[i] == NULL){
             
             system("cls | clear");
-            perror ("Errore nell'allocazione della memoria.");
-            free (nomeUtente);
+            perror ("Errore nell'allocazione della memoria.\n");
+            for (int j=0; j < i; j++){ // Libero tutti i veicoli allocati precedentemente
+                free(V[j]);
+            }
+            free(nomeUtente);
             exit (1);
         }
 
-        riempiVeicoli (V[i]);
+        if (!(riempiVeicoli (V[i]))){ // Controllo del riempimento dei veicoli, dipende anche dal token
+            system("cls | clear");
+            perror ("Errore nell'aggiunta delle informazioni relative ai veicoli.\n");
+            for (int j=0; j < i; j++){
+                liberaVeicolo(V[j]);
+                free(V[j]);
+            }
+            free(nomeUtente);
+            exit(1);
+        }
     }
 
-    nomeUtente = menuAccesso(); //Richiamo alla funzione menuAccesso per login o registrazione
     TabellaHash T = RiempiTabellaHashDaFile(V);
 
+    if (T == NULL){
+        printf("Errore durante l'aggiornamento delle prenotazioni effettuate.\n");
+        free(nomeUtente);
+        for (int i=0; i < VEICOLI_TAGLIA; i++){
+            liberaVeicolo(V[i]);
+            free(V[i]);
+        }
+        exit(1);
+    }
+
     int taglia = ottieniTaglia(T);
-    printf ("===== BENVENUT* %s NEL NOSTRO CAR-SHARING =====\n", nomeUtente);
+    printf ("===== BENVENUT* %s NEL NOSTRO CAR-SHARING =====\n\n", nomeUtente);
 
     inizio:
-        int scelta;
-        printf ("MENU \n");
+        char scelta;
+        char* endInput;
         printf ("1) Nuova Prenotazione\n2) Visualizza storico prenotazione\n3) Visualizza Sconti\n4) Visualizza Veicoli\n5) Trova Prenotazione\n6) Esci\n");
         printf ("Scelga l'operazione da effettuare (da 1-6): ");
 
-       while(1){
-
+        while (1){
             int corretto = 1;
+        if (scanf (" %c", &scelta) != 1 || getchar() != '\n'){
 
-            if(scanf ("%d", &scelta)==1){
+			printf("Scelta non valida, riprova: ");
+			for (; getchar() != '\n';);
+            corretto = 0;
 
-            if (scelta < 1 || scelta > 6){
+		} else if (scelta < '1' || scelta > '6'){
 
-                corretto = 0;
+			corretto = 0;
+            printf("Scelta non valida, riprova: ");
 
-            printf ("Scelta non valido, riprovi: ");
-
-            }
-
-            }else{
-
-                corretto = 0;
-
-            printf("Scelta non valida, riprovare: ");
-
-            while((getchar())!='\n');
-
-            }
-            if (corretto){
-            break;
+        } 
+            if (corretto) {
+                break;
             }
         }
-
-        switch (scelta) {
+        int sceltaInt = scelta - '0';
+        switch (sceltaInt) {
             case 1: { //Nuova Prenotazione
                 
                 for (int i=0; i<10; i++){
-                    printf ("VEICOLO %d\n", i+1);
+                    printf ("VEICOLO %d\n", i);
                     stampaVeicolo (V[i]);
                 }
 
@@ -113,8 +127,29 @@ void main () {
 
                 char* dataCorrente = ottieniData();
 
+                if (dataCorrente == NULL){
+                    printf("Errore nell'ottenimento della data locale.\n");
+                    free(nomeUtente);
+                    for (int i=0; i < VEICOLI_TAGLIA; i++){
+                    liberaVeicolo(V[i]);
+                    free(V[i]);
+                    }
+                    LiberaTabellaHash(T);
+                    exit(1);
+                }
+
                 Prenotazione p1 = NuovaPrenotazione (ID, nomeUtente, V[s1], s2, dataCorrente);
 
+                if (p1 == NULL){
+                    free(nomeUtente);
+                    free(dataCorrente);
+                    for (int i=0; i < VEICOLI_TAGLIA; i++){
+                    liberaVeicolo(V[i]);
+                    free(V[i]);
+                    }
+                    LiberaTabellaHash(T);
+                    exit(1);
+                }
                 printf ("Ecco il riepilogo della sua prenotazione: ");
                 stampaPrenotazione (p1);
 
@@ -131,7 +166,16 @@ void main () {
 
                         modificaDisponibilita (V[s1], s2);
                         int z = InserisciPrenotazione (T, p1);
-                        AggiornaStorico (p1, s1, s2);
+                        if (!(AggiornaStorico (p1, s1, s2))){
+                            free(nomeUtente);
+                            free(dataCorrente);
+                            for (int i=0; i < VEICOLI_TAGLIA; i++){
+                            liberaVeicolo(V[i]);
+                            free(V[i]);
+                            }
+                            LiberaTabellaHash(T);
+                            exit(1);
+                        }
                         system("cls | clear");
                         printf ("Bene, la sua prenotazione %d e' completa", ID);
                         printf ("\n\n\n\n");
@@ -191,7 +235,7 @@ void main () {
 
                 for (int i=0; i<10; i++){
 
-                    printf ("VEICOLO %d\n", i+1);
+                    printf ("VEICOLO %d\n", i);
                     stampaVeicolo (V[i]);
                 }
 
@@ -221,83 +265,41 @@ void main () {
                 Prenotazione p = TrovaPrenotazione (T, id, taglia);
                 if (p != NULL){
                     system("cls | clear");
+                    printf ("Ecco la sua prenotazione con ID %d:\n", id);
                     stampaPrenotazione(p);
                     if (menuPrincipale(s) == 0){
                             goto inizio;
                     }
                 }
-                if (p == NULL){
-
-                    FILE* file = fopen ("StoricoPrenotazioni.txt", "r");
-
-                    if (file == NULL){
-
-                        perror ("Errore nell'apertura dello storico.");
-                        exit (1);
-                    }
-
-                    char buffer [200];
-                    if (fgetc(file) == EOF){
-                        printf("Lo storico non presenta alcuna prenotazione.\n");
-                        fclose(file);
-                        if (menuPrincipale(s) == 0){
-                                goto inizio;
-                        }
-                    }
-                    rewind(file);
-                    while (fgets (buffer, sizeof (buffer), file) != NULL){
-                        char bufferCopia[200];
-                        strcpy(bufferCopia, buffer);
-                        char* token = strtok (buffer, "-");
-                        // controllo token
-                        if (strcmp (token, nomeUtente) == 0){
-                            int i=0;
-                            while (i < 4){
-                            token = strtok (NULL, "-");
-                            // controllo token
-                            i++;
-                            }
-                            int tokenID = atoi(token);
-                            if (tokenID == id){
-                                printf ("Ecco la sua prenotazione con ID %d: \n%s", id, bufferCopia);
-                                if (menuPrincipale(s) == 0){
-                                goto inizio;
-                                }
-                            }
-                        }
-                        }
-                         printf("Non e' stata trovata la prenotazione con ID scelto a nome di %s\n", nomeUtente);
-                        if (menuPrincipale(s) == 0){
+                printf("Non e' stata trovata la prenotazione con ID scelto a nome di %s\n", nomeUtente);
+                if (menuPrincipale(s) == 0){
                             goto inizio;
-                    }
                 }
                 break;
             }
-
 
             case 6: { //Esci
                 system("cls | clear");
                 printf ("Grazie mille per aver scelto il nostro servizio!");
 
+                free(nomeUtente);
                 for (int i=0; i < VEICOLI_TAGLIA; i++){
-
-                    liberaVeicoli (V[i]);
-
+                liberaVeicolo(V[i]);
+                free(V[i]);
                 }
-                LiberaTabellaHash (T);
-                exit (0);
+                LiberaTabellaHash(T);
+                exit(0);
             }
             default: { //Errore in caso non si inserisca un numero corretto
                 system("cls | clear");
                 printf("Vi e' stato qualche errore durante l'associazione dell'operazione da effettuare\n");
+                free(nomeUtente);
                 for (int i=0; i < VEICOLI_TAGLIA; i++){
-
-                    liberaVeicoli (V[i]);
-
+                liberaVeicolo(V[i]);
+                free(V[i]);
                 }
-                LiberaTabellaHash (T);
-                exit (1);
+                LiberaTabellaHash(T);
+                exit(1);
             }
         }
     }
-
