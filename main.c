@@ -27,7 +27,7 @@ void main () {
         if (V[i] == NULL){
             
             system("cls | clear");
-            perror ("Errore nell'allocazione della memoria.\n");
+            perror ("Errore nell'allocazione della memoria dei veicoli.\n");
             for (int j=0; j < i; j++){ // Libero tutti i veicoli allocati precedentemente
                 free(V[j]);
             }
@@ -60,11 +60,10 @@ void main () {
     }
 
     int taglia = ottieniTaglia(T);
-    printf ("===== BENVENUT* %s NEL NOSTRO CAR-SHARING =====\n\n", nomeUtente);
 
     inizio:
         char scelta;
-        char* endInput;
+        printf ("===== BENVENUT* %s NEL NOSTRO CAR-SHARING =====\n\n", nomeUtente);
         printf ("1) Nuova Prenotazione\n2) Visualizza storico prenotazione\n3) Visualizza Sconti\n4) Visualizza Veicoli\n5) Trova Prenotazione\n6) Esci\n");
         printf ("Scelga l'operazione da effettuare (da 1-6): ");
 
@@ -72,14 +71,14 @@ void main () {
             int corretto = 1;
         if (scanf (" %c", &scelta) != 1 || getchar() != '\n'){
 
-			printf("Scelta non valida, riprova: ");
+			printf("L'operazione da lei scelta non e' valida, riprova: ");
 			for (; getchar() != '\n';);
             corretto = 0;
 
 		} else if (scelta < '1' || scelta > '6'){
 
 			corretto = 0;
-            printf("Scelta non valida, riprova: ");
+            printf("L'operazione da lei scelta non e' valida, riprova: ");
 
         } 
             if (corretto) {
@@ -98,29 +97,48 @@ void main () {
                 printf ("Bene, innanzitutto scelga il veicolo che le interessa tra quelli in catalogo (da 0 a 9): ");
 
                 int s1;
+                char sceltaIndice[1024];
                 while (1){
-                    scanf ("%d", &s1);
-                    if (s1 < 0 || s1 > 9){
-                        printf ("\nIndice non valido, riprovi: ");
-                    } else {
-                        break;
+                    int i=0;
+                    fgets(sceltaIndice, sizeof(sceltaIndice), stdin);
+                    for (int j=0; sceltaIndice[i] != '\0'; i++){
+                        if (sceltaIndice[i] != ' '){
+                            sceltaIndice[j++] = sceltaIndice[i];
+                        }
                     }
-                }
-
+                    sceltaIndice[i] = '\0';
+                    sceltaIndice[strcspn(sceltaIndice, "\n")] = '\0';
+                    if (strlen(sceltaIndice) == 1 && sceltaIndice[0] >= '0' && sceltaIndice[0] <= '9'){
+                        break;
+                    } else {
+                        printf("Il veicolo da lei scelto non e' valida, riprova: ");
+                    }
+    	        }
+                s1 = sceltaIndice[0] - '0';
+                printf("\n");
                 LimitaOrariDisponibili (V);
                 stampaOrari (V[s1]);
-                printf ("Ora scelga un orario tra quelli disponibili per il noleggio del veicolo: ");
+                printf ("\nOra scelga un orario tra quelli disponibili per il noleggio del veicolo: ");
 
                 int s2;
                 while (1){
-                    scanf ("%d", &s2);
-                    if (s2 < 0 || s2 >8 ){
-                        printf ("\nIndice non valido, riprovi: ");
+                    int i=0;
+                    fgets(sceltaIndice, sizeof(sceltaIndice), stdin);
+                    for (int j=0; sceltaIndice[i] != '\0'; i++){
+                        if (sceltaIndice[i] != ' '){
+                            sceltaIndice[j++] = sceltaIndice[i];
+                        }
                     }
-                    else {
+                    sceltaIndice[i] = '\0';
+                    sceltaIndice[strcspn(sceltaIndice, "\n")] = '\0';
+                    if (strlen(sceltaIndice) == 1 && sceltaIndice[0] >= '0' && sceltaIndice[0] <= '7'){
                         break;
+                    } else {
+                        printf("L'orario da lei scelto non e' valido, riprova: ");
                     }
-                }
+    	        }
+                s2 = sceltaIndice[0] - '0';
+                
                 if (verificaDisponibilita(V[s1],s2)){
                 srand (time(NULL));
                 int ID = rand();
@@ -159,7 +177,7 @@ void main () {
                 while (1){
                     if (scanf (" %c", &s) != 1 || getchar() != '\n'){
 
-                        printf("Scelta non valida, riprova: ");
+                        printf("La conferma da lei scelta non e' valida, riprova: ");
                         for (; getchar() != '\n';);
 
                     } else if (s == 'Y' || s== 'y') {
@@ -188,11 +206,11 @@ void main () {
                         goto inizio;
 
                     } else {
-                        printf ("Scelta non valida, riprova: ");
+                        printf ("L'annullamento da lei scelto non e' valido, riprova: ");
                     }
                 }
                 } else {
-                    printf("Il veicolo da lei selezionato non e' disponibile per l'orario scelto\n");
+                    printf("\nIl veicolo da lei selezionato non e' disponibile per l'orario scelto\n");
                     char s;
                     if (menuPrincipale(s) == 0){
                         goto inizio;
@@ -205,7 +223,7 @@ void main () {
 
                 system ("cls | clear");
 
-                printf ("=== STORICO PRENOTAZIONI DI %s === \n", nomeUtente);
+                printf ("=== STORICO PRENOTAZIONI DI %s === \n\n", nomeUtente);
 
                 StampaPrenotazioneTabellaHash (T, nomeUtente);
 
@@ -231,7 +249,7 @@ void main () {
 
             case 4: { //Visualizza veicoli
                 system("cls | clear");
-                printf ("=== CATALOGO VEICOLI ===\n");
+                printf ("=== CATALOGO VEICOLI ===\n\n");
 
                 for (int i=0; i<10; i++){
 
@@ -249,7 +267,7 @@ void main () {
 
                 system ("cls | clear");
 
-                printf ("Inserisca l'ID della prenotazione che vuole vedere: ");
+                printf ("Inserisca l'ID della prenotazione che vuole vedere: "); // DA SISTEMARE L'INPUT
                 int id;
                 char s;
                 
@@ -292,7 +310,7 @@ void main () {
             }
             default: { //Errore in caso non si inserisca un numero corretto
                 system("cls | clear");
-                printf("Vi e' stato qualche errore durante l'associazione dell'operazione da effettuare\n");
+                printf("Errore durante l'associazione dell'operazione da effettuare.\n");
                 free(nomeUtente);
                 for (int i=0; i < VEICOLI_TAGLIA; i++){
                 liberaVeicolo(V[i]);
