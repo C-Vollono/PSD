@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 #include "Veicolo.h"
 
 /*-- FUNZIONI RELATIVE AI VEICOLI --*/
@@ -284,20 +285,16 @@ void liberaVeicolo (veicolo v){
 
 float costoNoleggio (veicolo v, int k){
 
-    int oreInizio, minutiInizio, oreFine, minutiFine;
-
+    int minutiTotali;
     float inizio = v->orari[k].inizio, fine = v->orari[k].fine;
-   
-    oreInizio = (int)inizio;
-    minutiInizio = (inizio - oreInizio) * 100;
 
-    oreFine = (int)fine;
-    minutiFine = (fine - oreFine) * 100;
-
-    float tempoNoleggio = ((oreFine * 3600 + minutiFine * 60) - (oreInizio * 3600 + minutiInizio * 60)) / 3600.0;
-
-  
-    return (tempoNoleggio * v->CostoNoleggioOrario) * verificaSconto(v, k);
+    int ore = (int)inizio;
+    int minuti = round((inizio-ore)*100);
+    minutiTotali = (ore*60) + minuti;
+    ore = (int)fine;
+    minuti = round((fine-ore)*100);
+    minutiTotali = (ore*60)+minuti - minutiTotali;
+    return minutiTotali * ((v->CostoNoleggioOrario)/60) * verificaSconto(v,k);
 }
 
 
