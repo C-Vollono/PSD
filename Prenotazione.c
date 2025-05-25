@@ -51,7 +51,7 @@ char* ottieniData(){
 
         system("cls|clear");
         perror("ERRORE IN DATA!");
-        exit(1);
+        return NULL;
     }
 
     strcpy(dataFormattata, buffer);
@@ -94,7 +94,7 @@ TabellaHash NuovaTabellaHash (int taglia){
     if (t == NULL){
         system("cls | clear");
         perror ("Errore nell'allocazione della memoria tabella hash.");
-        exit (1);
+        return NULL;
     }
 
     t->taglia = taglia+HASH_TAGLIA;
@@ -183,7 +183,7 @@ Prenotazione NuovaPrenotazione (int ID, char* NomeUtente, veicolo c, int i, char
 
         system("cls | clear");
         perror ("Errore nella creazione della prenotazione.");
-        exit (1);
+        return NULL;
     }
 
     p->ID = ID;
@@ -193,7 +193,7 @@ Prenotazione NuovaPrenotazione (int ID, char* NomeUtente, veicolo c, int i, char
     if (p->nomeUtente == NULL){
         system("cls | clear");
         perror ("ERRORE NEL NOME UTENTE!");
-        exit (1);
+        return NULL;
     }
 
     strcpy (p->nomeUtente, NomeUtente);
@@ -207,7 +207,7 @@ Prenotazione NuovaPrenotazione (int ID, char* NomeUtente, veicolo c, int i, char
         perror ("Errore.");
         free (p->nomeUtente);
         free (p);
-        exit(1);
+        return NULL;
     }
     
     p->OrarioSceltoInizio = p->v->orari[i].inizio;
@@ -391,7 +391,7 @@ static void LiberaLista (Prenotazione p){
  * ---------------------------------------------------------------------------------------------------------------- 
  */
 
-void AggiornaStorico (Prenotazione p, int indiceVeicolo, int indiceOrario){
+int AggiornaStorico (Prenotazione p, int indiceVeicolo, int indiceOrario){
 
     FILE* file;
 
@@ -401,18 +401,13 @@ void AggiornaStorico (Prenotazione p, int indiceVeicolo, int indiceOrario){
 
         system("cls | clear");
         perror ("Errore nell'apertura dello storico");
-        exit (1);
+        return 0;
     }
 
    
     fprintf (file, "\n%s-%s-%.2f-%.2f-%d-%s-%s-%d-%d", p->nomeUtente, p->data, p->OrarioSceltoInizio, p->OrarioSceltoFine, p->ID, p->v->modello, p->v->targa, indiceVeicolo, indiceOrario); // effettuata modifica per gli indici utili nell'inserimento della tabella hash
 
-    if (fclose (file) != 0){
-
-        system("cls | clear");
-        perror ("Errore nella chiusura dello storico.");
-        exit (1);
-    }
+    return chiudiFile(file);
 }
 
 /*---------------------------------------------------------------------------------------------------------------- 
@@ -505,11 +500,11 @@ TabellaHash RiempiTabellaHashDaFile (veicolo *v){
     if (file == NULL){
 
         perror ("Errore nella lettura dello storico.");
-        exit (1);
+        return NULL;
     }
 
-    char buffer [200];
-    int contatorePrenotazioni=0; // variabile che viene incrementata ogni volta che legge una prenotazione dal file, così alla fine si ha la grandezza necessaria per contenere le prenotazioni precedenti 
+    char buffer [1024];
+    int contatorePrenotazioni=0;
 
     while (fgets (buffer, sizeof (buffer), file) != NULL){
 
@@ -520,13 +515,13 @@ TabellaHash RiempiTabellaHashDaFile (veicolo *v){
 
 
     TabellaHash t = NuovaTabellaHash (contatorePrenotazioni);
-
+    if (t == NULL){
+        return NULL;
+    }
     if (contatorePrenotazioni == 0){
 
-        if (fclose(file) != 0){
-
-            perror ("Errore.");
-            exit (1);
+        if (!(chiudiFile(file))){
+            return NULL;
         }
 
         return t;
@@ -539,56 +534,77 @@ TabellaHash RiempiTabellaHashDaFile (veicolo *v){
     while (fgets (buffer, sizeof (buffer), file) != NULL){
 
         char* token = strtok (buffer, "-");
-        // controllo token (senza veicolo)
+        if (!(controlloToken (token))){
+            chiudiFile(file);
+            return NULL;
+        }
 
         char* nomeUtente = strdup (token);
 
         if (nomeUtente == NULL){
-
-            perror ("Errore tabellahash nome utente.");
-            exit (1);
+            chiudiFile(file);
+            perror ("Errore nell'inserimento del nome utente della prenotazione nella tabella Hash.");
+            return NULL;
         }
 
         token = strtok (NULL, "-");
-        //controllo token liberare utente nel caso da qui in poi
+        if (!(controlloToken (token))){
+            chiudiFile(file);
+            free(nomeUtente);
+            return NULL;
+        }
         
         char* dataPrenotazione = strdup (token);
 
         if (dataPrenotazione == NULL){
-
-            perror ("Errore. tabella hash data prenotazione");
-            exit (1);
+            free(nomeUtente);
+            chiudiFile(file);
+            perror ("Errore nell'inserimento della data della prenotazione nella tabella Hash");
+            return NULL;
         }
-
-        token = strtok (NULL, "-");
-        //controllo token liberare utente e dataprenotazione da qui in poi
-        
-        token = strtok (NULL, "-");
-        //controllo token
-
-        token = strtok (NULL, "-");
-        //controllo token
+        for (int k=0; k < 3; k++){
+            token = strtok (NULL, "-");
+            if (!(controlloToken (token))){
+            chiudiFile(file);
+            free(nomeUtente);
+            free(dataPrenotazione);
+            return NULL;
+            }
+        }
 
         int ID = atoi (token);
 
-        token = strtok (NULL, "-");
-        //controllo token
-
-        token = strtok (NULL, "-");
-        //controllo token
-
-        token = strtok (NULL, "-");
-        //controllo token
+        for (int k=0; k < 3; k++){
+            token = strtok (NULL, "-");
+            if (!(controlloToken (token))){
+            chiudiFile(file);
+            free(nomeUtente);
+            free(dataPrenotazione);
+            return NULL;
+            }
+        }
 
         int IndiceVeicoloScelto = atoi (token);
 
         token = strtok (NULL, "-");
-        //controllo token
+        if (!(controlloToken (token))){
+        chiudiFile(file);
+        free(nomeUtente);
+        free(dataPrenotazione);
+        return NULL;
+        }
 
         int IndiceOrarioScelto = atoi (token);
 
         Prenotazione prenotazioneFile = NuovaPrenotazione (ID, nomeUtente, v[IndiceVeicoloScelto], IndiceOrarioScelto, dataPrenotazione);
 
+        if (prenotazioneFile == NULL){
+            printf("L'errore durante il caricamento della prenotazione da file");
+            chiudiFile(file);
+            free(nomeUtente);
+            free(dataPrenotazione);
+            return NULL;
+        }
         InserisciPrenotazione(t,prenotazioneFile);
 
         if (strcmp(dataCorrente, dataPrenotazione) == 0){
@@ -601,10 +617,8 @@ TabellaHash RiempiTabellaHashDaFile (veicolo *v){
             free(dataPrenotazione);
         }
 
-        if (fclose (file) != 0){
-
-            perror ("Errore.");
-            exit(1);
+        if (!(chiudiFile(file))){
+            return NULL;
         }
 
         free(dataCorrente);
