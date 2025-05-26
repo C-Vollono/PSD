@@ -11,9 +11,66 @@ struct hash{
     struct item **tabella; 
 };
 
+/*---------------------------------------------------------------------------------------------------------------- 
+ * Funzione: ottieniTaglia
+ * -----------------------
+ *  
+ * 
+ * Specifica sintattica:
+ *      
+ *
+ * Parametri:
+ *      
+ * 
+ * Specifica semantica:
+ *      
+ * 
+ * Pre-condizione:
+ *      
+ * 
+ * Post-condizione:
+ *      
+ * 
+ * Ritorna:
+ *      
+ * 
+ * Effetti collaterali:
+ *      
+ * ---------------------------------------------------------------------------------------------------------------- 
+ */
+
 int ottieniTaglia (TabellaHash t){
     return t->taglia;
 }
+
+/*---------------------------------------------------------------------------------------------------------------- 
+ * Funzione: NuovaTabellaHash
+ * -----------------------
+ *  
+ * 
+ * Specifica sintattica:
+ *      
+ *
+ * Parametri:
+ *      
+ * 
+ * Specifica semantica:
+ *      
+ * 
+ * Pre-condizione:
+ *      
+ * 
+ * Post-condizione:
+ *      
+ * 
+ * Ritorna:
+ *      
+ * 
+ * Effetti collaterali:
+ *      
+ * ---------------------------------------------------------------------------------------------------------------- 
+ */
+
 
 
 TabellaHash NuovaTabellaHash (int taglia){
@@ -35,9 +92,65 @@ TabellaHash NuovaTabellaHash (int taglia){
     return t;
 }
 
+/*---------------------------------------------------------------------------------------------------------------- 
+ * Funzione: FunzioneHash
+ * -----------------------
+ *  
+ * 
+ * Specifica sintattica:
+ *      
+ *
+ * Parametri:
+ *      
+ * 
+ * Specifica semantica:
+ *      
+ * 
+ * Pre-condizione:
+ *      
+ * 
+ * Post-condizione:
+ *      
+ * 
+ * Ritorna:
+ *      
+ * 
+ * Effetti collaterali:
+ *      
+ * ---------------------------------------------------------------------------------------------------------------- 
+ */
+
 int FunzioneHash(int ID, int taglia) {
     return ((31 * ID) % taglia);
 }
+
+/*---------------------------------------------------------------------------------------------------------------- 
+ * Funzione: InserisciPrenotazione
+ * -----------------------
+ *  
+ * 
+ * Specifica sintattica:
+ *      
+ *
+ * Parametri:
+ *      
+ * 
+ * Specifica semantica:
+ *      
+ * 
+ * Pre-condizione:
+ *      
+ * 
+ * Post-condizione:
+ *      
+ * 
+ * Ritorna:
+ *      
+ * 
+ * Effetti collaterali:
+ *      
+ * ---------------------------------------------------------------------------------------------------------------- 
+ */
 
 int InserisciPrenotazione (TabellaHash t, Prenotazione p){
     int indice;
@@ -59,6 +172,34 @@ int InserisciPrenotazione (TabellaHash t, Prenotazione p){
     return 1;
 }
 
+/*---------------------------------------------------------------------------------------------------------------- 
+ * Funzione: LiberaTabellaHash
+ * -----------------------
+ *  
+ * 
+ * Specifica sintattica:
+ *      
+ *
+ * Parametri:
+ *      
+ * 
+ * Specifica semantica:
+ *      
+ * 
+ * Pre-condizione:
+ *      
+ * 
+ * Post-condizione:
+ *      
+ * 
+ * Ritorna:
+ *      
+ * 
+ * Effetti collaterali:
+ *      
+ * ---------------------------------------------------------------------------------------------------------------- 
+ */
+
 void LiberaTabellaHash (TabellaHash t){
 
     for (int i=0; i< t->taglia; i++){
@@ -68,6 +209,34 @@ void LiberaTabellaHash (TabellaHash t){
     free (t->tabella);
     free (t);
 }
+
+/*---------------------------------------------------------------------------------------------------------------- 
+ * Funzione: StampaPrenotazioneTabellaHash
+ * -----------------------
+ *  
+ * 
+ * Specifica sintattica:
+ *      
+ *
+ * Parametri:
+ *      
+ * 
+ * Specifica semantica:
+ *      
+ * 
+ * Pre-condizione:
+ *      
+ * 
+ * Post-condizione:
+ *      
+ * 
+ * Ritorna:
+ *      
+ * 
+ * Effetti collaterali:
+ *      
+ * ---------------------------------------------------------------------------------------------------------------- 
+ */
 
 void StampaPrenotazioneTabellaHash (TabellaHash t, char* nomeUtente){
     int g = ottieniTaglia(t);
@@ -87,6 +256,34 @@ void StampaPrenotazioneTabellaHash (TabellaHash t, char* nomeUtente){
         printf ("Non risultano presenti prenotazioni a suo nome.\n");
     }
 }
+
+/*---------------------------------------------------------------------------------------------------------------- 
+ * Funzione: TrovaPrenotazione
+ * -----------------------
+ *  
+ * 
+ * Specifica sintattica:
+ *      
+ *
+ * Parametri:
+ *      
+ * 
+ * Specifica semantica:
+ *      
+ * 
+ * Pre-condizione:
+ *      
+ * 
+ * Post-condizione:
+ *      
+ * 
+ * Ritorna:
+ *      
+ * 
+ * Effetti collaterali:
+ *      
+ * ---------------------------------------------------------------------------------------------------------------- 
+ */
 
 Prenotazione TrovaPrenotazione (TabellaHash t, int ID, int taglia){
     int indice = FunzioneHash (ID, taglia);

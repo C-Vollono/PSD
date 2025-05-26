@@ -36,31 +36,32 @@ struct Vettura{
 /*---------------------------------------------------------------------------------------------------------------- 
  * Funzione: riempiVeicoli
  * -----------------------
- * Prende in input l'oggetto veicolo e il puntatore al file .txt contenente i dati dei veicoli
- * Riempie l'oggetto veicolo con i dati contenuti nel file 
+ * Prende in input l'oggetto veicolo
+ * Riempie l'oggetto veicolo con i dati contenuti nel file Veicolo.txt  
  * 
  * Specifica sintattica:
- *      void riempiVeicoli(veicolo, char*) -> void
+ *      void riempiVeicoli(veicolo) -> int
  *
  * Parametri:
- *      v:        oggetto veicolo
- *      nomefile: file Veicoli.txt
+ *      v: oggetto veicolo
  * 
  * Specifica semantica:
- *      riempiVeicoli(v, nomefile) -> void
+ *      riempiVeicoli(v) -> 0 se chiusura del file corretta altrimenti 1
  * 
  * Pre-condizione:
- *      Il file txt deve contenere i vari dati dei Veicoli e l'oggetto veicolo esistere
+ *      Veicolo.txt deve esistere e contenere i dati dei veicoli
+ *      L'oggetto veicolo deve esistere
  * 
  * Post-condizione:
- *      Non ritorna nessun valore, oggetto veicolo riempito
+ *      L'oggetto veicolo e` riempito con successo
  * 
  * Ritorna:
- *      Nessun valore 
+ *      0 se chiusura del file corretta altrimenti 1
  * 
  * Effetti collaterali:
  *      Modifica il contenuto nell'oggetto veicolo
- *      Se il file è vuoto, la funzione potrebbe dare comportamento indefinito senza opportuni controlli
+ *      Se il file è vuoto, l'oggetto veicolo risulta NULL
+ *      Stampa errore per apertura del file fallita, per l'allocazione dei vari campi dell'oggetto e riempimento fallito
  * ---------------------------------------------------------------------------------------------------------------- 
  */
 
@@ -189,9 +190,9 @@ struct Vettura{
 }
 
 /*---------------------------------------------------------------------------------------------------------------- 
- * Funzione: stampaVeicoli
+ * Funzione: stampaVeicolo
  * -----------------------
- * Stampa a video i dati di un oggetto veicolo tra cui anche gli intervalli orari con la loro disponibilità (richiamo ad altre due funzioni) 
+ * Stampa a video i dati di un oggetto veicolo
  * 
  * Specifica sintattica:
  *      void stampaVeicoli(veicolo) -> void
@@ -204,8 +205,7 @@ struct Vettura{
  * 
  * Pre-condizione:
  *      L'oggetto veicolo deve contenere dei dati diversi da NULL
- *      La funzione stampaOrari deve esistere
- * 
+ *      
  * Post-condizione:
  *      Non ritorna nessun valore
  * 
@@ -213,7 +213,7 @@ struct Vettura{
  *      Nessun valore 
  * 
  * Effetti collaterali:
- *      Nessun effetto collaterale
+ *      Stampa a video i dati dell'oggetto veicolo
  * ---------------------------------------------------------------------------------------------------------------- 
  */
 
@@ -257,104 +257,36 @@ struct Vettura{
     if (v->tipoVeicolo){ free(v->tipoVeicolo); }
 }
 
-/*-- FUNZIONI RELATIVE AL NOLEGGIO --*/
-
-/*---------------------------------------------------------------------------------------------------------------- 
- * Funzione: costoNoleggio
- * -----------------------
- * Calcola quanto costa il noleggio in un orario scelto dall'utente con eventuale sconto 
- * 
- * Specifica sintattica:
- *      float costoNoleggio(veicolo, int) -> float
- *
- * Parametri:
- *      v: oggetto veicolo
- *      k: indice dell'orario scelto
- * 
- * Specifica semantica:
- *      costoNoleggio(v, k) -> costo_del_Noleggio
- * 
- * Pre-condizione:
- *      L'oggetto veicolo deve esistere e contenere dati sugli intervalli orari
- *      La funzione verificaSconto deve esistere (oppure eliminata in caso di sconti non applicabili)
- * 
- * Post-condizione:
- *      Restituisce il costo totale del noleggio dell'orario scelto dall'utente
- * 
- * Ritorna:
- *      Ritorna un tipo float del costo totale
- * 
- * Effetti collaterali: 
- *      Nessun effetto collaterale
- * ---------------------------------------------------------------------------------------------------------------- 
- */
-
-
-
-
-/*---------------------------------------------------------------------------------------------------------------- 
- * Funzione: verificaSconto
- * -----------------------
- * La funzione verifica la possibilità di un sconto in determinati intervalli orari prestabiliti e restituisce un tipo float
- * riguardante lo sconto da applicare al calcolo del costo totale del noleggio
- * 
- * Specifica sintattica:
- *      float verificaSconto(veicolo, int) -> float
- *
- * Parametri:
- *      v: oggetto veicolo
- *      k: indice dell'orario scelto
- * 
- * Specifica semantica:
- *      verificaSconto(v, k) -> Percentuale_di_Sconto
- * Pre-condizione:
- *      L'oggetto veicolo deve esistere e contenere i dati sugli intervalli orari
- *      
- * Post-condizione:
- *      Restituisce la percentuale di sconto se l'orario della prenotazione corrisponde all'intervallo
- *      Altrimenti restituisce 1
- * 
- * Ritorna:
- *      Restituisce un tipo float della percentuale di sconto
- *      Altrimenti float di 1.0
- *      
- * Effetti collaterali:
- *      Nessun effetto collaterale 
- * ---------------------------------------------------------------------------------------------------------------- 
- */
-
-
-
-/*-- FUNZIONI RELATIVE AGLI ORARI --*/
 
 /*---------------------------------------------------------------------------------------------------------------- 
  * Funzione: riempiOrari
  * -----------------------
- * Prende in input l'oggetto veicolo e il puntatore al file .txt contenente i dati degli intervalli orari
- * Riempie l'oggetto veicolo con i dati contenuti nel file 
+ * Prende in input l'oggetto veicolo
+ * Riempi l'oggetto Orari con i dati contenuti nel file Orari.txt
  * 
  * Specifica sintattica:
- *      void riempiOrari(veicolo,char*)->void
+ *      int riempiOrari(veicolo) -> int
  *
  * Parametri:
- *             v: oggetto veicolo
- *      nomefile: file Orari.tx
- * 
+ *      v: oggetto veicolo
+ *      
  * Specifica semantica:
- *      riempiOrari(v, nomefile)-> void
+ *      riempiOrari(v) -> 0 se chiusura del file corretta altrimenti 1
  *       
  * Pre-condizione:
- *       Il file txt deve contenere i vari dati degli Orari e l'oggetto veicolo esistere
+ *      L'oggetto veicolo esistere
+ *      Orari.txt deve esistere e contenere i dati degli intervalli orari e il loro status di disponibilita`
  * 
  * Post-condizione:
- *      Non ritorna nessun valore, oggetto Orari riempito
+ *      L'oggetto Orari riempito con successo
  * 
  * Ritorna: 
- *      Nessun valore
+ *      0 se chiusura del file corretta altrimenti 1
  * 
  * Effetti collaterali:
- *      Modifica il contenuto nell'oggetto veicolo
- *      Se il file è vuoto, la funzione potrebbe dare comportamento indefinito senza opportuni controlli
+ *      Modifica il contenuto nell'oggetto orari
+ *      Se il file è vuoto, l'oggetto veicolo risulta NULL
+ *      File viene chiuso in caso in cui controllotoken fallisce
  * ---------------------------------------------------------------------------------------------------------------- 
  */
 
@@ -407,23 +339,22 @@ int riempiOrari (veicolo v){
 
 
 /*---------------------------------------------------------------------------------------------------------------- 
- * Funzione: verificaDisponibilità
+ * Funzione: stampaDisponibilita
  * -----------------------
- * Verifica che un veicolo in un determinato orario sia disponibile attraverso un modulo 2 (se 1 allora non disponibile altrimenti disponibile)
- * Stampa a video disponibile o meno
+ * Stampa a video lo status di disponibilita di un veicolo
  * 
  * Specifica sintattica:
- *      void verificaDisponibilità (veicolo, int) -> void
+ *      void stampaDisponibilita(veicolo, int) -> void
  *
  * Parametri:
  *      v: oggetto veicolo
  *      k: indice orario scelto
  * 
  * Specifica semantica:
- *      verificaDisponibilità(v, k) -> void
- *       
+ *       stampaDisponibilità(v, k) -> void
+ * 
  * Pre-condizione:
- *      L'oggetto veicolo deve esistere e contenere i dati della struct Orari
+ *      L'oggetto veicolo deve esistere e contenere dati dell'oggetto Orari
  *       
  * Post-condizione:
  *      Non ritorna nessun valore
@@ -432,8 +363,8 @@ int riempiOrari (veicolo v){
  *      Nessun valore
  * 
  * Effetti collaterali:
- *      Nessun effetto collaterale   
- * ----------------------------------------------------------------------------------------------------------------     
+ *       Stampa a video la disponibilita ("Non disponibile" o "Disponibile")
+ * ---------------------------------------------------------------------------------------------------------------- 
  */
 
 void stampaDisponibilita (veicolo v, int k){
@@ -480,39 +411,6 @@ void modificaDisponibilita (veicolo v, int k){
 }
 
 /*-----------------------------------------------------------------------------------------------------------------
- * Funzione: stampaOrari
- * ----------------------------------------------------------------------------------------------------------------
- * Stampa a video l'intervallo orario scelto dall'utente con la sua disponibilità (Non disponibile o Disponibile)
- * 
- * Specifica sintattica:
- *      void stampaOrari(veicolo) -> void
- *
- * Parametri:
- *      v: oggetto veicolo
- * 
- * Specifica semantica:
- *      stampaOrari(v) -> void
- *       
- * Pre-condizione:
- *      L'oggetto deve esistere e contenere dati
- *      verificaDisponibilità deve esistere 
- *       
- * Post-condizione:
- *      Nessun valore di ritorno
- * 
- * Ritorna: 
- *      Nessun valore
- * 
- * Effetti collaterali:
- *      Nessun effetto collaterale     
- * ---------------------------------------------------------------------------------------------------------------- 
- */
-
-
-
-/*--Funzioni di supporto--*/
-
-/*-----------------------------------------------------------------------------------------------------------------
  * Funzione: controllotoken
  * ----------------------------------------------------------------------------------------------------------------
  * Controllo di eventuali errori nella funzione strtok della libreria string.h 
@@ -542,10 +440,6 @@ void modificaDisponibilita (veicolo v, int k){
  * ---------------------------------------------------------------------------------------------------------------- 
  */
 
-
-
-
-
 char* ottieniModello(veicolo v){
     if(v!=NULL){
         return v->modello;
@@ -560,23 +454,23 @@ char* ottieniTarga(veicolo v){
     return NULL;
 }
 
-float ottieniOrarioInizio(veicolo v, int k){
+float ottieniOrarioInizio(veicolo v, int indiceOrario){
     if(v!=NULL){
-        return v->orari[k].inizio;
+        return v->orari[indiceOrario].inizio;
     }
     return -1;
 }
 
-float ottieniOrarioFine(veicolo v, int k){
+float ottieniOrarioFine(veicolo v, int indiceOrario){
     if(v!=NULL){
-        return v->orari[k].fine;
+        return v->orari[indiceOrario].fine;
     }
     return -1;
 }
 
-int ottieniDisponibilita(veicolo v, int k){
+int ottieniDisponibilita(veicolo v, int indiceOrario){
     if(v!=NULL){
-        return v->orari[k].Disponibilita;
+        return v->orari[indiceOrario].Disponibilita;
     }
     return -1;
 }

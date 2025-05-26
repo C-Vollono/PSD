@@ -387,11 +387,11 @@ char* ottieniModello(veicolo v);
 
 char* ottieniTarga(veicolo v);
 
-float ottieniOrarioInizio(veicolo v, int k);
+float ottieniOrarioInizio(veicolo v, int indiceOrario);
 
-float ottieniOrarioFine(veicolo v, int k);
+float ottieniOrarioFine(veicolo v, int indiceOrario);
 
-int ottieniDisponibilita(veicolo v, int k);
+int ottieniDisponibilita(veicolo v, int indiceOrario);
 
 float ottieniCostoOrario(veicolo v);
 

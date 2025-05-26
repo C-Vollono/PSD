@@ -10,8 +10,6 @@ void LiberaLista (Prenotazione p); // Dealloca una lista collegata nella tabella
 
 Prenotazione NuovaPrenotazione (int ID, char* NomeUtente, veicolo c, int i, char* dataPrenotazione); //Crea una nuova prenotazione
 
-
-
 void stampaPrenotazione (Prenotazione p); // stampa i dettagli di una prenotazione
 
 int ottieniID (Prenotazione p);
