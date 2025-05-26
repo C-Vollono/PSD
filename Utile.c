@@ -8,6 +8,34 @@
 #include "Utile.h"
 
 
+/*---------------------------------------------------------------------------------------------------------------- 
+ * Funzione: ottieniData
+ * -----------------------
+ *  
+ * 
+ * Specifica sintattica:
+ *      
+ *
+ * Parametri:
+ *      
+ * 
+ * Specifica semantica:
+ *      
+ * 
+ * Pre-condizione:
+ *      
+ * 
+ * Post-condizione:
+ *      
+ * 
+ * Ritorna:
+ *      
+ * 
+ * Effetti collaterali:
+ *      
+ * ---------------------------------------------------------------------------------------------------------------- 
+ */
+
 char* ottieniData(){ 
     time_t t = time (NULL); //ottengo i secondi dal 1 gennaio 1970
     struct tm* data = localtime (&t); //ottengo la data corrente, ma bisogna formattarla
@@ -25,6 +53,34 @@ char* ottieniData(){
     return dataFormattata;
 }
 
+/*---------------------------------------------------------------------------------------------------------------- 
+ * Funzione: AggiornaStorico
+ * -----------------------
+ *  
+ * 
+ * Specifica sintattica:
+ *      
+ *
+ * Parametri:
+ *      
+ * 
+ * Specifica semantica:
+ *      
+ * 
+ * Pre-condizione:
+ *      
+ * 
+ * Post-condizione:
+ *      
+ * 
+ * Ritorna:
+ *      
+ * 
+ * Effetti collaterali:
+ *      
+ * ---------------------------------------------------------------------------------------------------------------- 
+ */
+
 int AggiornaStorico (Prenotazione p, int indiceVeicolo, int indiceOrario){
     FILE* file;
     file = fopen ("StoricoPrenotazioni.txt", "a");
@@ -39,6 +95,34 @@ int AggiornaStorico (Prenotazione p, int indiceVeicolo, int indiceOrario){
 
     return chiudiFile(file);
 }
+
+/*---------------------------------------------------------------------------------------------------------------- 
+ * Funzione: RiempiTabellaHashDaFile
+ * -----------------------
+ *  
+ * 
+ * Specifica sintattica:
+ *      
+ *
+ * Parametri:
+ *      
+ * 
+ * Specifica semantica:
+ *      
+ * 
+ * Pre-condizione:
+ *      
+ * 
+ * Post-condizione:
+ *      
+ * 
+ * Ritorna:
+ *      
+ * 
+ * Effetti collaterali:
+ *      
+ * ---------------------------------------------------------------------------------------------------------------- 
+ */
 
 TabellaHash RiempiTabellaHashDaFile (veicolo *v){
     FILE* file = fopen ("StoricoPrenotazioni.txt", "r");
@@ -180,6 +264,34 @@ TabellaHash RiempiTabellaHashDaFile (veicolo *v){
     return t;    
 }
 
+/*---------------------------------------------------------------------------------------------------------------- 
+ * Funzione: LimitaOrariDisponibili
+ * -----------------------
+ *  
+ * 
+ * Specifica sintattica:
+ *      
+ *
+ * Parametri:
+ *      
+ * 
+ * Specifica semantica:
+ *      
+ * 
+ * Pre-condizione:
+ *      
+ * 
+ * Post-condizione:
+ *      
+ * 
+ * Ritorna:
+ *      
+ * 
+ * Effetti collaterali:
+ *      
+ * ---------------------------------------------------------------------------------------------------------------- 
+ */
+
 void LimitaOrariDisponibili (veicolo *v){
     time_t t = time (NULL); //ottengo i secondi dal 1 gennaio 1970
     struct tm* data = localtime (&t); //ottengo la data corrente, ma bisogna formattarla
@@ -195,6 +307,37 @@ void LimitaOrariDisponibili (veicolo *v){
     }
 }
 
+/*---------------------------------------------------------------------------------------------------------------- 
+ * Funzione: verificaSconto
+ * -----------------------
+ * La funzione verifica la possibilità di un sconto in determinati intervalli orari prestabiliti e restituisce un tipo float
+ * riguardante lo sconto da applicare al calcolo del costo totale del noleggio
+ * 
+ * Specifica sintattica:
+ *      float verificaSconto(veicolo, int) -> float
+ *
+ * Parametri:
+ *      v: oggetto veicolo
+ *      k: indice dell'orario scelto
+ * 
+ * Specifica semantica:
+ *      verificaSconto(v, k) -> Percentuale di Sconto
+ * Pre-condizione:
+ *      L'oggetto veicolo deve esistere e contenere i dati sugli intervalli orari
+ *      
+ * Post-condizione:
+ *      Restituisce la percentuale di sconto se l'orario della prenotazione corrisponde all'intervallo
+ *      Altrimenti restituisce 1
+ * 
+ * Ritorna:
+ *      Restituisce un tipo float della percentuale di sconto
+ *      Altrimenti float di 1.0
+ *      
+ * Effetti collaterali:
+ *      Nessun effetto collaterale 
+ * ---------------------------------------------------------------------------------------------------------------- 
+ */
+
 float verificaSconto (veicolo v, int k){
       float orario = ottieniOrarioInizio(v , k);
       if (orario >= 20.00 ){
@@ -204,12 +347,70 @@ float verificaSconto (veicolo v, int k){
       } else return 1.0;
 }
 
+/*---------------------------------------------------------------------------------------------------------------- 
+ * Funzione: verificaDisponibilità
+ * -----------------------
+ * Verifica la disponibilita` di un veicolo in un determinato orario
+ * 
+ * Specifica sintattica:
+ *      int verificaDisponibilità (veicolo, int) -> void
+ *
+ * Parametri:
+ *      v: oggetto veicolo
+ *      indiceOrario: indice orario scelto
+ * 
+ * Specifica semantica:
+ *      verificaDisponibilità(v, indiceOrario) -> 1 se ottieniDisponibilita restituisce 0 altrimenti 0
+ *       
+ * Pre-condizione:
+ *      L'oggetto veicolo deve esistere e contenere i dati dell'oggetto orari
+ *       
+ * Post-condizione:
+ *      Restituisce un intero se ottieniDisponibilita e` 0 o diverso da 0
+ * 
+ * Ritorna: 
+ *      1 se ottieniDisponibilita restituisce 0 altrimenti 0
+ * 
+ * Effetti collaterali:
+ *      Nessun effetto collaterale   
+ * ----------------------------------------------------------------------------------------------------------------     
+ */
+
 int verificaDisponibilita(veicolo v, int indiceOrario){
     if (ottieniDisponibilita(v, indiceOrario) == 0){
         return 1;
     }
         return 0;
 }
+
+/*-----------------------------------------------------------------------------------------------------------------
+ * Funzione: stampaOrari
+ * ----------------------------------------------------------------------------------------------------------------
+ * Stampa a video l'intervallo orario scelto dall'utente con la sua disponibilità (Non disponibile o Disponibile)
+ * 
+ * Specifica sintattica:
+ *      void stampaOrari(veicolo) -> void
+ *
+ * Parametri:
+ *      v: oggetto veicolo
+ * 
+ * Specifica semantica:
+ *      stampaOrari(v) -> void
+ *       
+ * Pre-condizione:
+ *      L'oggetto deve esistere e contenere dati
+ *      stampaDisponibilita, ottieniOrarioInizio e ottieniOrarioFine devono esistere 
+ *       
+ * Post-condizione:
+ *      Nessun valore di ritorno
+ * 
+ * Ritorna: 
+ *      Nessun valore
+ * 
+ * Effetti collaterali:
+ *      Stampa a video la lista degli orari e la loro disponibilita del veicolo   
+ * ---------------------------------------------------------------------------------------------------------------- 
+ */
 
 void stampaOrari (veicolo v){
         printf("\nLista degli orari del veicolo scelto\n\n");
@@ -219,6 +420,36 @@ void stampaOrari (veicolo v){
         }
 }
 
+/*-----------------------------------------------------------------------------------------------------------------
+ * Funzione: controllotoken
+ * ----------------------------------------------------------------------------------------------------------------
+ * Controllo di eventuali errori nella funzione strtok della libreria string.h 
+ * 
+ * Specifica sintattica:
+ *      void controllotoken(char*, veicolo, FILE*)-> void
+ *
+ * Parametri:
+ *      token: stringa
+ *      v: oggetto veicolo
+ *      file: puntatore a file
+ * 
+ * Specifica semantica:
+ *      controllotoken(token, v, file)-> void 
+ *       
+ * Pre-condizione:
+ *      token deve esistere
+ *       
+ * Post-condizione:
+ *      Se token == NULL, libera memoria e chiude file
+ * 
+ * Ritorna: 
+ *      Nessun valore     
+ * 
+ * Effetti collaterali:
+ *      Nessun effetto collaterale
+ * ---------------------------------------------------------------------------------------------------------------- 
+ */
+
 int controlloToken (char* token){ 
     if (token == NULL){
         system("cls | clear");
@@ -227,6 +458,34 @@ int controlloToken (char* token){
     }
     return 1;
 }
+
+/*---------------------------------------------------------------------------------------------------------------- 
+ * Funzione: chiudiFile
+ * -----------------------
+ *  
+ * 
+ * Specifica sintattica:
+ *      
+ *
+ * Parametri:
+ *      
+ * 
+ * Specifica semantica:
+ *      
+ * 
+ * Pre-condizione:
+ *      
+ * 
+ * Post-condizione:
+ *      
+ * 
+ * Ritorna:
+ *      
+ * 
+ * Effetti collaterali:
+ *      
+ * ---------------------------------------------------------------------------------------------------------------- 
+ */
 
 int chiudiFile(FILE* file){ 
     if (fclose (file) != 0){

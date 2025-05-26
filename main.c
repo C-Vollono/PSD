@@ -59,7 +59,7 @@ void main () {
 
 inizio:
     printf ("\n===== BENVENUT* %s NEL NOSTRO CAR-SHARING =====\n\n", nomeUtente);
-    printf ("1) Nuova Prenotazione\n2) Visualizza storico prenotazione\n3) Visualizza Sconti\n4) Visualizza Veicoli\n5) Trova Prenotazione\n6) Esci\n");
+    printf ("1) Nuova Prenotazione\n2) Visualizza storico prenotazioni\n3) Visualizza Sconti\n4) Visualizza Veicoli\n5) Trova Prenotazione\n6) Esci\n");
     printf ("Scelga l'operazione da effettuare (da 1-6): ");
 
     char scelta;
@@ -165,6 +165,7 @@ inizio:
                         goto inizio;
                     } else if (s == 'N' || s == 'n') {
                         printf ("Mi dispiace, ma la sua prenotazione e' annullata.");
+                        LiberaLista (p1);
                         printf ("\n\n\n");
                         goto inizio;
                     } else {

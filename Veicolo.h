@@ -328,7 +328,7 @@ void stampaDisponibilita (veicolo v, int k);
  * Va a modificare nel campo disponibilità il suo valore a 1 quando chiamata
  * 
  * Specifica sintattica:
- *      void modificaDisponibilità(veicolo, int) -> void
+ *      modificaDisponibilità(veicolo, int) -> void
  *
  * Parametri:
  *      v: oggetto veicolo
@@ -387,11 +387,11 @@ char* ottieniModello(veicolo v);
 
 char* ottieniTarga(veicolo v);
 
-float ottieniOrarioInizio(veicolo v, int k);
+float ottieniOrarioInizio(veicolo v, int indiceOrario);
 
-float ottieniOrarioFine(veicolo v, int k);
+float ottieniOrarioFine(veicolo v, int indiceOrario);
 
-int ottieniDisponibilita(veicolo v, int k);
+int ottieniDisponibilita(veicolo v, int indiceOrario);
 
 float ottieniCostoOrario(veicolo v);
 
