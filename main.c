@@ -13,6 +13,8 @@
 #include "Veicolo.h"
 #include "Prenotazione.h"
 #include "Menu.h"
+#include "Utile.h"
+#include "TabellaHash.h"
 
 #define VEICOLI_TAGLIA 10
 
@@ -24,10 +26,8 @@ void main () {
     nomeUtente = menuAccesso(); 
     
     for (int i=0; i < VEICOLI_TAGLIA; i++){
-        V[i] = malloc(sizeof(struct Vettura));
+        V[i] = creaVeicolo(); 
         if (V[i] == NULL){  
-            system("cls | clear");
-            perror ("ERRORE: Allocazione memoria veicolo fallita\n");
             for (int j=0; j < i; j++){ free(V[j]);}
             free(nomeUtente);
             exit (1);
