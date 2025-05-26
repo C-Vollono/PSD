@@ -36,32 +36,32 @@ struct Vettura{
 /*---------------------------------------------------------------------------------------------------------------- 
  * Funzione: riempiVeicoli
  * -----------------------
- * Prende in input l'oggetto veicolo
- * Riempie l'oggetto veicolo con i dati contenuti nel file Veicolo.txt  
+ * Prende in input la struct veicolo
+ * Riempie la struct veicolo con i dati contenuti nel file Veicolo.txt  
  * 
  * Specifica sintattica:
- *      void riempiVeicoli(veicolo) -> int
+ *      riempiVeicoli(veicolo) -> int
  *
  * Parametri:
- *      v: oggetto veicolo
+ *      v: struct veicolo
  * 
  * Specifica semantica:
  *      riempiVeicoli(v) -> 0 se chiusura del file corretta altrimenti 1
  * 
  * Pre-condizione:
  *      Veicolo.txt deve esistere e contenere i dati dei veicoli
- *      L'oggetto veicolo deve esistere
+ *      La struct veicolo deve esistere
  * 
  * Post-condizione:
- *      L'oggetto veicolo e` riempito con successo
+ *      La struct veicolo e` riempita con successo
  * 
  * Ritorna:
  *      0 se chiusura del file corretta altrimenti 1
  * 
  * Effetti collaterali:
- *      Modifica il contenuto nell'oggetto veicolo
- *      Se il file è vuoto, l'oggetto veicolo risulta NULL
- *      Stampa errore per apertura del file fallita, per l'allocazione dei vari campi dell'oggetto e riempimento fallito
+ *      Modifica il contenuto nella struct veicolo
+ *      Se il file è vuoto, la struct veicolo risulta NULL
+ *      Stampa errore per apertura del file fallita, per l'allocazione dei vari campi della struct e riempimento fallito
  * ---------------------------------------------------------------------------------------------------------------- 
  */
 
@@ -192,19 +192,19 @@ struct Vettura{
 /*---------------------------------------------------------------------------------------------------------------- 
  * Funzione: stampaVeicolo
  * -----------------------
- * Stampa a video i dati di un oggetto veicolo
+ * Stampa a video i dati della struct veicolo
  * 
  * Specifica sintattica:
- *      void stampaVeicoli(veicolo) -> void
+ *      stampaVeicoli(veicolo) -> void
  *
  * Parametri:
- *      v: oggetto veicolo
+ *      v: struct veicolo
  * 
  * Specifica semantica:
  *      stampaVeicoli(v) -> void
  * 
  * Pre-condizione:
- *      L'oggetto veicolo deve contenere dei dati diversi da NULL
+ *      La struct veicolo deve contenere dei dati diversi da NULL
  *      
  * Post-condizione:
  *      Non ritorna nessun valore
@@ -213,7 +213,7 @@ struct Vettura{
  *      Nessun valore 
  * 
  * Effetti collaterali:
- *      Stampa a video i dati dell'oggetto veicolo
+ *      Stampa a video i dati della struct veicolo
  * ---------------------------------------------------------------------------------------------------------------- 
  */
 
@@ -224,19 +224,19 @@ struct Vettura{
 /*---------------------------------------------------------------------------------------------------------------- 
  * Funzione: liberaVeicolo
  * -----------------------
- *  Libera la memoria dell'oggetto veicolo
+ *  Libera la memoria della struct veicolo
  * 
  * Specifica sintattica:
- *      void liberaVeicolo(veicolo) -> void
+ *      liberaVeicolo(veicolo) -> void
  *
  * Parametri:
- *      v: oggetto veicolo
+ *      v: struct veicolo
  *  
  * Specifica semantica:
  *      liberaVeicolo(v) -> void
  * 
  * Pre-condizione:
- *      Memoria allocata per l'oggetto veicolo
+ *      Memoria allocata per la struct veicolo
  * 
  * Post-condizione:
  *      Memoria liberata correttamente
@@ -245,7 +245,7 @@ struct Vettura{
  *      Nessun valore 
  * 
  * Effetti collaterali:
- *      L'oggetto veicolo non ha più dati presenti in memoria
+ *      La struct veicolo non ha più dati presenti in memoria
  * ---------------------------------------------------------------------------------------------------------------- 
  */
 
@@ -257,35 +257,34 @@ struct Vettura{
     if (v->tipoVeicolo){ free(v->tipoVeicolo); }
 }
 
-
 /*---------------------------------------------------------------------------------------------------------------- 
  * Funzione: riempiOrari
  * -----------------------
- * Prende in input l'oggetto veicolo
- * Riempi l'oggetto Orari con i dati contenuti nel file Orari.txt
+ * Prende in input la struct veicolo
+ * Riempi la struct annidata Orari con i dati contenuti nel file Orari.txt
  * 
  * Specifica sintattica:
- *      int riempiOrari(veicolo) -> int
+ *      riempiOrari(veicolo) -> int
  *
  * Parametri:
- *      v: oggetto veicolo
+ *      v: struct veicolo
  *      
  * Specifica semantica:
  *      riempiOrari(v) -> 0 se chiusura del file corretta altrimenti 1
  *       
  * Pre-condizione:
- *      L'oggetto veicolo esistere
+ *      La struct veicolo esistere
  *      Orari.txt deve esistere e contenere i dati degli intervalli orari e il loro status di disponibilita`
  * 
  * Post-condizione:
- *      L'oggetto Orari riempito con successo
+ *      La struct annidata Orari riempito con successo
  * 
  * Ritorna: 
  *      0 se chiusura del file corretta altrimenti 1
  * 
  * Effetti collaterali:
- *      Modifica il contenuto nell'oggetto orari
- *      Se il file è vuoto, l'oggetto veicolo risulta NULL
+ *      Modifica il contenuto nella struct annidata orari
+ *      Se il file è vuoto, la struct veicolo risulta NULL
  *      File viene chiuso in caso in cui controllotoken fallisce
  * ---------------------------------------------------------------------------------------------------------------- 
  */
@@ -337,24 +336,23 @@ int riempiOrari (veicolo v){
     return chiudiFile(file); 
 }
 
-
 /*---------------------------------------------------------------------------------------------------------------- 
  * Funzione: stampaDisponibilita
  * -----------------------
  * Stampa a video lo status di disponibilita di un veicolo
  * 
  * Specifica sintattica:
- *      void stampaDisponibilita(veicolo, int) -> void
+ *      stampaDisponibilita(veicolo, int) -> void
  *
  * Parametri:
- *      v: oggetto veicolo
- *      k: indice orario scelto
+ *      v: struct veicolo
+ *      indiceOrario: indice orario scelto
  * 
  * Specifica semantica:
- *       stampaDisponibilità(v, k) -> void
+ *       stampaDisponibilità(v, indiceOrario) -> void
  * 
  * Pre-condizione:
- *      L'oggetto veicolo deve esistere e contenere dati dell'oggetto Orari
+ *      La struct veicolo deve esistere e contenere dati della struct annidata Orari
  *       
  * Post-condizione:
  *      Non ritorna nessun valore
@@ -367,8 +365,8 @@ int riempiOrari (veicolo v){
  * ---------------------------------------------------------------------------------------------------------------- 
  */
 
-void stampaDisponibilita (veicolo v, int k){
-    if ((v->orari[k].Disponibilita)%2 == 1){
+void stampaDisponibilita (veicolo v, int indiceOrario){
+    if ((v->orari[indiceOrario].Disponibilita)%2 == 1){
         printf ("Non Disponibile\n");
     }
     else {
@@ -376,24 +374,23 @@ void stampaDisponibilita (veicolo v, int k){
     }
 }
 
-
 /*---------------------------------------------------------------------------------------------------------------- 
  * Funzione: modificaDisponibilità
  * -----------------------
  * Va a modificare nel campo disponibilità il suo valore a 1 quando chiamata
  * 
  * Specifica sintattica:
- *      void modificaDisponibilità(veicolo, int) -> void
+ *      modificaDisponibilità(veicolo, int) -> void
  *
  * Parametri:
- *      v: oggetto veicolo
- *      k: indice orario scelto
+ *      v: struct veicolo
+ *      indiceOrario: indice orario scelto
  * 
  * Specifica semantica:
- *       modificaDisponibilità(v, k) -> void
+ *       modificaDisponibilità(v, indiceOrario) -> void
  * 
  * Pre-condizione:
- *      L'oggetto veicolo deve esistere e contenere dati nella struct Orari
+ *      La struct veicolo deve esistere e contenere dati nella struct annidata Orari
  *       
  * Post-condizione:
  *      Non ritorna nessun valore, Campo Disponibilità cambiato
@@ -402,38 +399,36 @@ void stampaDisponibilita (veicolo v, int k){
  *      Nessun valore
  * 
  * Effetti collaterali:
- *       Cambiato il valore nel campo Disponibilità della struct Orario
+ *       Cambiato il valore nel campo Disponibilità della struct annidata Orari
  * ---------------------------------------------------------------------------------------------------------------- 
  */
 
-void modificaDisponibilita (veicolo v, int k){
-    v->orari[k].Disponibilita = 1;
+void modificaDisponibilita (veicolo v, int indiceOrario){
+    v->orari[indiceOrario].Disponibilita = 1;
 }
 
 /*-----------------------------------------------------------------------------------------------------------------
- * Funzione: controllotoken
+ * Funzione: ottieniModello
  * ----------------------------------------------------------------------------------------------------------------
- * Controllo di eventuali errori nella funzione strtok della libreria string.h 
+ *  Restituisce la stringa del campo modello della struct veicolo 
  * 
  * Specifica sintattica:
- *      void controllotoken(char*, veicolo, FILE*)-> void
+ *      ottieniModello(veicolo) -> char*
  *
  * Parametri:
- *      token: stringa
- *      v: oggetto veicolo
- *      file: puntatore a file
+ *      v: struct veicolo
  * 
  * Specifica semantica:
- *      controllotoken(token, v, file)-> void 
- *       
+ *       ottieniModello(v) -> stringa del modello veicolo
+ *        
  * Pre-condizione:
- *      token deve esistere
+ *      La struct veicolo deve esistere
  *       
  * Post-condizione:
- *      Se token == NULL, libera memoria e chiude file
+ *      Ottenuta la stringa nel campo modello della struct veicolo
  * 
  * Ritorna: 
- *      Nessun valore     
+ *      Una stringa del campo modello della struct veicolo altrimenti NULL
  * 
  * Effetti collaterali:
  *      Nessun effetto collaterale
@@ -447,12 +442,69 @@ char* ottieniModello(veicolo v){
     return NULL;
 }
 
+/*-----------------------------------------------------------------------------------------------------------------
+ * Funzione: ottieniTarga
+ * ----------------------------------------------------------------------------------------------------------------
+ *  Restituisce la stringa del campo targa della struct veicolo 
+ * 
+ * Specifica sintattica:
+ *      ottieniTarga(veicolo) -> char*
+ *
+ * Parametri:
+ *      v: struct veicolo
+ * 
+ * Specifica semantica:
+ *       ottieniTarga(v) -> stringa della targa veicolo
+ *        
+ * Pre-condizione:
+ *      La struct veicolo deve esistere
+ *       
+ * Post-condizione:
+ *      Ottenuta la stringa nel campo targa della struct veicolo
+ * 
+ * Ritorna: 
+ *      Una stringa del campo targa della struct veicolo altrimenti NULL
+ * 
+ * Effetti collaterali:
+ *      Nessun effetto collaterale
+ * ---------------------------------------------------------------------------------------------------------------- 
+ */
+
 char* ottieniTarga(veicolo v){
     if(v!=NULL){
         return v->targa;
     }
     return NULL;
 }
+
+/*-----------------------------------------------------------------------------------------------------------------
+ * Funzione: ottieniOrarioInizio
+ * ----------------------------------------------------------------------------------------------------------------
+ *  Restituisce il float del campo inizio della struct annidata orari
+ * 
+ * Specifica sintattica:
+ *      ottieniOrariInizio(veicolo, int) -> float
+ *
+ * Parametri:
+ *      v: struct veicolo
+ *      indiceOrario: indice orario scelto
+ * 
+ * Specifica semantica:
+ *       ottieniOrariInizio(v , indiceOrario ) -> float della struct annidata orari
+ *        
+ * Pre-condizione:
+ *      La struct veicolo deve esistere
+ *       
+ * Post-condizione:
+ *      Ottenuto il float del campo inizio della struct annidata orari
+ * 
+ * Ritorna: 
+ *      Un float del campo inzio della struct annidata orari altrimenti -1 
+ * 
+ * Effetti collaterali:
+ *      Nessun effetto collaterale
+ * ---------------------------------------------------------------------------------------------------------------- 
+ */
 
 float ottieniOrarioInizio(veicolo v, int indiceOrario){
     if(v!=NULL){
@@ -461,12 +513,70 @@ float ottieniOrarioInizio(veicolo v, int indiceOrario){
     return -1;
 }
 
+/*-----------------------------------------------------------------------------------------------------------------
+ * Funzione: ottieniOrarioFine
+ * ----------------------------------------------------------------------------------------------------------------
+ *  Restituisce il float del campo fine della struct annidata orari
+ * 
+ * Specifica sintattica:
+ *      ottieniOrariFine(veicolo, int) -> float
+ *
+ * Parametri:
+ *      v: struct veicolo
+ *      indiceOrario: indice orario scelto
+ * 
+ * Specifica semantica:
+ *       ottieniOrariFine(v , indiceOrario ) -> float della struct annidata orari
+ *        
+ * Pre-condizione:
+ *      La struct veicolo deve esistere
+ *       
+ * Post-condizione:
+ *      Ottenuto il float del campo fine della struct annidata orari
+ * 
+ * Ritorna: 
+ *      Un float del campo fine della struct annidata orari altrimenti -1 
+ * 
+ * Effetti collaterali:
+ *      Nessun effetto collaterale
+ * ---------------------------------------------------------------------------------------------------------------- 
+ */
+
 float ottieniOrarioFine(veicolo v, int indiceOrario){
     if(v!=NULL){
         return v->orari[indiceOrario].fine;
     }
     return -1;
 }
+
+/*-----------------------------------------------------------------------------------------------------------------
+ * Funzione: ottieniDisponibilita
+ * ----------------------------------------------------------------------------------------------------------------
+ *  Restituisce l'int del campo Disponibilita della struct annidata orari
+ * 
+ * Specifica sintattica:
+ *      ottieniDisponibilita(veicolo, int) -> int
+ *
+ * Parametri:
+ *      v: struct veicolo
+ *      indiceOrario: indice orario scelto
+ * 
+ * Specifica semantica:
+ *       ottieniDisponibilita(v , indiceOrario ) -> int della struct annidata orari
+ *        
+ * Pre-condizione:
+ *      La struct veicolo deve esistere
+ *       
+ * Post-condizione:
+ *      Ottenuto l'int del campo Disponibilita della struct annidata orari
+ * 
+ * Ritorna: 
+ *      Un int del campo Disponibilita della struct annidata orari altrimenti -1 
+ * 
+ * Effetti collaterali:
+ *      Nessun effetto collaterale
+ * ---------------------------------------------------------------------------------------------------------------- 
+ */
 
 int ottieniDisponibilita(veicolo v, int indiceOrario){
     if(v!=NULL){
@@ -475,6 +585,34 @@ int ottieniDisponibilita(veicolo v, int indiceOrario){
     return -1;
 }
 
+/*-----------------------------------------------------------------------------------------------------------------
+ * Funzione: ottieniCostoOrario
+ * ----------------------------------------------------------------------------------------------------------------
+ *  Restituisce il float del campo CostoNoleggioOrario della struct veicolo
+ * 
+ * Specifica sintattica:
+ *      ottieniCostoOrario(veicolo) -> float
+ *
+ * Parametri:
+ *      v: struct veicolo
+ * 
+ * Specifica semantica:
+ *       ottieniCostoOrario(v) -> float della struct veicolo
+ *        
+ * Pre-condizione:
+ *      La struct veicolo deve esistere
+ *       
+ * Post-condizione:
+ *      Ottenuto il float del campo CostoNoleggioOrario della struct veicolo
+ * 
+ * Ritorna: 
+ *      Un float del campo CostoNoleggioOrario della struct veicolo altrimenti -1 
+ * 
+ * Effetti collaterali:
+ *      Nessun effetto collaterale
+ * ---------------------------------------------------------------------------------------------------------------- 
+ */
+
 float ottieniCostoOrario(veicolo v){
     if(v!=NULL){
         return v->CostoNoleggioOrario;
@@ -482,10 +620,38 @@ float ottieniCostoOrario(veicolo v){
     return -1;
 }
 
+/*-----------------------------------------------------------------------------------------------------------------
+ * Funzione: creaVeicolo
+ * ----------------------------------------------------------------------------------------------------------------
+ *  Alloca memoria per la struct veicolo
+ * 
+ * Specifica sintattica:
+ *      creaVeicolo() -> veicolo
+ *
+ * Parametri:
+ *     
+ * 
+ * Specifica semantica:
+ *       creaVeicolo() -> struct veicolo
+ *        
+ * Pre-condizione:
+ *      Nessuna pre-condizione
+ *       
+ * Post-condizione:
+ *      Memoria allocata correttamente per la struct veicolo
+ * 
+ * Ritorna: 
+ *      La struct veicolo allocata correttamente altrimenti NULL 
+ * 
+ * Effetti collaterali:
+ *      Stampa a video un messaggio di errore in caso di allocazione fallita
+ * ---------------------------------------------------------------------------------------------------------------- 
+ */
+
 veicolo creaVeicolo(){
     veicolo v = malloc(sizeof(struct Vettura));
         if (v == NULL){  
-            //system("cls | clear");
+            system("cls | clear");
             perror ("ERRORE: Allocazione memoria veicolo fallita\n");
             return NULL;
         }
