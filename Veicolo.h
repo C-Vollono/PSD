@@ -328,7 +328,7 @@ void stampaDisponibilita (veicolo v, int k);
  * Va a modificare nel campo disponibilità il suo valore a 1 quando chiamata
  * 
  * Specifica sintattica:
- *      void modificaDisponibilità(veicolo, int) -> void
+ *      modificaDisponibilità(veicolo, int) -> void
  *
  * Parametri:
  *      v: oggetto veicolo
