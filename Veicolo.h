@@ -2,26 +2,6 @@
 #define VEICOLO_H
 #include <stdio.h>
 
-/*DEFINIZIONE STRUCT ORARIO*/
-typedef struct Orario {
-    float inizio;
-    float fine;
-    int Disponibilita; // 0 = disponibile oppure 1 = non disponibile
-}Orario;
-
-/*DEFINIZIONE STRUCT VETTURA*/
-struct Vettura{
-    char* tipoVeicolo;
-    char* modello;
-    char* colore;
-    char* targa;
-    Orario orari[8]; //Struct annidata per gli orari
-    int postiOmologati;
-    char* Combustibile;
-    int annoDiImmatricolazione;
-    float CostoNoleggioOrario;
-};
-
 typedef struct Vettura *veicolo;
 
 /*DEFINIZIONE FUNZIONI*/
@@ -54,7 +34,7 @@ typedef struct Vettura *veicolo;
  * ---------------------------------------------------------------------------------------------------------------- 
  */
 
-int controlloToken (char* token);
+
 
 /*-----------------------------------------------------------------------------------------------------------------
  * Funzione: chiudiFile
@@ -88,7 +68,7 @@ int controlloToken (char* token);
  * ---------------------------------------------------------------------------------------------------------------- 
  */
 
-int chiudiFile(FILE* file);
+
 
 /*---------------------------------------------------------------------------------------------------------------- 
  * Funzione: riempiVeicoli
@@ -215,7 +195,7 @@ void liberaVeicolo (veicolo v);
  * ---------------------------------------------------------------------------------------------------------------- 
  */
 
-float verificaSconto (veicolo v, int k);
+
 
 /*---------------------------------------------------------------------------------------------------------------- 
  * Funzione: costoNoleggio
@@ -247,7 +227,6 @@ float verificaSconto (veicolo v, int k);
  * ---------------------------------------------------------------------------------------------------------------- 
  */
 
-float costoNoleggio (veicolo v, int k);
 
 /*---------------------------------------------------------------------------------------------------------------- 
  * Funzione: riempiOrari
@@ -342,7 +321,6 @@ void stampaDisponibilita (veicolo v, int k);
  * ----------------------------------------------------------------------------------------------------------------     
  */
 
-int verificaDisponibilita (veicolo v, int indiceOrario);
 
 /*---------------------------------------------------------------------------------------------------------------- 
  * Funzione: modificaDisponibilità
@@ -404,47 +382,19 @@ void modificaDisponibilita (veicolo v, int k);
  * ---------------------------------------------------------------------------------------------------------------- 
  */
 
-void stampaOrari (veicolo v);
 
+char* ottieniModello(veicolo v);
 
+char* ottieniTarga(veicolo v);
 
+float ottieniOrarioInizio(veicolo v, int k);
 
+float ottieniOrarioFine(veicolo v, int k);
 
+int ottieniDisponibilita(veicolo v, int k);
 
+float ottieniCostoOrario(veicolo v);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+veicolo creaVeicolo();
 
 #endif

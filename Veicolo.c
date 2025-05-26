@@ -8,6 +8,28 @@
 #include <string.h>
 #include <math.h>
 #include "Veicolo.h"
+#include "Utile.h"
+
+
+/*DEFINIZIONE STRUCT ORARIO*/
+typedef struct Orario {
+    float inizio;
+    float fine;
+    int Disponibilita; // 0 = disponibile oppure 1 = non disponibile
+}Orario;
+
+/*DEFINIZIONE STRUCT VETTURA*/
+struct Vettura{
+    char* tipoVeicolo;
+    char* modello;
+    char* colore;
+    char* targa;
+    Orario orari[8]; //Struct annidata per gli orari
+    int postiOmologati;
+    char* Combustibile;
+    int annoDiImmatricolazione;
+    float CostoNoleggioOrario;
+};
 
 /*-- FUNZIONI RELATIVE AI VEICOLI --*/
 
@@ -267,21 +289,7 @@
  * ---------------------------------------------------------------------------------------------------------------- 
  */
 
-float costoNoleggio (veicolo v, int k){
 
-    int minutiTotali, ore, minuti;
-    float inizio = v->orari[k].inizio, fine = v->orari[k].fine;
-
-    ore = (int)inizio;
-    minuti = round((inizio-ore)*100);
-    minutiTotali = (ore*60) + minuti; // MINUTI TOTALI SOLO INIZIALI
-
-    ore = (int)fine;
-    minuti = round((fine-ore)*100);
-    minutiTotali = (ore*60)+minuti - minutiTotali; // MINUTI TOTALI DEL TEMPO DI NOLEGGIO
-
-    return minutiTotali * ((v->CostoNoleggioOrario)/60) * verificaSconto(v,k);
-}
 
 
 /*---------------------------------------------------------------------------------------------------------------- 
@@ -315,14 +323,7 @@ float costoNoleggio (veicolo v, int k){
  * ---------------------------------------------------------------------------------------------------------------- 
  */
 
-float verificaSconto (veicolo v, int k){
-      float orario = v->orari[k].inizio;
-      if (orario >= 20.00 ){
-        return 0.7; //Sconto del 30% se l'orario prenotato è dalle 20.00 in poi
-      } else if (orario < 9) {
-        return 0.85; //Sconto del 15% se l'orario prenotato è prima delle 9.00
-      } else return 1.0;
-}
+
 
 /*-- FUNZIONI RELATIVE AGLI ORARI --*/
 
@@ -444,12 +445,7 @@ void stampaDisponibilita (veicolo v, int k){
     }
 }
 
-int verificaDisponibilita(veicolo v, int indiceOrario){
-    if (v->orari[indiceOrario].Disponibilita == 0){
-        return 1;
-    }
-        return 0;
-}
+
 /*---------------------------------------------------------------------------------------------------------------- 
  * Funzione: modificaDisponibilità
  * -----------------------
@@ -512,13 +508,7 @@ void modificaDisponibilita (veicolo v, int k){
  * ---------------------------------------------------------------------------------------------------------------- 
  */
 
-void stampaOrari (veicolo v){
-        printf("\nLista degli orari del veicolo scelto\n\n");
-        for (int k=0; k<8; k++){
-            printf (" (%d) %.2f-%.2f ", k, v->orari[k].inizio, v->orari[k].fine);
-        stampaDisponibilita(v, k);
-        }
-}
+
 
 /*--Funzioni di supporto--*/
 
@@ -552,19 +542,58 @@ void stampaOrari (veicolo v){
  * ---------------------------------------------------------------------------------------------------------------- 
  */
 
-int controlloToken (char* token){ 
-    if (token == NULL){
-        system("cls | clear");
-        printf("ERRORE: Ottenimento token fallito.\n");
-        return 0;
+
+
+
+
+char* ottieniModello(veicolo v){
+    if(v!=NULL){
+        return v->modello;
     }
-    return 1;
+    return NULL;
 }
 
-int chiudiFile(FILE* file){ 
-    if (fclose (file) != 0){
-        perror ("ERRORE: Chiusura del file fallita.\n");
-        return 0;
+char* ottieniTarga(veicolo v){
+    if(v!=NULL){
+        return v->targa;
     }
-    return 1;
+    return NULL;
+}
+
+float ottieniOrarioInizio(veicolo v, int k){
+    if(v!=NULL){
+        return v->orari[k].inizio;
+    }
+    return -1;
+}
+
+float ottieniOrarioFine(veicolo v, int k){
+    if(v!=NULL){
+        return v->orari[k].fine;
+    }
+    return -1;
+}
+
+int ottieniDisponibilita(veicolo v, int k){
+    if(v!=NULL){
+        return v->orari[k].Disponibilita;
+    }
+    return -1;
+}
+
+float ottieniCostoOrario(veicolo v){
+    if(v!=NULL){
+        return v->CostoNoleggioOrario;
+    }
+    return -1;
+}
+
+veicolo creaVeicolo(){
+    veicolo v = malloc(sizeof(struct Vettura));
+        if (v == NULL){  
+            //system("cls | clear");
+            perror ("ERRORE: Allocazione memoria veicolo fallita\n");
+            return NULL;
+        }
+        return v;
 }
