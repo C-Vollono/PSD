@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 #include "Veicolo.h"
 
 /*-- FUNZIONI RELATIVE AI VEICOLI --*/
@@ -41,134 +42,128 @@
  * ---------------------------------------------------------------------------------------------------------------- 
  */
 
- void riempiVeicoli (veicolo v){
+ int riempiVeicoli (veicolo v){
 
     FILE *file;
-    char buffer [200];
+    char buffer [1024];
     static int indiceVeicolo=0; 
     int j = 0;
 
     file = fopen ("Veicoli.txt", "r");
-
     if (file == NULL){
         system("cls | clear");
-        perror ("Errore nell'apertura del file.");
-        exit (1);
+        perror ("ERRORE: Apertura file veicoli fallita.\n");
+        return 0;
     }
-        do{
 
+    do {
         fgets (buffer, sizeof (buffer), file);
         j++;
+    } while (j <= indiceVeicolo);
 
-        }while (j <= indiceVeicolo);
-
-        char* token = strtok (buffer, ";");
-        controlloToken (token, v, file);
-
-        v->tipoVeicolo = malloc (strlen (token)+1 * sizeof (char));
-
-        if (v->tipoVeicolo == NULL){
-
-            system("cls | clear");
-            perror ("ERRORE TIPO VEICOLO");
-            exit (1);
-        }
-
-        strcpy (v->tipoVeicolo, token);
-
-        token = strtok (NULL, ";");
-        controlloToken (token, v, file);
-
-        v->modello = malloc (strlen (token)+1 * sizeof (char));
-
-        if (v->modello == NULL){
-
-            system("cls | clear");
-            perror ("ERRORE MODELLO");
-            free (v->tipoVeicolo);
-            exit (1);
-        }
-
-        strcpy (v->modello, token);
-
-        token = strtok (NULL, ";");
-        controlloToken (token, v, file);
-
-        v->colore = malloc (strlen (token)+1 * sizeof (char));
-
-        if (v->colore == NULL){
-
-            system("cls | clear");
-            perror ("ERRORE COLORE");
-            free (v->modello);
-            free (v->tipoVeicolo);
-            exit (1);
-        }
-
-        strcpy (v->colore, token);
-
-        token = strtok (NULL, ";");
-        controlloToken (token, v, file);
-
-        v->targa = malloc (strlen (token)+1 * sizeof (char));
-
-        if (v->targa == NULL){
-
-            system("cls | clear");
-            perror ("ERRORE TARGA");
-            free (v->modello);
-            free (v->tipoVeicolo);
-            free (v->colore);
-            exit (1);
-        }
-
-        strcpy (v->targa, token);
-
-        token = strtok (NULL, ";");
-        controlloToken (token, v, file);
-
-        v->postiOmologati = atoi (token);
-
-        token = strtok (NULL, ";");
-        controlloToken (token, v, file);
-
-        v->Combustibile = malloc (strlen(token)+1 * sizeof (char));
-
-        if (v->Combustibile == NULL){
-
-            system("cls | clear");
-            perror ("ERRORE COMBUSTIBILE");
-            free (v->modello);
-            free (v->tipoVeicolo);
-            free (v->colore);
-            free (v->targa);
-            exit (1);
-        }
-
-        strcpy (v->Combustibile, token);
-
-        token = strtok (NULL, ";");
-        controlloToken (token, v, file);
-
-        v->annoDiImmatricolazione = atoi (token);
-
-        token = strtok (NULL, ";");
-        controlloToken (token, v, file);
-
-        v->CostoNoleggioOrario = atoi (token);
-    
-
-        riempiOrari (v);
-
-    
-    if (fclose (file) != 0){
-        system("cls | clear");
-        perror ("Errore nella chiusura del file.");
-        exit (1);
+    char* token = strtok (buffer, ";");
+    if (!(controlloToken (token))){
+        chiudiFile(file);
+        return 0;
     }
 
-    indiceVeicolo++;
+    v->tipoVeicolo = malloc ( (strlen (token)+1) * sizeof (char));
+    if (v->tipoVeicolo == NULL){
+        perror ("ERRORE: Allocazione memoria per il tipo del veicolo fallita.\n");
+        chiudiFile(file);
+        return 0;
+    }
+    strcpy (v->tipoVeicolo, token);
+
+    token = strtok (NULL, ";");
+    if (!(controlloToken (token))){
+        chiudiFile(file);
+        return 0;
+    }
+
+    v->modello = malloc ( (strlen (token)+1) * sizeof (char));
+    if (v->modello == NULL){
+        chiudiFile(file);
+        perror ("ERRORE: Allocazione memoria per il modello del veicolo fallita.\n");
+        return 0;
+    }
+    strcpy (v->modello, token);
+
+    token = strtok (NULL, ";");
+    if (!(controlloToken (token))){
+        chiudiFile(file);
+        return 0;
+    }
+
+    v->colore = malloc ( (strlen (token)+1) * sizeof (char));
+    if (v->colore == NULL){ 
+        chiudiFile(file);
+        perror ("ERRORE: Allocazione memoria per il colore del veicolo fallita.\n");
+        return 0;
+    }
+    strcpy (v->colore, token);
+
+    token = strtok (NULL, ";");
+    if (!(controlloToken (token))){
+        chiudiFile(file);
+        return 0;
+    }
+
+    v->targa = malloc ( (strlen (token)+1) * sizeof (char));
+    if (v->targa == NULL){
+        chiudiFile(file);
+        perror ("ERRORE: Allocazione memoria per la targa del veicolo fallita.\n");
+        return 0;
+    }
+    strcpy (v->targa, token);
+
+    token = strtok (NULL, ";");
+    if (!(controlloToken (token))){
+        chiudiFile(file);
+        return 0;
+    }
+
+    v->postiOmologati = atoi (token);
     
+    token = strtok (NULL, ";");
+    if (!(controlloToken (token))){
+        chiudiFile(file);
+        return 0;
+    }
+
+    v->Combustibile = malloc ( (strlen(token)+1) * sizeof (char));
+    if (v->Combustibile == NULL){
+        chiudiFile(file);
+        perror ("ERRORE: Allocazione memoria per il tipo di combustibile del veicolo fallita.\n");
+        return 0;
+    }
+    strcpy (v->Combustibile, token);
+
+    token = strtok (NULL, ";");
+    if (!(controlloToken (token))){
+        chiudiFile(file);
+        return 0;
+    }
+
+    v->annoDiImmatricolazione = atoi (token);
+
+    token = strtok (NULL, ";");
+    if (!(controlloToken (token))){
+        chiudiFile(file);
+        return 0;
+    }
+
+    v->CostoNoleggioOrario = atoi (token);
+    
+    if (!(riempiOrari (v))){
+        chiudiFile(file);
+        perror("ERRORE: Riempimento degli orari dei veicoli fallito.");
+        return 0;
+    };
+
+    indiceVeicolo++;
+
+    return chiudiFile(file);
 }
 
 /*---------------------------------------------------------------------------------------------------------------- 
@@ -201,24 +196,22 @@
  */
 
  void stampaVeicolo (veicolo v){
-    
     printf("Tipo Veicolo: %s\nModello: %s\nColore: %s\nTarga: %s\nPosti Omologati: %d\nCombustibile: %s\nAnno di immatricolazione: %d\nCosto Noleggio: %.2f euro/h\n\n", v->tipoVeicolo, v->modello, v->colore, v->targa, v->postiOmologati, v->Combustibile,v->annoDiImmatricolazione, v->CostoNoleggioOrario);
-    
 }
 
 /*---------------------------------------------------------------------------------------------------------------- 
- * Funzione: liberaVeicoli
+ * Funzione: liberaVeicolo
  * -----------------------
  *  Libera la memoria dell'oggetto veicolo
  * 
  * Specifica sintattica:
- *      void liberaVeicoli(veicolo) -> void
+ *      void liberaVeicolo(veicolo) -> void
  *
  * Parametri:
  *      v: oggetto veicolo
  *  
  * Specifica semantica:
- *      liberaVeicoli(v) -> void
+ *      liberaVeicolo(v) -> void
  * 
  * Pre-condizione:
  *      Memoria allocata per l'oggetto veicolo
@@ -234,13 +227,12 @@
  * ---------------------------------------------------------------------------------------------------------------- 
  */
 
-void liberaVeicoli (veicolo v){
-
-    free (v->colore);
-    free (v->Combustibile);
-    free (v->modello);
-    free (v->targa);
-    free (v->tipoVeicolo);
+ void liberaVeicolo (veicolo v){
+    if (v->colore) { free(v->colore); }
+    if (v->Combustibile) { free(v->Combustibile); }
+    if (v->modello) { free(v->modello); }
+    if (v->targa){ free(v->targa); }
+    if (v->tipoVeicolo){ free(v->tipoVeicolo); }
 }
 
 /*-- FUNZIONI RELATIVE AL NOLEGGIO --*/
@@ -277,20 +269,18 @@ void liberaVeicoli (veicolo v){
 
 float costoNoleggio (veicolo v, int k){
 
-    int oreInizio, minutiInizio, oreFine, minutiFine;
-
+    int minutiTotali, ore, minuti;
     float inizio = v->orari[k].inizio, fine = v->orari[k].fine;
-   
-    oreInizio = (int)inizio;
-    minutiInizio = (inizio - oreInizio) * 100;
 
-    oreFine = (int)fine;
-    minutiFine = (fine - oreFine) * 100;
+    ore = (int)inizio;
+    minuti = round((inizio-ore)*100);
+    minutiTotali = (ore*60) + minuti; // MINUTI TOTALI SOLO INIZIALI
 
-    float tempoNoleggio = ((oreFine * 3600 + minutiFine * 60) - (oreInizio * 3600 + minutiInizio * 60)) / 3600.0;
+    ore = (int)fine;
+    minuti = round((fine-ore)*100);
+    minutiTotali = (ore*60)+minuti - minutiTotali; // MINUTI TOTALI DEL TEMPO DI NOLEGGIO
 
-  
-    return (tempoNoleggio * v->CostoNoleggioOrario) * verificaSconto(v, k);
+    return minutiTotali * ((v->CostoNoleggioOrario)/60) * verificaSconto(v,k);
 }
 
 
@@ -326,19 +316,12 @@ float costoNoleggio (veicolo v, int k){
  */
 
 float verificaSconto (veicolo v, int k){
-
       float orario = v->orari[k].inizio;
-
       if (orario >= 20.00 ){
-
         return 0.7; //Sconto del 30% se l'orario prenotato è dalle 20.00 in poi
-
       } else if (orario < 9) {
-
         return 0.85; //Sconto del 15% se l'orario prenotato è prima delle 9.00
-
       } else return 1.0;
-
 }
 
 /*-- FUNZIONI RELATIVE AGLI ORARI --*/
@@ -374,50 +357,52 @@ float verificaSconto (veicolo v, int k){
  * ---------------------------------------------------------------------------------------------------------------- 
  */
 
-void riempiOrari (veicolo v){
-
+int riempiOrari (veicolo v){
     FILE *file;
-    char buffer [200];
+    char buffer [1024];
 
     file = fopen ("Orari.txt", "r");
-
     if (file == NULL){
         system("cls | clear");
-        perror ("Errore nell'apertura del file.");
-        exit (1);
+        perror ("ERRORE: Apertura file degli orari fallita.\n");
+        return 0;
     }
 
-        while (fgets (buffer, sizeof (buffer), file) != NULL){
-
+    while (fgets (buffer, sizeof (buffer), file) != NULL){
         char* token = strtok (buffer, ";");
-        controlloToken (token, v, file);
-
-                for (int k=0; k<8; k++){
-
-                v->orari[k].inizio = atof (token);
-
-                token = strtok (NULL, ";");
-                controlloToken (token, v, file);
-
-                v->orari[k].fine = atof (token);
-
-                token = strtok (NULL, ";");
-                controlloToken (token, v, file);
-
-                v->orari[k].Disponibilita = atoi (token);
-
-                token = strtok (NULL, ";");
-                controlloToken (token, v, file);
-                }
+        if (!(controlloToken (token))){
+            chiudiFile(file);
+            return 0;
         }
 
-        if (fclose (file) != 0){
+        for (int k=0; k<8; k++){
+            v->orari[k].inizio = atof (token);
+            
+            token = strtok (NULL, ";");
+            if (!(controlloToken (token))){
+                chiudiFile(file);
+                return 0;
+            }
 
-            system("cls | clear");
-            perror ("Errore nella chiusura del file.");
-            exit (1);
+            v->orari[k].fine = atof (token);
+
+            token = strtok (NULL, ";");
+            if (!(controlloToken (token))){
+                chiudiFile(file);
+                return 0;
+            }
+
+            v->orari[k].Disponibilita = atoi (token);
+
+            token = strtok (NULL, ";");
+            if (!(controlloToken (token))){
+                chiudiFile(file);
+                return 0;
+            }
         }
     }
+    return chiudiFile(file); 
+}
 
 
 /*---------------------------------------------------------------------------------------------------------------- 
@@ -451,24 +436,18 @@ void riempiOrari (veicolo v){
  */
 
 void stampaDisponibilita (veicolo v, int k){
-
     if ((v->orari[k].Disponibilita)%2 == 1){
-
         printf ("Non Disponibile\n");
     }
-    else{
-
+    else {
         printf ("Disponibile\n");
     }
 }
 
 int verificaDisponibilita(veicolo v, int indiceOrario){
-
     if (v->orari[indiceOrario].Disponibilita == 0){
-
         return 1;
     }
-
         return 0;
 }
 /*---------------------------------------------------------------------------------------------------------------- 
@@ -501,7 +480,6 @@ int verificaDisponibilita(veicolo v, int indiceOrario){
  */
 
 void modificaDisponibilita (veicolo v, int k){
-
     v->orari[k].Disponibilita = 1;
 }
 
@@ -535,11 +513,9 @@ void modificaDisponibilita (veicolo v, int k){
  */
 
 void stampaOrari (veicolo v){
-
+        printf("\nLista degli orari del veicolo scelto\n\n");
         for (int k=0; k<8; k++){
-
-        printf (" (%d) %.2f-%.2f ", k, v->orari[k].inizio, v->orari[k].fine);
-
+            printf (" (%d) %.2f-%.2f ", k, v->orari[k].inizio, v->orari[k].fine);
         stampaDisponibilita(v, k);
         }
 }
@@ -576,22 +552,19 @@ void stampaOrari (veicolo v){
  * ---------------------------------------------------------------------------------------------------------------- 
  */
 
-void controlloToken (char* token, veicolo v, FILE* file){
-
+int controlloToken (char* token){ 
     if (token == NULL){
-
         system("cls | clear");
-
-        printf("Errore nella lettura dei dati.\n");
-
-        liberaVeicoli(v);
-
-        if (fclose (file) != 0){
-
-            perror ("Errore nella chisuura del file.");
-        }
-
-        exit(1);
+        printf("ERRORE: Ottenimento token fallito.\n");
+        return 0;
     }
+    return 1;
+}
 
+int chiudiFile(FILE* file){ 
+    if (fclose (file) != 0){
+        perror ("ERRORE: Chiusura del file fallita.\n");
+        return 0;
+    }
+    return 1;
 }

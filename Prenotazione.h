@@ -19,7 +19,7 @@ void LiberaTabellaHash (TabellaHash t); //Dealloca la memoria occupata dalla tab
 
 static void LiberaLista (Prenotazione p); // Dealloca una lista collegata nella tabella hash
 
-void AggiornaStorico (Prenotazione p, int indiceVeicolo, int indiceOrario); //Aggiorna lo storico prenotazioni con l'ultima prenotazione effettuata
+int AggiornaStorico (Prenotazione p, int indiceVeicolo, int indiceOrario); //Aggiorna lo storico prenotazioni con l'ultima prenotazione effettuata
 
 void stampaPrenotazione (Prenotazione p); // stampa i dettagli di una prenotazione
 

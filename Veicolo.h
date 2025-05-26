@@ -4,16 +4,13 @@
 
 /*DEFINIZIONE STRUCT ORARIO*/
 typedef struct Orario {
-
     float inizio;
     float fine;
     int Disponibilita; // 0 = disponibile oppure 1 = non disponibile
-
 }Orario;
 
 /*DEFINIZIONE STRUCT VETTURA*/
 struct Vettura{
-
     char* tipoVeicolo;
     char* modello;
     char* colore;
@@ -60,9 +57,11 @@ typedef struct Vettura *veicolo;
  * ---------------------------------------------------------------------------------------------------------------- 
  */
 
-void riempiVeicoli (veicolo v);
+int riempiVeicoli (veicolo v);
 
-void controlloToken (char* token, veicolo v, FILE* file);
+int controlloToken (char* token);
+
+int chiudiFile(FILE* file);
 
 /*---------------------------------------------------------------------------------------------------------------- 
  * Funzione: stampaVeicoli
@@ -96,18 +95,18 @@ void controlloToken (char* token, veicolo v, FILE* file);
 void stampaVeicolo (veicolo v);
 
 /*---------------------------------------------------------------------------------------------------------------- 
- * Funzione: liberaVeicoli
+ * Funzione: liberaVeicolo
  * -----------------------
  *  Libera la memoria dell'oggetto veicolo
  * 
  * Specifica sintattica:
- *      void liberaVeicoli(veicolo) -> void
+ *      void liberaVeicolo(veicolo) -> void
  *
  * Parametri:
  *      v: oggetto veicolo
  *  
  * Specifica semantica:
- *      liberaVeicoli(v) -> void
+ *      liberaVeicolo(v) -> void
  * 
  * Pre-condizione:
  *      Memoria allocata per l'oggetto veicolo
@@ -123,7 +122,7 @@ void stampaVeicolo (veicolo v);
  * ---------------------------------------------------------------------------------------------------------------- 
  */
 
-void liberaVeicoli (veicolo v);
+void liberaVeicolo (veicolo v);
 
 /*---------------------------------------------------------------------------------------------------------------- 
  * Funzione: costoNoleggio
@@ -188,8 +187,6 @@ float costoNoleggio (veicolo v, int k);
  * ---------------------------------------------------------------------------------------------------------------- 
  */
 
-float verificaSconto (veicolo v, int k);
-
 /*-- FUNZIONI RELATIVE AGLI ORARI --*/
 
 /*---------------------------------------------------------------------------------------------------------------- 
@@ -223,7 +220,7 @@ float verificaSconto (veicolo v, int k);
  * ---------------------------------------------------------------------------------------------------------------- 
  */
 
-void riempiOrari (veicolo v);
+int riempiOrari (veicolo v);
 
 /*---------------------------------------------------------------------------------------------------------------- 
  * Funzione: verificaDisponibilità
@@ -255,7 +252,6 @@ void riempiOrari (veicolo v);
  * ----------------------------------------------------------------------------------------------------------------     
  */
 
-void verificaDisponibilità (veicolo v, int k);
 /*---------------------------------------------------------------------------------------------------------------- 
  * Funzione: verificaSconto
  * -----------------------
@@ -321,8 +317,6 @@ float verificaSconto (veicolo v, int k);
  *      Se il file è vuoto, la funzione potrebbe dare comportamento indefinito senza opportuni controlli
  * ---------------------------------------------------------------------------------------------------------------- 
  */
-
-void riempiOrari (veicolo v);
 
 /*---------------------------------------------------------------------------------------------------------------- 
  * Funzione: verificaDisponibilità
