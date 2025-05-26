@@ -195,6 +195,37 @@ void LimitaOrariDisponibili (veicolo *v){
     }
 }
 
+/*---------------------------------------------------------------------------------------------------------------- 
+ * Funzione: verificaSconto
+ * -----------------------
+ * La funzione verifica la possibilità di un sconto in determinati intervalli orari prestabiliti e restituisce un tipo float
+ * riguardante lo sconto da applicare al calcolo del costo totale del noleggio
+ * 
+ * Specifica sintattica:
+ *      float verificaSconto(veicolo, int) -> float
+ *
+ * Parametri:
+ *      v: oggetto veicolo
+ *      k: indice dell'orario scelto
+ * 
+ * Specifica semantica:
+ *      verificaSconto(v, k) -> Percentuale di Sconto
+ * Pre-condizione:
+ *      L'oggetto veicolo deve esistere e contenere i dati sugli intervalli orari
+ *      
+ * Post-condizione:
+ *      Restituisce la percentuale di sconto se l'orario della prenotazione corrisponde all'intervallo
+ *      Altrimenti restituisce 1
+ * 
+ * Ritorna:
+ *      Restituisce un tipo float della percentuale di sconto
+ *      Altrimenti float di 1.0
+ *      
+ * Effetti collaterali:
+ *      Nessun effetto collaterale 
+ * ---------------------------------------------------------------------------------------------------------------- 
+ */
+
 float verificaSconto (veicolo v, int k){
       float orario = ottieniOrarioInizio(v , k);
       if (orario >= 20.00 ){
@@ -204,12 +235,70 @@ float verificaSconto (veicolo v, int k){
       } else return 1.0;
 }
 
+/*---------------------------------------------------------------------------------------------------------------- 
+ * Funzione: verificaDisponibilità
+ * -----------------------
+ * Verifica la disponibilita` di un veicolo in un determinato orario
+ * 
+ * Specifica sintattica:
+ *      int verificaDisponibilità (veicolo, int) -> void
+ *
+ * Parametri:
+ *      v: oggetto veicolo
+ *      indiceOrario: indice orario scelto
+ * 
+ * Specifica semantica:
+ *      verificaDisponibilità(v, indiceOrario) -> 1 se ottieniDisponibilita restituisce 0 altrimenti 0
+ *       
+ * Pre-condizione:
+ *      L'oggetto veicolo deve esistere e contenere i dati dell'oggetto orari
+ *       
+ * Post-condizione:
+ *      Restituisce un intero se ottieniDisponibilita e` 0 o diverso da 0
+ * 
+ * Ritorna: 
+ *      1 se ottieniDisponibilita restituisce 0 altrimenti 0
+ * 
+ * Effetti collaterali:
+ *      Nessun effetto collaterale   
+ * ----------------------------------------------------------------------------------------------------------------     
+ */
+
 int verificaDisponibilita(veicolo v, int indiceOrario){
     if (ottieniDisponibilita(v, indiceOrario) == 0){
         return 1;
     }
         return 0;
 }
+
+/*-----------------------------------------------------------------------------------------------------------------
+ * Funzione: stampaOrari
+ * ----------------------------------------------------------------------------------------------------------------
+ * Stampa a video l'intervallo orario scelto dall'utente con la sua disponibilità (Non disponibile o Disponibile)
+ * 
+ * Specifica sintattica:
+ *      void stampaOrari(veicolo) -> void
+ *
+ * Parametri:
+ *      v: oggetto veicolo
+ * 
+ * Specifica semantica:
+ *      stampaOrari(v) -> void
+ *       
+ * Pre-condizione:
+ *      L'oggetto deve esistere e contenere dati
+ *      stampaDisponibilita, ottieniOrarioInizio e ottieniOrarioFine devono esistere 
+ *       
+ * Post-condizione:
+ *      Nessun valore di ritorno
+ * 
+ * Ritorna: 
+ *      Nessun valore
+ * 
+ * Effetti collaterali:
+ *      Stampa a video la lista degli orari e la loro disponibilita del veicolo   
+ * ---------------------------------------------------------------------------------------------------------------- 
+ */
 
 void stampaOrari (veicolo v){
         printf("\nLista degli orari del veicolo scelto\n\n");

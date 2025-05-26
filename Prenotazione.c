@@ -411,6 +411,36 @@ char* ottieniTargaPrenotazione(Prenotazione p){
     return NULL;
 }
 
+/*---------------------------------------------------------------------------------------------------------------- 
+ * Funzione: costoNoleggio
+ * -----------------------
+ * Calcola quanto costa il noleggio in un orario scelto dall'utente con eventuale sconto 
+ * 
+ * Specifica sintattica:
+ *      float costoNoleggio(veicolo, int) -> float
+ *
+ * Parametri:
+ *      v: oggetto veicolo
+ *      k: indice dell'orario scelto
+ * 
+ * Specifica semantica:
+ *      costoNoleggio(v, k) -> Costo del noleggio
+ * 
+ * Pre-condizione:
+ *      L'oggetto veicolo deve esistere e contenere dati sugli intervalli orari
+ *      La funzione verificaSconto deve esistere (oppure eliminata in caso di sconti non applicabili) e inclusa
+ * 
+ * Post-condizione:
+ *      Restituisce il costo totale del noleggio dell'orario scelto dall'utente
+ * 
+ * Ritorna:
+ *      Ritorna un tipo float del costo totale
+ * 
+ * Effetti collaterali: 
+ *      Nessun effetto collaterale
+ * ---------------------------------------------------------------------------------------------------------------- 
+ */
+
 float costoNoleggio (veicolo v, int k){
 
     int minutiTotali, ore, minuti;
