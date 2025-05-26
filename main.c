@@ -91,7 +91,7 @@ void main () {
             case 1: { //Nuova Prenotazione
                 
                 for (int i=0; i<10; i++){
-                    printf ("VEICOLO %d\n", i);
+                    printf ("\nVEICOLO %d\n", i);
                     stampaVeicolo (V[i]);
                 }
 
