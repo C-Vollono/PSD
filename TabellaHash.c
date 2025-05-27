@@ -167,7 +167,7 @@ int FunzioneHash(int ID, int taglia) {
 
 int InserisciPrenotazione (TabellaHash t, Prenotazione p){
     int indice;
-    Prenotazione testa, corrente, temp;
+    Prenotazione testa, corrente;
     indice = FunzioneHash (ottieniID(p), t->taglia);
     corrente = testa = t->tabella[indice];
     while (corrente){
@@ -177,9 +177,9 @@ int InserisciPrenotazione (TabellaHash t, Prenotazione p){
         corrente = ottieniNext(corrente);
     }
     
+    testa = t->tabella[indice];
     t->tabella[indice] = p;
-    temp = ottieniNext(t->tabella[indice]);
-    temp = testa;
+    assegnaNext(p, testa);
 
 
     return 1;

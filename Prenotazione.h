@@ -377,3 +377,5 @@ char* ottieniTargaPrenotazione(Prenotazione p);
  */
 
 float costoNoleggio (veicolo v, int indiceOrario);
+
+void assegnaNext(Prenotazione p, Prenotazione next);

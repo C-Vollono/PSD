@@ -503,3 +503,9 @@ float costoNoleggio (veicolo v, int indiceOrario){
 
     return minutiTotali * ((ottieniCostoOrario(v))/60) * verificaSconto(v, indiceOrario);
 }
+
+void assegnaNext(Prenotazione p, Prenotazione next){
+    if(p!=NULL){
+        p->next = next;
+    }
+}
