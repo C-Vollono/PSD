@@ -11,7 +11,7 @@
 #include "Prenotazione.h"
 #include "Utile.h"
 
-struct item { // STRUTTURA PRENOTAZIONE DA RIMANERE
+struct item {
     int ID; //chiave dell'item prenotazione
     char* nomeUtente;
     veicolo v;
@@ -22,8 +22,6 @@ struct item { // STRUTTURA PRENOTAZIONE DA RIMANERE
     struct item *next; 
 };
 
-<<<<<<< HEAD
-=======
 /*---------------------------------------------------------------------------------------------------------------- 
  * Funzione: NuovaPrenotazione
  * -----------------------
@@ -52,7 +50,6 @@ struct item { // STRUTTURA PRENOTAZIONE DA RIMANERE
  * ---------------------------------------------------------------------------------------------------------------- 
  */
 
->>>>>>> 5fc77bdd29a79ca64eba61161764cec944d2e7bc
 Prenotazione NuovaPrenotazione (int ID, char* NomeUtente, veicolo c, int i, char* dataPrenotazione){
 
     Prenotazione p = malloc (sizeof (struct item));
@@ -82,22 +79,14 @@ Prenotazione NuovaPrenotazione (int ID, char* NomeUtente, veicolo c, int i, char
         return NULL;
     }
     
-<<<<<<< HEAD
-    p->OrarioSceltoInizio = p->v->orari[i].inizio; // DA METTERE GETORARIOINIZIO
-    p->OrarioSceltoFine = p->v->orari[i].fine; // GETORARIOFINE
-=======
     p->OrarioSceltoInizio = ottieniOrarioInizio(c, i);
     p->OrarioSceltoFine = ottieniOrarioFine(c, i);
->>>>>>> 5fc77bdd29a79ca64eba61161764cec944d2e7bc
     p->CostoNoleggioFinale = costoNoleggio (c, i);
     p->next = NULL;
 
     return p;
 }
 
-<<<<<<< HEAD
-static void LiberaLista (Prenotazione p){ // DA METTERE IN PRENOTAZIONE.C 
-=======
 /*---------------------------------------------------------------------------------------------------------------- 
  * Funzione: LiberaLista
  * -----------------------
@@ -127,7 +116,6 @@ static void LiberaLista (Prenotazione p){ // DA METTERE IN PRENOTAZIONE.C
  */
 
 void LiberaLista (Prenotazione p){
->>>>>>> 5fc77bdd29a79ca64eba61161764cec944d2e7bc
     Prenotazione nuovap;
     while (p != NULL){
         nuovap = p->next;
@@ -140,13 +128,6 @@ void LiberaLista (Prenotazione p){
     }
 }
 
-<<<<<<< HEAD
-
-void stampaPrenotazione (Prenotazione p){ // GET SOPRA DA METTERE IN PRENOTAZIONE.C
-    printf("\nID Prenotazione: %d\nData: %s\nModello: %s\nOrario selezionato: %.2f/%.2f\nCosto noleggio: %.2f euro\n", p->ID, p->data, p->v->modello, p->OrarioSceltoInizio, p->OrarioSceltoFine, p->CostoNoleggioFinale);
-}
-
-=======
 /*---------------------------------------------------------------------------------------------------------------- 
  * Funzione: stampaPrenotazione
  * -----------------------
@@ -509,4 +490,3 @@ float costoNoleggio (veicolo v, int k){
 
     return minutiTotali * ((ottieniCostoOrario(v))/60) * verificaSconto(v,k);
 }
->>>>>>> 5fc77bdd29a79ca64eba61161764cec944d2e7bc
