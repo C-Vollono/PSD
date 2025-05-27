@@ -122,7 +122,7 @@ inizio:
                         }
                     LiberaTabellaHash(T);
                     exit(1);
-                }
+                    }
 
                 Prenotazione p1 = NuovaPrenotazione (ID, nomeUtente, V[indiceVeicolo], indiceOrario, dataCorrente);
                 if (p1 == NULL){
