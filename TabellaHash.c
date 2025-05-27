@@ -6,45 +6,39 @@
 
 #define HASH_TAGLIA 30
 
+/*DEFIZIONE TABELLA HASH*/
 struct hash{
     int taglia;
     struct item **tabella; 
 };
+
+/*-- FUNZIONI RELATIVE ALLA TABELLA HASH --*/
 
 /*---------------------------------------------------------------------------------------------------------------- 
  * Funzione: ottieniTaglia
  * -----------------------
  * Restituisce la taglia della tabella hash.
  *  
- * 
  * Specifica sintattica:
  *      ottieniTaglia (TabellaHash) -> int
  *      
- *
  * Parametri:
  *      t: Tabella hash
  *      
- * 
  * Specifica semantica:
  *      ottieniTaglia (t) -> int
  *      
- * 
  * Pre-condizione:
- *      t deve esistere e non deve essere vuota.
+ *      t deve esistere e diversa da NULL
  *      
- * 
  * Post-condizione:
- *      ottengo la taglia della tabella hash.
+ *      Taglia della tabella hash ottenuta correttamente
  *      
- * 
  * Ritorna:
  *      un intero che è la taglia della tabella hash.
  *      
- * 
  * Effetti collaterali:
- * 
- * Nessun effetto collaterale.
- *      
+ *      Nessun effetto collaterale.
  * ---------------------------------------------------------------------------------------------------------------- 
  */
 
@@ -55,36 +49,32 @@ int ottieniTaglia (TabellaHash t){
 /*---------------------------------------------------------------------------------------------------------------- 
  * Funzione: NuovaTabellaHash
  * -----------------------
- *  La funzione alloca memoria per una nuova tabella hash.
+ * Alloca memoria per una nuova tabella hash.
  * 
  * Specifica sintattica:
  *      NuovaTabellaHash (int) -> TabellaHash
  *      
- *
  * Parametri:
  *      taglia: grandezza della tabella hash.
  *      
  * 
  * Specifica semantica:
- *      NuovaTabellaHash (taglia) -> TabellaHash
+ *      NuovaTabellaHash (taglia) -> tabellahash se allocata correttamente altrimenti NULL
  *      
- * 
  * Pre-condizione:
- *     taglia: deve essere maggiore di 0.
+ *     La taglia deve essere maggiore di 0.
  *      
  * 
  * Post-condizione:
- *      La tabella hash non deve essere vuota.
+ *      La tabella hash allocata correttamente altrimenti NULL
  *      
  * 
  * Ritorna:
- *      Una variabile di tipo TabellaHash che è la tabella hash allocata.
+ *      TabellaHash allocata correttamente
  *      
  * 
  * Effetti collaterali:
  *      Stampa un messaggio di errore se l'allocazione fallisce.
- *      
- * 
  * ---------------------------------------------------------------------------------------------------------------- 
  */
 
@@ -112,32 +102,27 @@ TabellaHash NuovaTabellaHash (int taglia){
 /*---------------------------------------------------------------------------------------------------------------- 
  * Funzione: FunzioneHash
  * -----------------------
- *  La funzione calcola l'indice della tabella hash.
+ * Calcola l'indice della tabella hash.
  * 
  * Specifica sintattica:
  *      FunzioneHash (int, int) -> int
  *      
- *
  * Parametri:
  *      ID: codice univoco della prenotazione
  *      taglia: grandezza della tabella hash
  *      
- * 
  * Specifica semantica:
- *      FunzioneHash (ID, taglia) -> int
+ *      FunzioneHash (ID, taglia) -> indice tabella hash
  *      
- * 
  * Pre-condizione:
- *      taglia deve essere maggiore di zero.
- * 
+ *      La taglia deve essere maggiore di zero.
  * 
  * Post-condizione:
- *      Nessuna post condizione.
+ *      Ottenuto l'indice della tabella hash
  * 
  * Ritorna:
- *      ritorna un intero che è l'indice della tabella hash associato alla prenotazione.
+ *      Intero che è l'indice della tabella hash
  *      
- * 
  * Effetti collaterali:
  *      Nessun effetto collaterale.
  *      
@@ -151,37 +136,32 @@ int FunzioneHash(int ID, int taglia) {
 /*---------------------------------------------------------------------------------------------------------------- 
  * Funzione: InserisciPrenotazione
  * -----------------------
- *  La funzione inserisce una prenotazione nella tabella hash
+ * Inserisce una prenotazione nella tabella hash
  * 
  * Specifica sintattica:
  *      InserisciPrenotazione (TabellaHash, Prenotazione) -> int
  *      
- *
  * Parametri:
  *      t: Tabella hash
- *      p: prenotazione
+ *      p: struct prenotazione
  *      
- * 
  * Specifica semantica:
- *      InserisciPrenotazione (t, p) -> int     
- * 
+ *      InserisciPrenotazione (t, p) -> 1 a buon fine altrimenti 0 gia` presente     
  * 
  * Pre-condizione:
  *      t deve essere allocata correttamente
  *      p deve essere diversa da NULL
- *      
+ *      ottieniID, ottieniNext, FunzioneHash devono essere implemetate correttamente
  * 
  * Post-condizione:
- *      Nessuna post condizione.
+ *      Se l'inserimento ha avuto successo restituisce un 1 (inserimento effettuato correttamente) altrimenti zero
  *      
- * 
  * Ritorna:
  *      0 se la prenotazione è già presente nella tabella hash, 1 altrimenti.
  *      
  * 
  * Effetti collaterali:
- *      Modifica il contenuto della tabella hash aggiungendo una prenotazione.
- *      
+ *      Modifica il contenuto della tabella hash aggiungendo una prenotazione.      
  * ---------------------------------------------------------------------------------------------------------------- 
  */
 
@@ -208,23 +188,20 @@ int InserisciPrenotazione (TabellaHash t, Prenotazione p){
 /*---------------------------------------------------------------------------------------------------------------- 
  * Funzione: LiberaTabellaHash
  * -----------------------
- *  La funzione dealloca la memoria occupata dalla tabella hash.
+ * Dealloca la memoria occupata dalla tabella hash.
  * 
  * Specifica sintattica:
  *      LiberaTabellaHash (TabellaHash) -> void
  *      
- *
  * Parametri:
  *      t: tabella hash
  *      
- * 
  * Specifica semantica:
  *      LiberaTabellaHash (t) -> void
  *      
- * 
  * Pre-condizione:
- *      t non deve essere vuota.
- *      
+ *      TabellaHash deve esistere e diversa da NULL
+ *      LiberaLista implementata correttamente
  * 
  * Post-condizione:
  *      Memoria liberata correttamente.
@@ -235,9 +212,7 @@ int InserisciPrenotazione (TabellaHash t, Prenotazione p){
  *      
  * 
  * Effetti collaterali:
- *      La tabella hash non contiene più i dati presenti in memoria.
- * 
- *      
+ *      La tabella hash non contiene più i dati presenti in memoria.     
  * ---------------------------------------------------------------------------------------------------------------- 
  */
 
@@ -254,25 +229,23 @@ void LiberaTabellaHash (TabellaHash t){
 /*---------------------------------------------------------------------------------------------------------------- 
  * Funzione: StampaPrenotazioneTabellaHash
  * -----------------------
- *  La funzione stampa a video le prenotazioni dell'utente scelto.
+ * Stampa a video le prenotazioni dell'utente
  * 
  * Specifica sintattica:
  *      StampaPrenotazioneTabellaHash (TabellaHash, char*) -> void
  *      
- *
  * Parametri:
  *      t: tabella hash
- *      nomeUtente: variabile con cui effettuare la ricerca delle prenotazioni
+ *      nomeUtente: stringa nomeUtente
  *      
- * 
  * Specifica semantica:
  *      StampaPrenotazioneTabellaHash (t, nomeUtente) -> void     
  * 
- * 
  * Pre-condizione:
- *      t non deve essere vuota.
+ *      TabellaHash deve esistere e diversa da NULL
+ *      nomeUtente allocato correttamente
+ *      ottieniTaglia, ottieniNomeUtente, stampaPrenotazione implementate correttamente
  *      
- * 
  * Post-condizione:
  *      Nessuna post-condizione.
  *      
@@ -282,8 +255,7 @@ void LiberaTabellaHash (TabellaHash t){
  *      
  * 
  * Effetti collaterali:
- *      Stampa a video i dettagli delle prenotazioni presenti nella tabella hash dell'utente scelto.
- *      
+ *      Stampa a video i dati della prenotazione dell'utente, se non presenti un avviso      
  * ---------------------------------------------------------------------------------------------------------------- 
  */
 
@@ -309,7 +281,7 @@ void StampaPrenotazioneTabellaHash (TabellaHash t, char* nomeUtente){
 /*---------------------------------------------------------------------------------------------------------------- 
  * Funzione: TrovaPrenotazione
  * -----------------------
- *  La funzione ricerca all'iterno della tabella hash la prenotazione associata all'ID inserito da tastiera.
+ *  Cerca all'interno della tabella hash la prenotazione attraverso l'ID
  * 
  * Specifica sintattica:
  *      TrovaPrenotazione (TabellaHash, int, int) -> Prenotazione
@@ -317,31 +289,29 @@ void StampaPrenotazioneTabellaHash (TabellaHash t, char* nomeUtente){
  *
  * Parametri:
  *      t: tabella hash
- *      ID: codice univoco della Prenotazione
- *      taglia: grandezza della tabella hash
+ *      ID: chiave Prenotazione
+ *      taglia: grandezza tabella hash
  *      
  * 
  * Specifica semantica:
- *      TrovaPrenotazione: (t, ID, taglia) -> Prenotazione
+ *      TrovaPrenotazione: (t, ID, taglia) -> prenotazione se ID trovato altrimenti NULL
  *      
  * 
  * Pre-condizione:
- *      t non deve essere vuota.
- *      taglia deve essere maggiore di 0.
- *      
+ *      TabellaHash deve esistere e diverso da NULL
+ *      Taglia deve essere maggiore di 0.
+ *      FunzioneHash, ottieniID, ottieniNext implementate correttamente
  * 
  * Post-condizione:
- *      Restituisce una variabile di tipo prenotazione che contiene i dati della prenotazione cercata.
+ *      Restituisce prenotazione se l'ID coincide altrimenti NULL
  *      
  * 
  * Ritorna:
- *      Una variabile di tipo Prenotazione, altrimenti NULL se la ricerca ha dato esito negativo.
+ *      Prenotazione se l'ID coincide altrimenti NULL
  *      
  * 
  * Effetti collaterali:
- *      La variabile restituita contiene i dati della prenotazione cercata.
- * 
- *      
+ *      Prenotazione contiene dati della struct Prenotazione   
  * ---------------------------------------------------------------------------------------------------------------- 
  */
 

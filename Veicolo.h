@@ -2,14 +2,14 @@
 #define VEICOLO_H
 #include <stdio.h>
 
+/*-- DEFIZIONE STRUCT VETTURA VEICOLO --*/
 typedef struct Vettura *veicolo;
 
-/*DEFINIZIONE FUNZIONI*/
+/*-- DEFINIZIONE FUNZIONI VEICOLO --*/
 
 /*---------------------------------------------------------------------------------------------------------------- 
  * Funzione: riempiVeicoli
  * -----------------------
- * Prende in input la struct veicolo
  * Riempie la struct veicolo con i dati contenuti nel file Veicolo.txt  
  * 
  * Specifica sintattica:
@@ -24,6 +24,7 @@ typedef struct Vettura *veicolo;
  * Pre-condizione:
  *      Veicolo.txt deve esistere e contenere i dati dei veicoli
  *      La struct veicolo deve esistere
+ *      controlloToken, chiudiFile, riempiOrari devono essere implemetate correttamente
  * 
  * Post-condizione:
  *      La struct veicolo e` riempita con successo
@@ -118,7 +119,8 @@ void liberaVeicolo (veicolo v);
  * Pre-condizione:
  *      La struct veicolo esistere
  *      Orari.txt deve esistere e contenere i dati degli intervalli orari e il loro status di disponibilita`
- * 
+ *      controlloToken, chiudiFile devono essere implemetate correttamente
+ *      
  * Post-condizione:
  *      La struct annidata Orari riempito con successo
  * 
@@ -403,7 +405,7 @@ float ottieniCostoOrario(veicolo v);
  *      La struct veicolo allocata correttamente altrimenti NULL 
  * 
  * Effetti collaterali:
- *      Stampa a video un messaggio di errore in caso di allocazione fallita
+ *      Stampa un messaggio di errore in caso di allocazione fallita
  * ---------------------------------------------------------------------------------------------------------------- 
  */
 

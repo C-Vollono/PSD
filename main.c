@@ -62,24 +62,27 @@ inizio:
     printf ("1) Nuova Prenotazione\n2) Visualizza storico prenotazioni\n3) Visualizza Sconti\n4) Visualizza Veicoli\n5) Trova Prenotazione\n6) Esci\n");
     printf ("Scelga l'operazione da effettuare (da 1-6): ");
 
-    char scelta;
+    char scelta[1024];
     while (1){
-        if (scanf (" %c", &scelta) != 1 || scelta < '1' || scelta > '6'){
-			printf("L'operazione scelta non e' valida, riprova: ");
-			while (getchar() != '\n');
-		} else break;
-    }
+                fgets(scelta, sizeof(scelta), stdin);
+                scelta[strcspn(scelta, "\n")] = '\0';
+                if (strlen(scelta) == 1 && scelta[0] >= '1' && scelta[0] <= '6'){
+                    break;
+                }
+                printf("Operazione non valida, riprova: ");
+    	        }
     
-    int sceltaInt = scelta - '0';
+    int sceltaInt = scelta[0] - '0';
 
     switch (sceltaInt) {
         case 1: { // Nuova Prenotazione
-            getchar();
+            
             for (int i=0; i<10; i++){
                 printf ("VEICOLO %d\n", i);
                 stampaVeicolo (V[i]);
             }
-
+            
+            
             printf ("Scelga il veicolo che le interessa tra quelli in catalogo (da 0 a 9): ");
             char sceltaIndice[1024];
             int indiceVeicolo;
