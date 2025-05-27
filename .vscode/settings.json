@@ -4,7 +4,8 @@
         "stdio.h": "c",
         "prenotazione.h": "c",
         "stdlib.h": "c",
-        "veicolo.h": "c"
+        "veicolo.h": "c",
+        "menu.h": "c"
     },
     "makefile.configureOnOpen": false,
     "C_Cpp.default.compilerPath": "C:/msys64/ucrt64/bin/gcc.exe"
