@@ -482,7 +482,7 @@ int controlloToken (char* token){
 /*---------------------------------------------------------------------------------------------------------------- 
  * Funzione: chiudiFile
  * -----------------------
- *  Funzione che chiudere un file
+ *  Funzione che per chiudere un file
  * 
  * Specifica sintattica:
  *      chiudiFile(FILE) -> int
