@@ -6,7 +6,7 @@
 
 #define HASH_TAGLIA 30
 
-/*DEFIZIONE TABELLA HASH*/
+/*-- DEFIZIONE TABELLA HASH --*/
 struct hash{
     int taglia;
     struct item **tabella; 

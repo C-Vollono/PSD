@@ -11,14 +11,14 @@
 #include "Utile.h"
 
 
-/*DEFINIZIONE STRUCT ORARIO*/
+/*-- DEFINIZIONE STRUCT ORARIO --*/
 typedef struct Orario {
     float inizio;
     float fine;
     int Disponibilita; // 0 = disponibile oppure 1 = non disponibile
 }Orario;
 
-/*DEFINIZIONE STRUCT VETTURA*/
+/*-- DEFINIZIONE STRUCT VETTURA --*/
 struct Vettura{
     char* tipoVeicolo;
     char* modello;
