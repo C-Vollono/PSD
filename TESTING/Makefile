@@ -1,5 +1,5 @@
-carsharing.exe: main.o Menu.o Prenotazione.o Veicolo.o Utile.o TabellaHash.o
-	gcc main.o Menu.o Prenotazione.o Veicolo.o Utile.o TabellaHash.o -o carsharing.exe
+testing.exe: main.o Menu.o Prenotazione.o Veicolo.o Utile.o TabellaHash.o Testing.o
+	gcc main.o Menu.o Prenotazione.o Veicolo.o Utile.o TabellaHash.o Testing.o -o testing.exe
 
 Menu.o: Menu.c Menu.h
 	gcc -c Menu.c
@@ -16,7 +16,10 @@ TabellaHash.o: TabellaHash.c TabellaHash.h
 Utile.o: Utile.c Utile.h
 	gcc -c Utile.c
 
-main.o: main.c Menu.o Prenotazione.o Veicolo.o Utile.o TabellaHash.o
+Testing.o: Testing.c Testing.h
+	gcc -c Testing.c
+
+main.o: main.c Menu.o Prenotazione.o Veicolo.o Utile.o TabellaHash.o Testing.o
 	gcc -c main.c
 
 clean:

@@ -13,6 +13,8 @@
 #include "Veicolo.h"
 #include "Prenotazione.h"
 #include "Menu.h"
+#include "Utile.h"
+#include "TabellaHash.h"
 
 #define VEICOLI_TAGLIA 10
 
@@ -24,10 +26,8 @@ void main () {
     nomeUtente = menuAccesso(); 
     
     for (int i=0; i < VEICOLI_TAGLIA; i++){
-        V[i] = malloc(sizeof(struct Vettura));
+        V[i] = creaVeicolo(); 
         if (V[i] == NULL){  
-            system("cls | clear");
-            perror ("ERRORE: Allocazione memoria veicolo fallita\n");
             for (int j=0; j < i; j++){ free(V[j]);}
             free(nomeUtente);
             exit (1);
@@ -59,27 +59,30 @@ void main () {
 
 inizio:
     printf ("\n===== BENVENUT* %s NEL NOSTRO CAR-SHARING =====\n\n", nomeUtente);
-    printf ("1) Nuova Prenotazione\n2) Visualizza storico prenotazione\n3) Visualizza Sconti\n4) Visualizza Veicoli\n5) Trova Prenotazione\n6) Esci\n");
+    printf ("1) Nuova Prenotazione\n2) Visualizza storico prenotazioni\n3) Visualizza Sconti\n4) Visualizza Veicoli\n5) Trova Prenotazione\n6) Esci\n");
     printf ("Scelga l'operazione da effettuare (da 1-6): ");
 
-    char scelta;
+    char scelta[1024];
     while (1){
-        if (scanf (" %c", &scelta) != 1 || scelta < '1' || scelta > '6'){
-			printf("L'operazione scelta non e' valida, riprova: ");
-			while (getchar() != '\n');
-		} else break;
-    }
+                fgets(scelta, sizeof(scelta), stdin);
+                scelta[strcspn(scelta, "\n")] = '\0';
+                if (strlen(scelta) == 1 && scelta[0] >= '1' && scelta[0] <= '6'){
+                    break;
+                }
+                printf("Operazione non valida, riprova: ");
+    	        }
     
-    int sceltaInt = scelta - '0';
+    int sceltaInt = scelta[0] - '0';
 
     switch (sceltaInt) {
         case 1: { // Nuova Prenotazione
-            getchar();
+            
             for (int i=0; i<10; i++){
                 printf ("VEICOLO %d\n", i);
                 stampaVeicolo (V[i]);
             }
-
+            
+            
             printf ("Scelga il veicolo che le interessa tra quelli in catalogo (da 0 a 9): ");
             char sceltaIndice[1024];
             int indiceVeicolo;
@@ -165,6 +168,7 @@ inizio:
                         goto inizio;
                     } else if (s == 'N' || s == 'n') {
                         printf ("Mi dispiace, ma la sua prenotazione e' annullata.");
+                        LiberaLista (p1);
                         printf ("\n\n\n");
                         goto inizio;
                     } else {
