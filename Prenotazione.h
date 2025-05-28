@@ -408,4 +408,4 @@ float costoNoleggio (veicolo v, int indiceOrario);
  * ---------------------------------------------------------------------------------------------------------------- 
  */
 
-Prenotazione assegnaNext(Prenotazione p, Prenotazione next);
+void assegnaNext(Prenotazione p, Prenotazione next);

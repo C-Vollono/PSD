@@ -11,8 +11,6 @@
 #include "Prenotazione.h"
 #include "Utile.h"
 
-
-/*-- DEFINIZIONE STRUCT PRENOTAZIONE --*/
 struct item {
     int ID; //chiave dell'item prenotazione
     char* nomeUtente;
@@ -24,43 +22,35 @@ struct item {
     struct item *next; 
 };
 
-/*-- FUNZIONI RELATIVE A PRENOTAZIONE --*/
-
 /*---------------------------------------------------------------------------------------------------------------- 
  * Funzione: NuovaPrenotazione
  * -----------------------
- *  Crea una nuova prenotazione nella struct item (prenotazione)
+ *  
  * 
  * Specifica sintattica:
- *      NuovaPrenotazione(int, char*, veicolo, int, char*) -> Prenotazione
+ *      
  *
  * Parametri:
- *      ID: indice (key) prenotazione
- *      NomeUtente: nome utente prenotazione
- *      c: struct veicolo
- *      i: indice orario
- *      dataPrenotazione: data prenotazione
+ *      
  * 
  * Specifica semantica:
- *      NuovaPrenotazione(ID, NomeUtente, c, i, dataPrenotazione) -> Prenotazione altrimenti NULL
+ *      
  * 
  * Pre-condizione:
- *      Struct veicolo deve esistere
- *      NomeUtente e dataPrenotazione allocate correttamente
- *      ottieniOrarioInizio, ottieniOrarioFine, costoNoleggio devono essere implementate correttamente
+ *      
  * 
  * Post-condizione:
- *      Prenotazione allocata e creata correttamente altrimenti NULL     
+ *      
  * 
  * Ritorna:
- *      Prenotazione
+ *      
  * 
  * Effetti collaterali:
- *      Stampa a video dei messaggi di errore in caso di mancata allocazione di NomeUtente, dataPrenotazione e prenotazione stessa
+ *      
  * ---------------------------------------------------------------------------------------------------------------- 
  */
 
-Prenotazione NuovaPrenotazione (int ID, char* NomeUtente, veicolo c, int indiceOrario, char* dataPrenotazione){
+Prenotazione NuovaPrenotazione (int ID, char* NomeUtente, veicolo c, int i, char* dataPrenotazione){
 
     Prenotazione p = malloc (sizeof (struct item));
     if (p == NULL){
@@ -89,9 +79,9 @@ Prenotazione NuovaPrenotazione (int ID, char* NomeUtente, veicolo c, int indiceO
         return NULL;
     }
     
-    p->OrarioSceltoInizio = ottieniOrarioInizio(c, indiceOrario);
-    p->OrarioSceltoFine = ottieniOrarioFine(c, indiceOrario);
-    p->CostoNoleggioFinale = costoNoleggio (c, indiceOrario);
+    p->OrarioSceltoInizio = ottieniOrarioInizio(c, i);
+    p->OrarioSceltoFine = ottieniOrarioFine(c, i);
+    p->CostoNoleggioFinale = costoNoleggio (c, i);
     p->next = NULL;
 
     return p;
@@ -100,28 +90,28 @@ Prenotazione NuovaPrenotazione (int ID, char* NomeUtente, veicolo c, int indiceO
 /*---------------------------------------------------------------------------------------------------------------- 
  * Funzione: LiberaLista
  * -----------------------
- *  Libera memoria dalla struct prenotazione
+ *  
  * 
  * Specifica sintattica:
- *      LiberaLista(Prenotazione) -> void
+ *      
  *
  * Parametri:
- *      p: struct prenotazione
+ *      
  * 
  * Specifica semantica:
- *      LiberaLista(p) -> void
+ *      
  * 
  * Pre-condizione:
- *      Memoria allocata per la struct prenotazione
+ *      
  * 
  * Post-condizione:
- *      Memoria liberata correttamente
+ *      
  * 
  * Ritorna:
- *      Nessun valore
+ *      
  * 
  * Effetti collaterali:
- *      La struct prenotazione non ha piu` dati presenti in memoria
+ *      
  * ---------------------------------------------------------------------------------------------------------------- 
  */
 
@@ -141,29 +131,28 @@ void LiberaLista (Prenotazione p){
 /*---------------------------------------------------------------------------------------------------------------- 
  * Funzione: stampaPrenotazione
  * -----------------------
- *  Stampa a video i dati della struct prenotazione
+ *  
  * 
  * Specifica sintattica:
- *      stampaPrenotazione(Prenotazione) -> void
+ *      
  *
  * Parametri:
- *      p: struct prenotazione
+ *      
  * 
  * Specifica semantica:
- *      stampaPrenotazione(p) -> void
+ *      
  * 
  * Pre-condizione:
- *      La struct prenotazione deve contenere dei dati diversi da NULL
- *      ottieniModelloPrenotazione deve essere implementata correttamente
+ *      
  * 
  * Post-condizione:
- *      Non ritorna nessun valore
+ *      
  * 
  * Ritorna:
- *      Nessun valore
+ *      
  * 
  * Effetti collaterali:
- *      Stampa a video i dati della struct veicolo
+ *      
  * ---------------------------------------------------------------------------------------------------------------- 
  */
 
@@ -175,28 +164,28 @@ void stampaPrenotazione (Prenotazione p){
 /*---------------------------------------------------------------------------------------------------------------- 
  * Funzione: ottieniID
  * -----------------------
- *  Restituisce l'intero del campo ID della struct prenotazione
+ *  
  * 
  * Specifica sintattica:
- *      ottieniID(Prenotazione) -> int
+ *      
  *
  * Parametri:
- *      p: struct prenotazione
+ *      
  * 
  * Specifica semantica:
- *      ottieniID(p) -> intero dell'ID prenotazione
+ *      
  * 
  * Pre-condizione:
- *      La struct prenotazione deve esistere
+ *      
  * 
  * Post-condizione:
- *      Ottenuto l'ID della prenotazione
+ *      
  * 
  * Ritorna:
- *      Un intero del campo ID della struct prenotazione altrimenti -1
+ *      
  * 
  * Effetti collaterali:
- *      Nessun effetto collaterale
+ *      
  * ---------------------------------------------------------------------------------------------------------------- 
  */
 
@@ -210,28 +199,28 @@ int ottieniID (Prenotazione p){
 /*---------------------------------------------------------------------------------------------------------------- 
  * Funzione: ottieniNext
  * -----------------------
- *  Restituisce il puntatore al prossimo elemento nella lista concatenata
+ *  
  * 
  * Specifica sintattica:
- *      ottieniNext(Prenotazione p) -> struct item*
+ *      
  *
  * Parametri:
- *      p: struct prenotazione
+ *      
  * 
  * Specifica semantica:
- *      ottieniNext(p) -> puntatore al prossimo elemento nella lista concatenata altrimenti NULL
+ *      
  * 
  * Pre-condizione:
- *      Struct prenotazione deve esistere
+ *      
  * 
  * Post-condizione:
- *      Ottenuto il puntatore al prossimo elemento nella lista concatenata
+ *      
  * 
  * Ritorna:
- *      puntatore al prossimo elemento nella lista concatenata
+ *      
  * 
  * Effetti collaterali:
- *      Nessun effetto collaterale
+ *      
  * ---------------------------------------------------------------------------------------------------------------- 
  */
 
@@ -245,28 +234,28 @@ struct item *ottieniNext(Prenotazione p){
 /*---------------------------------------------------------------------------------------------------------------- 
  * Funzione: ottieniNomeUtente
  * -----------------------
- *  Restituisce la stringa del campo nomeUtente della struct prenotazione
+ *  
  * 
  * Specifica sintattica:
- *      ottieniNomeUtente(Prenotazione) -> char*
+ *      
  *
  * Parametri:
- *      p: struct prenotazione
+ *      
  * 
  * Specifica semantica:
- *      ottieniNomeUtente(p) -> stringa del nomeUtente
+ *      
  * 
  * Pre-condizione:
- *      La struct prenotazione deve esistere
+ *      
  * 
  * Post-condizione:
- *      Ottenuta la stringa del campo nomeUtente della struct prenotazione
+ *      
  * 
  * Ritorna:
- *      Una stringa del campo nomeUtente della struct prenotazioni altrimenti NULL
+ *      
  * 
  * Effetti collaterali:
- *      Nessun effetto collaterale
+ *      
  * ---------------------------------------------------------------------------------------------------------------- 
  */
 
@@ -280,28 +269,28 @@ char* ottieniNomeUtente(Prenotazione p){
 /*---------------------------------------------------------------------------------------------------------------- 
  * Funzione: ottieniDataPrenotazione
  * -----------------------
- *  Restituisce la stringa del campo data della struct prenotazione
+ *  
  * 
  * Specifica sintattica:
- *      ottieniDataPrenotazione(Prenotazione) -> char*
+ *      
  *
  * Parametri:
- *      p: struct prenotazione
+ *      
  * 
  * Specifica semantica:
- *      ottieniDataPrenotazione(p) -> stringa della data prenotazione
+ *      
  * 
  * Pre-condizione:
- *      La struct prenotazione deve esistere
+ *      
  * 
  * Post-condizione:
- *      Ottenuta la stringa del campo data della struct prenotazione altrimenti NULL
+ *      
  * 
  * Ritorna:
- *      Una stringa del campo data della struct prenotazione altrimenti NULL
+ *      
  * 
  * Effetti collaterali:
- *      Nessun effetto collaterale
+ *      
  * ---------------------------------------------------------------------------------------------------------------- 
  */
 
@@ -315,28 +304,28 @@ char* ottieniDataPrenotazione(Prenotazione p){
 /*---------------------------------------------------------------------------------------------------------------- 
  * Funzione: ottieniInizioPrenotazione
  * -----------------------
- *  Restituisce il float del campo OrarioSceltoInizio della struct prenotazione
+ *  
  * 
  * Specifica sintattica:
- *      ottieniInizioPrenotazione(Prenotazione) -> float
+ *      
  *
  * Parametri:
- *      p: struct prenotazione
+ *      
  * 
  * Specifica semantica:
- *      ottieniInizioPrenotazione(p) -> float dell'inizio prenotazione
+ *      
  * 
  * Pre-condizione:
- *      La struct prenotazione deve esistere
+ *      
  * 
  * Post-condizione:
- *      Ottenuto il float del campo OrarioSceltoInizio della struct prenotazione
+ *      
  * 
  * Ritorna:
- *      Un float del campo OrarioSceltoInizio della struct prenotazione altrimenti -1
+ *      
  * 
  * Effetti collaterali:
- *      Nessun effetto collaterale
+ *      
  * ---------------------------------------------------------------------------------------------------------------- 
  */
 
@@ -350,28 +339,28 @@ float ottieniInizioPrenotazione(Prenotazione p){
 /*---------------------------------------------------------------------------------------------------------------- 
  * Funzione: ottieniFinePrenotazione
  * -----------------------
- *  Restituisce il float del campo OrarioSceltoFine della struct prenotazione
+ *  
  * 
  * Specifica sintattica:
- *      ottieniFinePrenotazione(Prenotazione) -> float
+ *      
  *
  * Parametri:
- *      p: struct prenotazione
+ *      
  * 
  * Specifica semantica:
- *      ottieniFinePrenotazione(p) -> float della fine prenotazione
+ *      
  * 
  * Pre-condizione:
- *      La struct prenotazione deve esistere
+ *      
  * 
  * Post-condizione:
- *      Ottenuto il float del campo OrarioSceltoFine della struct prenotazione
+ *      
  * 
  * Ritorna:
- *      Un float del campo OrarioSceltoFine della struct prenotazione altrimenti -1
+ *      
  * 
  * Effetti collaterali:
- *      Nessun effetto collaterale
+ *      
  * ---------------------------------------------------------------------------------------------------------------- 
  */
 
@@ -383,31 +372,30 @@ float ottieniFinePrenotazione(Prenotazione p){
 }
 
 /*---------------------------------------------------------------------------------------------------------------- 
- * Funzione: ottieniModelloPrenotazione
+ * Funzione: ottineiModelloPrenotazione
  * -----------------------
- *  Restituisce la stringa del modello del veicolo
+ *  
  * 
  * Specifica sintattica:
- *      ottieniModelloPrenotazione(Prenotazione) -> char*
+ *      
  *
  * Parametri:
- *      p: struct veicolo
+ *      
  * 
  * Specifica semantica:
- *      ottieniModelloPrenotazione(p) -> stringa del modello veicolo
+ *      
  * 
  * Pre-condizione:
- *      La struct prenotazione deve esistere
- *      ottieniModello deve essere implementato correttamente
+ *      
  * 
  * Post-condizione:
- *      Ottenuta la stringa del modello del veicolo     
+ *      
  * 
  * Ritorna:
- *      Una stringa del modello del veicolo dalla struct veicolo
+ *      
  * 
  * Effetti collaterali:
- *      Nessun effetto collaterale
+ *      
  * ---------------------------------------------------------------------------------------------------------------- 
  */
 
@@ -423,29 +411,28 @@ char* ottieniModelloPrenotazione(Prenotazione p){
 /*---------------------------------------------------------------------------------------------------------------- 
  * Funzione: ottieniTargaPrenotazione
  * -----------------------
- *  Restituisce la stringa della targa del veicolo
+ *  
  * 
  * Specifica sintattica:
- *      ottieniTargaPrenotazione(Prenotazione) -> char*
+ *      
  *
  * Parametri:
- *      p: struct veicolo
+ *      
  * 
  * Specifica semantica:
- *      ottieniTargaPrenotazione(p) -> stringa della targa veicolo
+ *      
  * 
  * Pre-condizione:
- *      La struct prenotazione deve esistere
- *      ottieniTarga deve essere implementato correttamente
+ *      
  * 
  * Post-condizione:
- *      Ottenuta la stringa della targa del veicolo     
+ *      
  * 
  * Ritorna:
- *      Una stringa della targa del veicolo dalla struct veicolo
+ *      
  * 
  * Effetti collaterali:
- *      Nessun effetto collaterale
+ *      
  * ---------------------------------------------------------------------------------------------------------------- 
  */
 
@@ -461,37 +448,37 @@ char* ottieniTargaPrenotazione(Prenotazione p){
 /*---------------------------------------------------------------------------------------------------------------- 
  * Funzione: costoNoleggio
  * -----------------------
- * Calcola il costo noleggio di un intervallo orario (con eventuale sconto)
+ * Calcola quanto costa il noleggio in un orario scelto dall'utente con eventuale sconto 
  * 
  * Specifica sintattica:
- *      costoNoleggio(veicolo, int) -> float
+ *      float costoNoleggio(veicolo, int) -> float
  *
  * Parametri:
- *      v: struct veicolo
- *      indiceOrario: indice dell'orario scelto
+ *      v: oggetto veicolo
+ *      k: indice dell'orario scelto
  * 
  * Specifica semantica:
- *      costoNoleggio(v, indiceOrario) -> float del costo noleggio
+ *      costoNoleggio(v, k) -> Costo del noleggio
  * 
  * Pre-condizione:
- *      La struct veicolo deve esistere
- *      ottieniOrarioInizio, ottieniOrarioFine, ottieniCostoOrario, verificaSconto devono essere implementate correttamente
+ *      L'oggetto veicolo deve esistere e contenere dati sugli intervalli orari
+ *      La funzione verificaSconto deve esistere (oppure eliminata in caso di sconti non applicabili) e inclusa
  * 
  * Post-condizione:
- *      Restituisce il costo totale del noleggio dell'intervallo orario (con eventuale sconto)
+ *      Restituisce il costo totale del noleggio dell'orario scelto dall'utente
  * 
  * Ritorna:
- *      Un float del costo totale
+ *      Ritorna un tipo float del costo totale
  * 
  * Effetti collaterali: 
  *      Nessun effetto collaterale
  * ---------------------------------------------------------------------------------------------------------------- 
  */
 
-float costoNoleggio (veicolo v, int indiceOrario){
+float costoNoleggio (veicolo v, int k){
 
     int minutiTotali, ore, minuti;
-    float inizio = ottieniOrarioInizio(v , indiceOrario), fine = ottieniOrarioFine(v , indiceOrario);
+    float inizio = ottieniOrarioInizio(v , k), fine = ottieniOrarioFine(v , k);
 
     ore = (int)inizio;
     minuti = round((inizio-ore)*100);
@@ -501,39 +488,16 @@ float costoNoleggio (veicolo v, int indiceOrario){
     minuti = round((fine-ore)*100);
     minutiTotali = (ore*60)+minuti - minutiTotali; // MINUTI TOTALI DEL TEMPO DI NOLEGGIO
 
-    return minutiTotali * ((ottieniCostoOrario(v))/60) * verificaSconto(v, indiceOrario);
+    return minutiTotali * ((ottieniCostoOrario(v))/60) * verificaSconto(v,k);
 }
 
-/*---------------------------------------------------------------------------------------------------------------- 
- * Funzione: assegnaNext
- * -----------------------
- * Assegna prenotazione next al campo next di p
- * 
- * Specifica sintattica:
- *      assegnaNext(Prenotazione, Prenotazione) -> void
- *
- * Parametri:
- *      p: struct prenotazione
- *      next: struct prenotazione
- * 
- * Specifica semantica:
- *      assegnaNext(p, next) -> void
- * 
- * Pre-condizione:
- *      p deve esistere e diversa da NULL
- *      
- * 
- * Post-condizione:
- *      Next di p punterà alla prenotazione next
- * 
- * Ritorna:
- *      Nessun valore
- * 
- * Effetti collaterali: 
- *      Nessun effetto collaterale
- * ---------------------------------------------------------------------------------------------------------------- 
- */
-
+//Utilizzato solo per il testing
+float ottieniCostoNoleggio (Prenotazione p){
+    if (p!=NULL){
+        return p->CostoNoleggioFinale;
+    }
+    return -1;
+}
 
 void assegnaNext(Prenotazione p, Prenotazione next){
     if(p!=NULL){
