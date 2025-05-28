@@ -120,10 +120,10 @@ int FunzioneHash(int ID, int taglia);
  * Pre-condizione:
  *      t deve essere allocata correttamente
  *      p deve essere diversa da NULL
- *      ottieniID, ottieniNext, FunzioneHash devono essere implemetate correttamente
+ *      ottieniID, ottieniNext, FunzioneHash, assegnaNext devono essere implemetate correttamente
  * 
  * Post-condizione:
- *      Se l'inserimento ha avuto successo restituisce un 1 (inserimento effettuato correttamente) altrimenti zero
+ *      Se l'inserimento ha avuto successo restituisce un 1 (inserimento effettuato correttamente) altrimenti 0
  *      
  * Ritorna:
  *      0 se la prenotazione è già presente nella tabella hash, 1 altrimenti.
@@ -187,7 +187,7 @@ void LiberaTabellaHash (TabellaHash t);
  * Pre-condizione:
  *      TabellaHash deve esistere e diversa da NULL
  *      nomeUtente allocato correttamente
- *      ottieniTaglia, ottieniNomeUtente, stampaPrenotazione implementate correttamente
+ *      ottieniTaglia, ottieniNomeUtente, stampaPrenotazione, ottieniNext implementate correttamente
  *      
  * Post-condizione:
  *      Nessuna post-condizione.

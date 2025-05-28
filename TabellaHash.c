@@ -151,10 +151,10 @@ int FunzioneHash(int ID, int taglia) {
  * Pre-condizione:
  *      t deve essere allocata correttamente
  *      p deve essere diversa da NULL
- *      ottieniID, ottieniNext, FunzioneHash devono essere implemetate correttamente
+ *      ottieniID, ottieniNext, FunzioneHash, assegnaNext devono essere implemetate correttamente
  * 
  * Post-condizione:
- *      Se l'inserimento ha avuto successo restituisce un 1 (inserimento effettuato correttamente) altrimenti zero
+ *      Se l'inserimento ha avuto successo restituisce un 1 (inserimento effettuato correttamente) altrimenti 0
  *      
  * Ritorna:
  *      0 se la prenotazione è già presente nella tabella hash, 1 altrimenti.
@@ -177,10 +177,9 @@ int InserisciPrenotazione (TabellaHash t, Prenotazione p){
         corrente = ottieniNext(corrente);
     }
     
-    testa = t->tabella[indice];
     t->tabella[indice] = p;
     assegnaNext(p, testa);
-
+    
 
     return 1;
 }
@@ -244,7 +243,7 @@ void LiberaTabellaHash (TabellaHash t){
  * Pre-condizione:
  *      TabellaHash deve esistere e diversa da NULL
  *      nomeUtente allocato correttamente
- *      ottieniTaglia, ottieniNomeUtente, stampaPrenotazione implementate correttamente
+ *      ottieniTaglia, ottieniNomeUtente, stampaPrenotazione, ottieniNext implementate correttamente
  *      
  * Post-condizione:
  *      Nessuna post-condizione.
@@ -259,22 +258,24 @@ void LiberaTabellaHash (TabellaHash t){
  * ---------------------------------------------------------------------------------------------------------------- 
  */
 
-void StampaPrenotazioneTabellaHash (TabellaHash t, char* nomeUtente){
+void StampaPrenotazioneTabellaHash(TabellaHash t, char* nomeUtente) {
     int g = ottieniTaglia(t);
     int prenotazioniEffettuate = 0;
 
-    for (int i=0; i < g; i++){
-        if (t->tabella[i] != NULL){
-            Prenotazione P = t->tabella[i];
-            if (strcmp (ottieniNomeUtente(P), nomeUtente) == 0){
+    for (int i = 0; i < g; i++) {
+        Prenotazione P = t->tabella[i];
+
+        while (P != NULL) {
+            if (strcmp(ottieniNomeUtente(P), nomeUtente) == 0) {
+                stampaPrenotazione(P);
                 prenotazioniEffettuate++;
-                stampaPrenotazione (P);
             }
-        } 
+            P = ottieniNext(P);
+        }
     }
 
-    if (prenotazioniEffettuate == 0){
-        printf ("Non risultano presenti prenotazioni a suo nome.\n");
+    if (prenotazioniEffettuate == 0) {
+        printf("Non risultano presenti prenotazioni a suo nome.\n");
     }
 }
 

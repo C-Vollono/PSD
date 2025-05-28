@@ -378,4 +378,34 @@ char* ottieniTargaPrenotazione(Prenotazione p);
 
 float costoNoleggio (veicolo v, int indiceOrario);
 
-void assegnaNext(Prenotazione p, Prenotazione next);
+/*---------------------------------------------------------------------------------------------------------------- 
+ * Funzione: assegnaNext
+ * -----------------------
+ * 
+ * 
+ * Specifica sintattica:
+ *      assegnaNext(Prenotazione, Prenotazione) -> Prenotazione
+ *
+ * Parametri:
+ *      p: struct prenotazione
+ *      next: struct prenotazione
+ * 
+ * Specifica semantica:
+ *      assegnaNext(p, next) -> restituisce la prenotazione successiva
+ * 
+ * Pre-condizione:
+ *      p deve esistere e diversa da NULL
+ *      
+ * 
+ * Post-condizione:
+ *      Ottenuta la prossima prenotazione altrimenti NULL
+ * 
+ * Ritorna:
+ *      la prossima prenotazione altrimenti NULL
+ * 
+ * Effetti collaterali: 
+ *      Nessun effetto collaterale
+ * ---------------------------------------------------------------------------------------------------------------- 
+ */
+
+Prenotazione assegnaNext(Prenotazione p, Prenotazione next);
