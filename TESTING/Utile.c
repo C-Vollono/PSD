@@ -104,7 +104,7 @@ int AggiornaStorico (Prenotazione p, int indiceVeicolo, int indiceOrario){
 /*---------------------------------------------------------------------------------------------------------------- 
  * Funzione: RiempiTabellaHashDaFile
  * -----------------------
- *  La funzione legge il file TC1_input.txt o TC4_input.txt (Storico = 1 o Storico = 4), conta il numero di prenotazioni
+ *  La funzione legge il file TC4_input.txt (Storico = 4), conta il numero di prenotazioni
  *  e crea una tabella hash per contenere tutte le prenotazioni
  *  Se la data corrente corrisponde alla data locale viene aggiornata la disponibilita
  * 
