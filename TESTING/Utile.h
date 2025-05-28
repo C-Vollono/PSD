@@ -11,7 +11,7 @@
 /*---------------------------------------------------------------------------------------------------------------- 
  * Funzione: ottieniData
  * -----------------------
- *  Funzione per ottenere la data locale della macchina formattata gg/mm/aaaa
+ * Funzione per ottenere la data locale della macchina formattata gg/mm/aaaa
  * 
  * Specifica sintattica:
  *      ottieniData()-> char*
@@ -33,15 +33,15 @@
  * 
  * Effetti collaterali:
  *      Stampa un messaggio di errore in caso di allocazione della memoria per la stringa fallita
+ * 
  * ---------------------------------------------------------------------------------------------------------------- 
  */
-
 char* ottieniData();
 
 /*---------------------------------------------------------------------------------------------------------------- 
  * Funzione: AggiornaStorico
  * -----------------------
- *  Aggiorna il file StoricoPrenotazioni.txt in appending con una nuova prenotazione
+ * Aggiorna il file StoricoPrenotazioni.txt in appending con una nuova prenotazione
  * 
  * Specifica sintattica:
  *      AggiornaStorico(Prenotazione, int, int)-> int
@@ -67,17 +67,17 @@ char* ottieniData();
  * 
  * Effetti collaterali:
  *      In caso di fallimento nell'apertura del file viene stampato un messaggio di errore
+ *
  * ---------------------------------------------------------------------------------------------------------------- 
  */
-
 int AggiornaStorico (Prenotazione p, int indiceVeicolo, int indiceOrario);
 
 /*---------------------------------------------------------------------------------------------------------------- 
  * Funzione: RiempiTabellaHashDaFile
  * -----------------------
- *  La funzione legge il file StoricoPrenotazioni.txt, conta il numero di prenotazioni
- *  e crea una tabella hash per contenere tutte le prenotazioni
- *  Se la data corrente corrisponde alla data locale viene aggiornata la disponibilita
+ * La funzione legge il file StoricoPrenotazioni.txt, conta il numero di prenotazioni
+ * e crea una tabella hash per contenere tutte le prenotazioni.
+ * Se la data corrente corrisponde alla data locale viene aggiornata la disponibilita
  * 
  * Specifica sintattica:
  *      RiempiTabellaHashDaFile(veicolo) -> TabellaHash
@@ -107,16 +107,15 @@ int AggiornaStorico (Prenotazione p, int indiceVeicolo, int indiceOrario);
  *      Allocata memoria per la tabella hash
  *      Stampa messaggi di errore in caso di: lettura fallita del file, memoria non allocata correttamente, ottenimento data locale fallita, inserimento fallito
  *      Viene liberata memoria in caso di tokenizzazione non corretta
+ * 
  * ---------------------------------------------------------------------------------------------------------------- 
  */
-
 TabellaHash RiempiTabellaHashDaFile (veicolo *v, int STORICO);
 
 /*---------------------------------------------------------------------------------------------------------------- 
  * Funzione: LimitaOrariDisponibili
  * -----------------------
- *  Modifica la disponibilita` degli orari disponibili durante una prenotazione confrontandoli con l'orario locale
- * 
+ * Modifica la disponibilita` degli orari disponibili durante una prenotazione confrontandoli con l'orario locale
  * 
  * Specifica sintattica:
  *      LimitaOrariDisponibili(veicolo) -> void
@@ -140,9 +139,9 @@ TabellaHash RiempiTabellaHashDaFile (veicolo *v, int STORICO);
  * 
  * Effetti collaterali:
  *      La disponibilita` viene modificata
+ * 
  * ---------------------------------------------------------------------------------------------------------------- 
  */
-
 void LimitaOrariDisponibili (veicolo *v);
 
 /*---------------------------------------------------------------------------------------------------------------- 
@@ -176,9 +175,9 @@ void LimitaOrariDisponibili (veicolo *v);
  *      
  * Effetti collaterali:
  *      Nessun effetto collaterale 
- * ---------------------------------------------------------------------------------------------------------------- 
+ *
+ *  ---------------------------------------------------------------------------------------------------------------- 
  */
-
 float verificaSconto (veicolo v, int indiceOrario);
 
 /*---------------------------------------------------------------------------------------------------------------- 
@@ -200,6 +199,7 @@ float verificaSconto (veicolo v, int indiceOrario);
  *      L'oggetto veicolo deve esistere e contenere i dati dell'oggetto orari
  *      IndiceOrario valido
  *       ottieniDisponibilita implemetata correttamente 
+ * 
  * Post-condizione:
  *      Restituisce un intero se ottieniDisponibilita e` 0 o diverso da 0
  * 
@@ -208,9 +208,9 @@ float verificaSconto (veicolo v, int indiceOrario);
  * 
  * Effetti collaterali:
  *      Nessun effetto collaterale   
+ * 
  * ----------------------------------------------------------------------------------------------------------------     
  */
-
 int verificaDisponibilita(veicolo v, int indiceOrario);
 
 /*-----------------------------------------------------------------------------------------------------------------
@@ -239,9 +239,9 @@ int verificaDisponibilita(veicolo v, int indiceOrario);
  * 
  * Effetti collaterali:
  *      Stampa a video la lista degli orari e la loro disponibilita del veicolo   
+ * 
  * ---------------------------------------------------------------------------------------------------------------- 
  */
-
 void stampaOrari (veicolo v);
 
 /*-----------------------------------------------------------------------------------------------------------------
@@ -269,9 +269,9 @@ void stampaOrari (veicolo v);
  * 
  * Effetti collaterali:
  *      Stampa un messaggio di errore in caso il token sia NULL
+ * 
  * ---------------------------------------------------------------------------------------------------------------- 
  */
-
 int controlloToken (char* token);
 
 /*---------------------------------------------------------------------------------------------------------------- 
@@ -299,7 +299,7 @@ int controlloToken (char* token);
  * 
  * Effetti collaterali:
  *      Stampa un messaggio di errore in caso di fallimento nella chiusura del file
+ * 
  * ---------------------------------------------------------------------------------------------------------------- 
  */
-
 int chiudiFile(FILE* file);

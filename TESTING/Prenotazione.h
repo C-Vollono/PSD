@@ -39,9 +39,9 @@ typedef struct item* Prenotazione;
  * 
  * Effetti collaterali:
  *      Stampa a video dei messaggi di errore in caso di mancata allocazione di NomeUtente, dataPrenotazione e prenotazione stessa
+ * 
  * ---------------------------------------------------------------------------------------------------------------- 
  */
-
 Prenotazione NuovaPrenotazione (int ID, char* NomeUtente, veicolo c, int i, char* dataPrenotazione);
 
 /*---------------------------------------------------------------------------------------------------------------- 
@@ -69,9 +69,9 @@ Prenotazione NuovaPrenotazione (int ID, char* NomeUtente, veicolo c, int i, char
  * 
  * Effetti collaterali:
  *      La struct prenotazione non ha piu` dati presenti in memoria
+ * 
  * ---------------------------------------------------------------------------------------------------------------- 
  */
-
 void LiberaLista (Prenotazione p);
 
 /*---------------------------------------------------------------------------------------------------------------- 
@@ -100,10 +100,9 @@ void LiberaLista (Prenotazione p);
  * 
  * Effetti collaterali:
  *      Stampa a video i dati della struct veicolo
+ * 
  * ---------------------------------------------------------------------------------------------------------------- 
  */
-
-
 void stampaPrenotazione (Prenotazione p);
 
 /*---------------------------------------------------------------------------------------------------------------- 
@@ -131,9 +130,9 @@ void stampaPrenotazione (Prenotazione p);
  * 
  * Effetti collaterali:
  *      Nessun effetto collaterale
+ * 
  * ---------------------------------------------------------------------------------------------------------------- 
  */
-
 int ottieniID (Prenotazione p);
 
 /*---------------------------------------------------------------------------------------------------------------- 
@@ -161,9 +160,9 @@ int ottieniID (Prenotazione p);
  * 
  * Effetti collaterali:
  *      Nessun effetto collaterale
+ * 
  * ---------------------------------------------------------------------------------------------------------------- 
  */
-
 struct item *ottieniNext(Prenotazione p);
 
 /*---------------------------------------------------------------------------------------------------------------- 
@@ -191,9 +190,9 @@ struct item *ottieniNext(Prenotazione p);
  * 
  * Effetti collaterali:
  *      Nessun effetto collaterale
+ * 
  * ---------------------------------------------------------------------------------------------------------------- 
  */
-
 char* ottieniNomeUtente(Prenotazione p);
 
 /*---------------------------------------------------------------------------------------------------------------- 
@@ -221,9 +220,9 @@ char* ottieniNomeUtente(Prenotazione p);
  * 
  * Effetti collaterali:
  *      Nessun effetto collaterale
+ * 
  * ---------------------------------------------------------------------------------------------------------------- 
  */
-
 char* ottieniDataPrenotazione(Prenotazione p);
 
 /*---------------------------------------------------------------------------------------------------------------- 
@@ -251,9 +250,9 @@ char* ottieniDataPrenotazione(Prenotazione p);
  * 
  * Effetti collaterali:
  *      Nessun effetto collaterale
+ * 
  * ---------------------------------------------------------------------------------------------------------------- 
  */
-
 float ottieniInizioPrenotazione(Prenotazione p);
 
 /*---------------------------------------------------------------------------------------------------------------- 
@@ -281,9 +280,9 @@ float ottieniInizioPrenotazione(Prenotazione p);
  * 
  * Effetti collaterali:
  *      Nessun effetto collaterale
+ * 
  * ---------------------------------------------------------------------------------------------------------------- 
  */
-
 float ottieniFinePrenotazione(Prenotazione p);
 
 /*---------------------------------------------------------------------------------------------------------------- 
@@ -312,9 +311,9 @@ float ottieniFinePrenotazione(Prenotazione p);
  * 
  * Effetti collaterali:
  *      Nessun effetto collaterale
+ * 
  * ---------------------------------------------------------------------------------------------------------------- 
  */
-
 char* ottieniModelloPrenotazione(Prenotazione p);
 
 /*---------------------------------------------------------------------------------------------------------------- 
@@ -343,9 +342,9 @@ char* ottieniModelloPrenotazione(Prenotazione p);
  * 
  * Effetti collaterali:
  *      Nessun effetto collaterale
+ * 
  * ---------------------------------------------------------------------------------------------------------------- 
  */
-
 char* ottieniTargaPrenotazione(Prenotazione p);
 
 /*---------------------------------------------------------------------------------------------------------------- 
@@ -375,9 +374,9 @@ char* ottieniTargaPrenotazione(Prenotazione p);
  * 
  * Effetti collaterali: 
  *      Nessun effetto collaterale
+ * 
  * ---------------------------------------------------------------------------------------------------------------- 
  */
-
 float costoNoleggio (veicolo v, int k);
 
 /*---------------------------------------------------------------------------------------------------------------- 
@@ -405,6 +404,7 @@ float costoNoleggio (veicolo v, int k);
  * 
  * Effetti collaterali: 
  *      Nessun effetto collaterale
+ * 
  * ---------------------------------------------------------------------------------------------------------------- 
  */
 float ottieniCostoNoleggio (Prenotazione p);
@@ -436,6 +436,7 @@ float ottieniCostoNoleggio (Prenotazione p);
  * 
  * Effetti collaterali: 
  *      Nessun effetto collaterale
+ * 
  * ---------------------------------------------------------------------------------------------------------------- 
  */
 void assegnaNext(Prenotazione p, Prenotazione next);

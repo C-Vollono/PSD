@@ -78,8 +78,6 @@ int ottieniTaglia (TabellaHash t){
  * ---------------------------------------------------------------------------------------------------------------- 
  */
 
-
-
 TabellaHash NuovaTabellaHash (int taglia){
     TabellaHash t = malloc (sizeof (struct hash)); //Alloco memoria per la tabella hash
     if (t == NULL){
@@ -294,7 +292,7 @@ void StampaPrenotazioneTabellaHash (TabellaHash t, char* nomeUtente){
  *      
  * 
  * Specifica semantica:
- *      TrovaPrenotazione: (t, ID, taglia) -> prenotazione se ID trovato altrimenti NULL
+ *      TrovaPrenotazione (t, ID, taglia) -> prenotazione altrimenti NULL
  *      
  * 
  * Pre-condizione:
@@ -303,11 +301,11 @@ void StampaPrenotazioneTabellaHash (TabellaHash t, char* nomeUtente){
  *      FunzioneHash, ottieniID, ottieniNext implementate correttamente
  * 
  * Post-condizione:
- *      Restituisce prenotazione se l'ID coincide altrimenti NULL
+ *      Restituisce prenotazione altrimenti NULL
  *      
  * 
  * Ritorna:
- *      Prenotazione se l'ID coincide altrimenti NULL
+ *      Prenotazione altrimenti NULL
  *      
  * 
  * Effetti collaterali:
@@ -327,6 +325,37 @@ Prenotazione TrovaPrenotazione (TabellaHash t, int ID, int taglia){
     return NULL;
 }
 
+/*---------------------------------------------------------------------------------------------------------------- 
+ * Funzione: ottieniPrenotazione
+ * -----------------------
+ *  Restituisce la prenotazione secondo l'indice
+ * 
+ * Specifica sintattica:
+ *      ottieniPrenotazione (TabellaHash, int) -> Prenotazione
+ *      
+ * Parametri:
+ *      t: tabella hash
+ *      indice: indice tabella hash
+ * 
+ * Specifica semantica:
+ *      ottieniPrenotazione: (t, indice) -> prenotazione
+ * 
+ * Pre-condizione:
+ *      TabellaHash deve esistere e diverso da NULL
+ *      Indice valido
+ * 
+ * Post-condizione:
+ *      Restituisce prenotazione
+ *      
+ * 
+ * Ritorna:
+ *      Prenotazione
+ *      
+ * 
+ * Effetti collaterali:
+ *      Nessun effetto collaterale
+ * ---------------------------------------------------------------------------------------------------------------- 
+ */
 //Utilizzata solo per il testing
 Prenotazione ottieniPrenotazione(TabellaHash t, int indice){
     return t->tabella[indice];

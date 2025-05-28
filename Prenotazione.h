@@ -10,7 +10,7 @@ typedef struct item* Prenotazione;
 /*---------------------------------------------------------------------------------------------------------------- 
  * Funzione: NuovaPrenotazione
  * -----------------------
- *  Crea una nuova prenotazione nella struct item (prenotazione)
+ * Crea una nuova prenotazione nella struct item (prenotazione)
  * 
  * Specifica sintattica:
  *      NuovaPrenotazione(int, char*, veicolo, int, char*) -> Prenotazione
@@ -38,15 +38,15 @@ typedef struct item* Prenotazione;
  * 
  * Effetti collaterali:
  *      Stampa a video dei messaggi di errore in caso di mancata allocazione di NomeUtente, dataPrenotazione e prenotazione stessa
+ * 
  * ---------------------------------------------------------------------------------------------------------------- 
  */
-
 Prenotazione NuovaPrenotazione (int ID, char* NomeUtente, veicolo c, int indiceOrario, char* dataPrenotazione);
 
 /*---------------------------------------------------------------------------------------------------------------- 
  * Funzione: LiberaLista
  * -----------------------
- *  Libera memoria dalla struct prenotazione
+ * Libera memoria dalla struct prenotazione
  * 
  * Specifica sintattica:
  *      LiberaLista(Prenotazione) -> void
@@ -68,15 +68,15 @@ Prenotazione NuovaPrenotazione (int ID, char* NomeUtente, veicolo c, int indiceO
  * 
  * Effetti collaterali:
  *      La struct prenotazione non ha piu` dati presenti in memoria
+ * 
  * ---------------------------------------------------------------------------------------------------------------- 
  */
-
 void LiberaLista (Prenotazione p);
 
 /*---------------------------------------------------------------------------------------------------------------- 
  * Funzione: stampaPrenotazione
  * -----------------------
- *  Stampa a video i dati della struct prenotazione
+ * Stampa a video i dati della struct prenotazione
  * 
  * Specifica sintattica:
  *      stampaPrenotazione(Prenotazione) -> void
@@ -99,15 +99,15 @@ void LiberaLista (Prenotazione p);
  * 
  * Effetti collaterali:
  *      Stampa a video i dati della struct veicolo
+ * 
  * ---------------------------------------------------------------------------------------------------------------- 
  */
-
 void stampaPrenotazione (Prenotazione p);
 
 /*---------------------------------------------------------------------------------------------------------------- 
  * Funzione: ottieniID
  * -----------------------
- *  Restituisce l'intero del campo ID della struct prenotazione
+ * Restituisce l'intero del campo ID della struct prenotazione
  * 
  * Specifica sintattica:
  *      ottieniID(Prenotazione) -> int
@@ -129,15 +129,15 @@ void stampaPrenotazione (Prenotazione p);
  * 
  * Effetti collaterali:
  *      Nessun effetto collaterale
+ * 
  * ---------------------------------------------------------------------------------------------------------------- 
  */
-
 int ottieniID (Prenotazione p);
 
 /*---------------------------------------------------------------------------------------------------------------- 
  * Funzione: ottieniNext
  * -----------------------
- *  Restituisce il puntatore al prossimo elemento nella lista concatenata
+ * Restituisce il puntatore al prossimo elemento nella lista concatenata
  * 
  * Specifica sintattica:
  *      ottieniNext(Prenotazione p) -> struct item*
@@ -159,15 +159,15 @@ int ottieniID (Prenotazione p);
  * 
  * Effetti collaterali:
  *      Nessun effetto collaterale
+ * 
  * ---------------------------------------------------------------------------------------------------------------- 
  */
-
 struct item *ottieniNext(Prenotazione p);
 
 /*---------------------------------------------------------------------------------------------------------------- 
  * Funzione: ottieniNomeUtente
  * -----------------------
- *  Restituisce la stringa del campo nomeUtente della struct prenotazione
+ * Restituisce la stringa del campo nomeUtente della struct prenotazione
  * 
  * Specifica sintattica:
  *      ottieniNomeUtente(Prenotazione) -> char*
@@ -189,15 +189,15 @@ struct item *ottieniNext(Prenotazione p);
  * 
  * Effetti collaterali:
  *      Nessun effetto collaterale
+ * 
  * ---------------------------------------------------------------------------------------------------------------- 
  */
-
 char* ottieniNomeUtente(Prenotazione p);
 
 /*---------------------------------------------------------------------------------------------------------------- 
  * Funzione: ottieniDataPrenotazione
  * -----------------------
- *  Restituisce la stringa del campo data della struct prenotazione
+ * Restituisce la stringa del campo data della struct prenotazione
  * 
  * Specifica sintattica:
  *      ottieniDataPrenotazione(Prenotazione) -> char*
@@ -219,15 +219,15 @@ char* ottieniNomeUtente(Prenotazione p);
  * 
  * Effetti collaterali:
  *      Nessun effetto collaterale
+ * 
  * ---------------------------------------------------------------------------------------------------------------- 
  */
-
 char* ottieniDataPrenotazione(Prenotazione p);
 
 /*---------------------------------------------------------------------------------------------------------------- 
  * Funzione: ottieniInizioPrenotazione
  * -----------------------
- *  Restituisce il float del campo OrarioSceltoInizio della struct prenotazione
+ * Restituisce il float del campo OrarioSceltoInizio della struct prenotazione
  * 
  * Specifica sintattica:
  *      ottieniInizioPrenotazione(Prenotazione) -> float
@@ -249,15 +249,15 @@ char* ottieniDataPrenotazione(Prenotazione p);
  * 
  * Effetti collaterali:
  *      Nessun effetto collaterale
+ * 
  * ---------------------------------------------------------------------------------------------------------------- 
  */
-
 float ottieniInizioPrenotazione(Prenotazione p);
 
 /*---------------------------------------------------------------------------------------------------------------- 
  * Funzione: ottieniFinePrenotazione
  * -----------------------
- *  Restituisce il float del campo OrarioSceltoFine della struct prenotazione
+ * Restituisce il float del campo OrarioSceltoFine della struct prenotazione
  * 
  * Specifica sintattica:
  *      ottieniFinePrenotazione(Prenotazione) -> float
@@ -279,15 +279,15 @@ float ottieniInizioPrenotazione(Prenotazione p);
  * 
  * Effetti collaterali:
  *      Nessun effetto collaterale
+ * 
  * ---------------------------------------------------------------------------------------------------------------- 
  */
-
 float ottieniFinePrenotazione(Prenotazione p);
 
 /*---------------------------------------------------------------------------------------------------------------- 
  * Funzione: ottieniModelloPrenotazione
  * -----------------------
- *  Restituisce la stringa del modello del veicolo
+ * Restituisce la stringa del modello del veicolo
  * 
  * Specifica sintattica:
  *      ottieniModelloPrenotazione(Prenotazione) -> char*
@@ -310,15 +310,15 @@ float ottieniFinePrenotazione(Prenotazione p);
  * 
  * Effetti collaterali:
  *      Nessun effetto collaterale
+ * 
  * ---------------------------------------------------------------------------------------------------------------- 
  */
-
 char* ottieniModelloPrenotazione(Prenotazione p);
 
 /*---------------------------------------------------------------------------------------------------------------- 
  * Funzione: ottieniTargaPrenotazione
  * -----------------------
- *  Restituisce la stringa della targa del veicolo
+ * Restituisce la stringa della targa del veicolo
  * 
  * Specifica sintattica:
  *      ottieniTargaPrenotazione(Prenotazione) -> char*
@@ -341,9 +341,9 @@ char* ottieniModelloPrenotazione(Prenotazione p);
  * 
  * Effetti collaterali:
  *      Nessun effetto collaterale
+ * 
  * ---------------------------------------------------------------------------------------------------------------- 
  */
-
 char* ottieniTargaPrenotazione(Prenotazione p);
 
 /*---------------------------------------------------------------------------------------------------------------- 
@@ -373,15 +373,15 @@ char* ottieniTargaPrenotazione(Prenotazione p);
  * 
  * Effetti collaterali: 
  *      Nessun effetto collaterale
+ * 
  * ---------------------------------------------------------------------------------------------------------------- 
  */
-
 float costoNoleggio (veicolo v, int indiceOrario);
 
 /*---------------------------------------------------------------------------------------------------------------- 
  * Funzione: assegnaNext
  * -----------------------
- * 
+ * Assegna prenotazione next al campo next di p
  * 
  * Specifica sintattica:
  *      assegnaNext(Prenotazione, Prenotazione) -> Prenotazione
@@ -396,7 +396,6 @@ float costoNoleggio (veicolo v, int indiceOrario);
  * Pre-condizione:
  *      p deve esistere e diversa da NULL
  *      
- * 
  * Post-condizione:
  *      Ottenuta la prossima prenotazione altrimenti NULL
  * 
@@ -405,7 +404,7 @@ float costoNoleggio (veicolo v, int indiceOrario);
  * 
  * Effetti collaterali: 
  *      Nessun effetto collaterale
+ * 
  * ---------------------------------------------------------------------------------------------------------------- 
  */
-
 void assegnaNext(Prenotazione p, Prenotazione next);
