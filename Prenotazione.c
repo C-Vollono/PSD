@@ -404,7 +404,7 @@ float ottieniFinePrenotazione(Prenotazione p){
  *      Ottenuta la stringa del modello del veicolo     
  * 
  * Ritorna:
- *      Una stringa del modello del veicolo dalla struct veicolo
+ *      Una stringa del modello del veicolo dalla struct veicolo altrimenti NULL
  * 
  * Effetti collaterali:
  *      Nessun effetto collaterale
@@ -442,7 +442,7 @@ char* ottieniModelloPrenotazione(Prenotazione p){
  *      Ottenuta la stringa della targa del veicolo     
  * 
  * Ritorna:
- *      Una stringa della targa del veicolo dalla struct veicolo
+ *      Una stringa della targa del veicolo dalla struct veicolo altrimenti NULL
  * 
  * Effetti collaterali:
  *      Nessun effetto collaterale

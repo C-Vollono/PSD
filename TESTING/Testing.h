@@ -4,7 +4,7 @@
 /*---------------------------------------------------------------------------------------------------------------- 
  * Funzione: StampaVeicoliFile
  * -----------------------
- *  Stampa su file di output le rispettive disponibilità per tutte le fasce orarie del veicolo (riferimento indice)
+ *  Stampa su file di output le informazioni relative alla disponibilità del veicolo in base alla fascia oraria
  * 
  * Specifica sintattica:
  *      
@@ -166,4 +166,42 @@ int stampaCostofile(Prenotazione p);
 
 int controlloStorico(TabellaHash t);
 
-int stampaDisponibilitaFile (veicolo v, int k);
+/*---------------------------------------------------------------------------------------------------------------- 
+ * Funzione: stampaDisponibilitaFile
+ * -----------------------
+ *  Stampa su file di output le rispettive disponibilità per tutte le fasce orarie del veicolo 
+ * 
+ * Specifica sintattica:
+ *      
+ *      stampaDisponibilitaFile(veicolo, int) -> int
+ * 
+ * Parametri:
+ * 
+ *      v: veicolo di cui considerare le fasce orarie
+ *      indiceOrario: indica di quale orario considerare le disponibilità 
+ * 
+ * Specifica semantica:
+ *
+ *      stampaDisponibilitaFile(v,indiceOrario) -> 0/1      
+ * 
+ * Pre-condizione:
+ *      
+ *      Il veicolo deve essere allocato correttamente, insieme alle sue fasce orarie e quindi anche le rispettive disponibilità
+ * 
+ * Post-condizione:
+ *      
+ *      Il file "TC1_output.txt" conterrà le fasce orarie e le rispettive disponibilità del veicolo
+ * 
+ * Ritorna:
+ *      0 se i file non vengono aperti o chiusi correttamente.
+ *      1 se i file vengono chiusi correttamente
+ * 
+ * Effetti collaterali:
+ * 
+ *      Il file "TC1_output.txt" viene modificato.
+ *      Stampa su schermo eventuali messaggi di errore nel caso in cui i file non vengono aperti o chiusi correttamente.
+ *
+ * ---------------------------------------------------------------------------------------------------------------- 
+ */
+
+int stampaDisponibilitaFile (veicolo v, int indiceOrario);
