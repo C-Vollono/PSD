@@ -1,10 +1,18 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "TabellaHash.h"
 #include "Prenotazione.h"
 
-/*-- DEFINIZIONE TABELLA HASH --*/
-typedef struct hash* TabellaHash;
+#define HASH_TAGLIA 30
+
+/*DEFIZIONE TABELLA HASH*/
+struct hash{
+    int taglia;
+    struct item **tabella; 
+};
+
+/*-- FUNZIONI RELATIVE ALLA TABELLA HASH --*/
 
 /*---------------------------------------------------------------------------------------------------------------- 
  * Funzione: ottieniTaglia
@@ -34,7 +42,9 @@ typedef struct hash* TabellaHash;
  * ---------------------------------------------------------------------------------------------------------------- 
  */
 
-int ottieniTaglia (TabellaHash t);
+int ottieniTaglia (TabellaHash t){
+    return t->taglia;
+}
 
 /*---------------------------------------------------------------------------------------------------------------- 
  * Funzione: NuovaTabellaHash
@@ -68,7 +78,26 @@ int ottieniTaglia (TabellaHash t);
  * ---------------------------------------------------------------------------------------------------------------- 
  */
 
-TabellaHash NuovaTabellaHash (int taglia);
+
+
+TabellaHash NuovaTabellaHash (int taglia){
+    TabellaHash t = malloc (sizeof (struct hash)); //Alloco memoria per la tabella hash
+    if (t == NULL){
+        system("cls | clear");
+        perror ("ERRORE: Allocazione della memoria per la tabella hash fallita.\n");
+        return NULL;
+    }
+
+    t->taglia = taglia+HASH_TAGLIA;
+    t->tabella = calloc ((taglia+HASH_TAGLIA), sizeof (struct item *)); 
+
+    if (t->tabella == NULL){
+        free (t);
+        return NULL;
+    }
+
+    return t;
+}
 
 /*---------------------------------------------------------------------------------------------------------------- 
  * Funzione: FunzioneHash
@@ -100,7 +129,9 @@ TabellaHash NuovaTabellaHash (int taglia);
  * ---------------------------------------------------------------------------------------------------------------- 
  */
 
-int FunzioneHash(int ID, int taglia);
+int FunzioneHash(int ID, int taglia) {
+    return ((31 * ID) % taglia);
+}
 
 /*---------------------------------------------------------------------------------------------------------------- 
  * Funzione: InserisciPrenotazione
@@ -120,10 +151,10 @@ int FunzioneHash(int ID, int taglia);
  * Pre-condizione:
  *      t deve essere allocata correttamente
  *      p deve essere diversa da NULL
- *      ottieniID, ottieniNext, FunzioneHash, assegnaNext devono essere implemetate correttamente
+ *      ottieniID, ottieniNext, FunzioneHash devono essere implemetate correttamente
  * 
  * Post-condizione:
- *      Se l'inserimento ha avuto successo restituisce un 1 (inserimento effettuato correttamente) altrimenti 0
+ *      Se l'inserimento ha avuto successo restituisce un 1 (inserimento effettuato correttamente) altrimenti zero
  *      
  * Ritorna:
  *      0 se la prenotazione è già presente nella tabella hash, 1 altrimenti.
@@ -134,7 +165,24 @@ int FunzioneHash(int ID, int taglia);
  * ---------------------------------------------------------------------------------------------------------------- 
  */
 
-int InserisciPrenotazione (TabellaHash t, Prenotazione p);
+int InserisciPrenotazione (TabellaHash t, Prenotazione p){
+    int indice;
+    Prenotazione testa, corrente;
+    indice = FunzioneHash (ottieniID(p), t->taglia);
+    corrente = testa = t->tabella[indice];
+    while (corrente){
+        if (ottieniID(corrente) == ottieniID(p)){
+            return 0;
+        }
+        corrente = ottieniNext(corrente);
+    }
+    
+    t->tabella[indice] = p;
+    assegnaNext(p, testa);
+
+
+    return 1;
+}
 
 /*---------------------------------------------------------------------------------------------------------------- 
  * Funzione: LiberaTabellaHash
@@ -167,7 +215,15 @@ int InserisciPrenotazione (TabellaHash t, Prenotazione p);
  * ---------------------------------------------------------------------------------------------------------------- 
  */
 
-void LiberaTabellaHash (TabellaHash t);
+void LiberaTabellaHash (TabellaHash t){
+
+    for (int i=0; i< t->taglia; i++){
+        LiberaLista (t->tabella[i]);
+    }
+
+    free (t->tabella);
+    free (t);
+}
 
 /*---------------------------------------------------------------------------------------------------------------- 
  * Funzione: StampaPrenotazioneTabellaHash
@@ -187,7 +243,7 @@ void LiberaTabellaHash (TabellaHash t);
  * Pre-condizione:
  *      TabellaHash deve esistere e diversa da NULL
  *      nomeUtente allocato correttamente
- *      ottieniTaglia, ottieniNomeUtente, stampaPrenotazione, ottieniNext implementate correttamente
+ *      ottieniTaglia, ottieniNomeUtente, stampaPrenotazione implementate correttamente
  *      
  * Post-condizione:
  *      Nessuna post-condizione.
@@ -202,7 +258,25 @@ void LiberaTabellaHash (TabellaHash t);
  * ---------------------------------------------------------------------------------------------------------------- 
  */
 
-void StampaPrenotazioneTabellaHash (TabellaHash t, char* nomeUtente);
+void StampaPrenotazioneTabellaHash (TabellaHash t, char* nomeUtente){
+    int g = ottieniTaglia(t);
+    int prenotazioniEffettuate = 0;
+
+    for (int i=0; i < g; i++){
+        Prenotazione corrente = t->tabella[i];
+        while (corrente != NULL){
+            if (strcmp (ottieniNomeUtente(corrente), nomeUtente) == 0){
+                prenotazioniEffettuate++;
+                stampaPrenotazione (corrente);
+            }
+        corrente = ottieniNext(corrente);
+        } 
+    }
+
+    if (prenotazioniEffettuate == 0){
+        printf ("Non risultano presenti prenotazioni a suo nome.\n");
+    }
+}
 
 /*---------------------------------------------------------------------------------------------------------------- 
  * Funzione: TrovaPrenotazione
@@ -241,4 +315,19 @@ void StampaPrenotazioneTabellaHash (TabellaHash t, char* nomeUtente);
  * ---------------------------------------------------------------------------------------------------------------- 
  */
 
-Prenotazione TrovaPrenotazione (TabellaHash t, int ID, int taglia);
+Prenotazione TrovaPrenotazione (TabellaHash t, int ID, int taglia){
+    int indice = FunzioneHash (ID, taglia);
+    Prenotazione p = t->tabella[indice];
+    while (p != NULL){
+        if (ottieniID(p) == ID){
+            return p;
+        }
+        p = ottieniNext(p);
+    }
+    return NULL;
+}
+
+//Utilizzata solo per il testing
+Prenotazione ottieniPrenotazione(TabellaHash t, int indice){
+    return t->tabella[indice];
+}

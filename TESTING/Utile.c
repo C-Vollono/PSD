@@ -57,7 +57,7 @@ char* ottieniData(){
 /*---------------------------------------------------------------------------------------------------------------- 
  * Funzione: AggiornaStorico
  * -----------------------
- *  Aggiorna il file StoricoPrenotazioni.txt in appending con una nuova prenotazione
+ *  Aggiorna il file TC1_output.txt in appending con una nuova prenotazione
  * 
  * Specifica sintattica:
  *      AggiornaStorico(Prenotazione, int, int)-> int
@@ -88,7 +88,7 @@ char* ottieniData(){
 
 int AggiornaStorico (Prenotazione p, int indiceVeicolo, int indiceOrario){
     FILE* file;
-    file = fopen ("StoricoPrenotazioni.txt", "a");
+    file = fopen ("TC1_output.txt", "a");
 
     if (file == NULL){
         system("cls | clear");
@@ -96,7 +96,7 @@ int AggiornaStorico (Prenotazione p, int indiceVeicolo, int indiceOrario){
         return 0;
     }
 
-    fprintf (file, "\n%s-%s-%.2f-%.2f-%d-%s-%s-%d-%d", ottieniNomeUtente(p), ottieniDataPrenotazione(p), ottieniInizioPrenotazione(p), ottieniFinePrenotazione(p), ottieniID(p), ottieniModelloPrenotazione(p), ottieniTargaPrenotazione(p), indiceVeicolo, indiceOrario);
+    fprintf(file, "\n%s-%.2f-%.2f-%s-%s-%d-%d\n",ottieniNomeUtente(p), ottieniInizioPrenotazione(p), ottieniFinePrenotazione(p), ottieniModelloPrenotazione(p), ottieniTargaPrenotazione(p), indiceVeicolo, indiceOrario);
 
     return chiudiFile(file);
 }
@@ -104,18 +104,18 @@ int AggiornaStorico (Prenotazione p, int indiceVeicolo, int indiceOrario){
 /*---------------------------------------------------------------------------------------------------------------- 
  * Funzione: RiempiTabellaHashDaFile
  * -----------------------
- *  La funzione legge il file StoricoPrenotazioni.txt, conta il numero di prenotazioni
+ *  La funzione legge il file TC1_input.txt o TC4_input.txt (Storico = 1 o Storico = 4), conta il numero di prenotazioni
  *  e crea una tabella hash per contenere tutte le prenotazioni
  *  Se la data corrente corrisponde alla data locale viene aggiornata la disponibilita
  * 
  * Specifica sintattica:
- *      RiempiTabellaHashDaFile(veicolo) -> TabellaHash
+ *      RiempiTabellaHashDaFile(veicolo, int) -> TabellaHash
  *
  * Parametri:
  *      *v: puntatore a un array di struct veicolo
  * 
  * Specifica semantica:
- *      RiempiTabellaHashDaFile(*v) -> tabella hash aggiornata o NULL (non ci sono prenotazioni)
+ *      RiempiTabellaHashDaFile(*v, STORICO) -> tabella hash aggiornata o NULL (non ci sono prenotazioni)
  * 
  * Pre-condizione:
  *      Il puntatore deve essere diverso da NULL e deve puntare all'array di struct veicolo
@@ -139,8 +139,15 @@ int AggiornaStorico (Prenotazione p, int indiceVeicolo, int indiceOrario){
  * ---------------------------------------------------------------------------------------------------------------- 
  */
 
-TabellaHash RiempiTabellaHashDaFile (veicolo *v){
-    FILE* file = fopen ("StoricoPrenotazioni.txt", "r");
+TabellaHash RiempiTabellaHashDaFile (veicolo *v, int STORICO){
+    FILE *file;
+    if (STORICO == 1){
+        file = fopen ("TC1_input.txt", "r");
+    }
+    
+    if (STORICO == 4){
+        file = fopen ("TC4_input.txt", "r");
+    }
     if (file == NULL){
         perror ("ERRORE: Lettura dello storico da file fallito.\n");
         return NULL;
@@ -249,8 +256,8 @@ TabellaHash RiempiTabellaHashDaFile (veicolo *v){
 
         int IndiceOrarioScelto = atoi (token);
 
-        Prenotazione prenotazioneFile = NuovaPrenotazione (ID, nomeUtente, v[IndiceVeicoloScelto], IndiceOrarioScelto, dataPrenotazione);
-        if (prenotazioneFile == NULL){
+        Prenotazione p = NuovaPrenotazione (ID, nomeUtente, v[IndiceVeicoloScelto], IndiceOrarioScelto, dataPrenotazione);
+        if (p == NULL){
             printf("ERRORE: Caricamento della prenotazione da file fallito.\n");
             free(dataCorrente);
             LiberaTabellaHash(t);
@@ -259,7 +266,7 @@ TabellaHash RiempiTabellaHashDaFile (veicolo *v){
             free(dataPrenotazione);
             return NULL;
         }
-        InserisciPrenotazione(t,prenotazioneFile);
+        InserisciPrenotazione(t,p);
 
         if (strcmp(dataCorrente, dataPrenotazione) == 0){
             modificaDisponibilita(v[IndiceVeicoloScelto], IndiceOrarioScelto);
@@ -482,7 +489,7 @@ int controlloToken (char* token){
 /*---------------------------------------------------------------------------------------------------------------- 
  * Funzione: chiudiFile
  * -----------------------
- *  Funzione che per chiudere un file
+ *  Funzione che chiudere un file
  * 
  * Specifica sintattica:
  *      chiudiFile(FILE) -> int
