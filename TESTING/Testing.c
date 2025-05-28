@@ -41,7 +41,6 @@
  * ---------------------------------------------------------------------------------------------------------------- 
  */
 
-
 int StampaVeicoliFile (){
 
     FILE* file = fopen ("TC3_input.txt", "r");
@@ -254,14 +253,12 @@ int controlloStorico(TabellaHash t){
             fprintf(storicoOutput, "\n%s-%s-%.2f-%.2f-%s-%s", 
                     ottieniNomeUtente(p), ottieniDataPrenotazione(p), 
                     ottieniInizioPrenotazione(p), ottieniFinePrenotazione(p), 
-                    ottieniModelloPrenotazione(p), ottieniTargaPrenotazione(p));
-                    printf("HO STAMPATO LA PRENOTAZIONE ID %d\n", i);
+                    ottieniModelloPrenotazione(p), ottieniTargaPrenotazione(p));                    
             p = ottieniNext(p);  // Passa alla prossima prenotazione nella lista collegata
         }
     }
     return chiudiFile(storicoOutput);
 }
-
 
 /*---------------------------------------------------------------------------------------------------------------- 
  * Funzione: stampaDisponibilitaFile
@@ -300,7 +297,8 @@ int controlloStorico(TabellaHash t){
  *
  * ---------------------------------------------------------------------------------------------------------------- 
  */
-int stampaDisponibilitaFile (veicolo v, int indiceOrario){
+
+ int stampaDisponibilitaFile (veicolo v, int indiceOrario){
     FILE *file = fopen("TC1_output.txt", "a");
     if(file==NULL){
         perror("ERRORE APERTURA DEL FILE!");

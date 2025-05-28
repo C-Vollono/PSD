@@ -81,7 +81,7 @@ int ottieniTaglia (TabellaHash t){
 
 
 TabellaHash NuovaTabellaHash (int taglia){
-    TabellaHash t = malloc (sizeof (struct hash)); //Alloco memoria per la tabella hash
+    TabellaHash t = malloc (sizeof (struct hash));
     if (t == NULL){
         system("cls | clear");
         perror ("ERRORE: Allocazione della memoria per la tabella hash fallita.\n");
@@ -89,7 +89,7 @@ TabellaHash NuovaTabellaHash (int taglia){
     }
 
     t->taglia = taglia+HASH_TAGLIA;
-    t->tabella = calloc ((taglia+HASH_TAGLIA), sizeof (struct item *)); 
+    t->tabella = calloc ((taglia+HASH_TAGLIA), sizeof (struct item *));
 
     if (t->tabella == NULL){
         free (t);
@@ -265,7 +265,7 @@ void StampaPrenotazioneTabellaHash(TabellaHash t, char* nomeUtente) {
     for (int i = 0; i < g; i++) {
         Prenotazione P = t->tabella[i];
 
-        while (P != NULL) {
+        while (P != NULL) { 
             if (strcmp(ottieniNomeUtente(P), nomeUtente) == 0) {
                 stampaPrenotazione(P);
                 prenotazioniEffettuate++;
@@ -316,12 +316,14 @@ void StampaPrenotazioneTabellaHash(TabellaHash t, char* nomeUtente) {
  * ---------------------------------------------------------------------------------------------------------------- 
  */
 
-Prenotazione TrovaPrenotazione (TabellaHash t, int ID, int taglia){
+Prenotazione TrovaPrenotazione (TabellaHash t, int ID, int taglia, char* nomeUtente){
     int indice = FunzioneHash (ID, taglia);
     Prenotazione p = t->tabella[indice];
     while (p != NULL){
         if (ottieniID(p) == ID){
+            if(strcmp(ottieniNomeUtente(p), nomeUtente) == 0){
             return p;
+            }
         }
         p = ottieniNext(p);
     }

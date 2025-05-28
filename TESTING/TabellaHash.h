@@ -31,9 +31,9 @@ typedef struct hash* TabellaHash;
  *      
  * Effetti collaterali:
  *      Nessun effetto collaterale.
+ * 
  * ---------------------------------------------------------------------------------------------------------------- 
  */
-
 int ottieniTaglia (TabellaHash t);
 
 /*---------------------------------------------------------------------------------------------------------------- 
@@ -65,9 +65,9 @@ int ottieniTaglia (TabellaHash t);
  * 
  * Effetti collaterali:
  *      Stampa un messaggio di errore se l'allocazione fallisce.
+ *
  * ---------------------------------------------------------------------------------------------------------------- 
  */
-
 TabellaHash NuovaTabellaHash (int taglia);
 
 /*---------------------------------------------------------------------------------------------------------------- 
@@ -99,7 +99,6 @@ TabellaHash NuovaTabellaHash (int taglia);
  *      
  * ---------------------------------------------------------------------------------------------------------------- 
  */
-
 int FunzioneHash(int ID, int taglia);
 
 /*---------------------------------------------------------------------------------------------------------------- 
@@ -131,9 +130,9 @@ int FunzioneHash(int ID, int taglia);
  * 
  * Effetti collaterali:
  *      Modifica il contenuto della tabella hash aggiungendo una prenotazione.      
+ * 
  * ---------------------------------------------------------------------------------------------------------------- 
  */
-
 int InserisciPrenotazione (TabellaHash t, Prenotazione p);
 
 /*---------------------------------------------------------------------------------------------------------------- 
@@ -164,9 +163,9 @@ int InserisciPrenotazione (TabellaHash t, Prenotazione p);
  * 
  * Effetti collaterali:
  *      La tabella hash non contiene più i dati presenti in memoria.     
+ * 
  * ---------------------------------------------------------------------------------------------------------------- 
  */
-
 void LiberaTabellaHash (TabellaHash t);
 
 /*---------------------------------------------------------------------------------------------------------------- 
@@ -199,9 +198,9 @@ void LiberaTabellaHash (TabellaHash t);
  * 
  * Effetti collaterali:
  *      Stampa a video i dati della prenotazione dell'utente, se non presenti un avviso      
+ * 
  * ---------------------------------------------------------------------------------------------------------------- 
  */
-
 void StampaPrenotazioneTabellaHash (TabellaHash t, char* nomeUtente);
 
 /*---------------------------------------------------------------------------------------------------------------- 
@@ -238,9 +237,39 @@ void StampaPrenotazioneTabellaHash (TabellaHash t, char* nomeUtente);
  * 
  * Effetti collaterali:
  *      Prenotazione contiene dati della struct Prenotazione   
+ * 
  * ---------------------------------------------------------------------------------------------------------------- 
  */
-
 Prenotazione TrovaPrenotazione (TabellaHash t, int ID, int taglia);
 
+/*---------------------------------------------------------------------------------------------------------------- 
+ * Funzione: ottieniPrenotazione
+ * -----------------------
+ * Restituisce la prenotazione secondo l'indice
+ * 
+ * Specifica sintattica:
+ *      ottieniPrenotazione (TabellaHash, int) -> Prenotazione
+ *      
+ * Parametri:
+ *      t: tabella hash
+ *      indice: indice tabella hash
+ * 
+ * Specifica semantica:
+ *      ottieniPrenotazione: (t, indice) -> prenotazione
+ * 
+ * Pre-condizione:
+ *      TabellaHash deve esistere e diverso da NULL
+ *      Indice valido
+ * 
+ * Post-condizione:
+ *      Restituisce prenotazione
+ *      
+ * Ritorna:
+ *      Prenotazione
+ *      
+ * Effetti collaterali:
+ *      Nessun effetto collaterale
+ * 
+ * ---------------------------------------------------------------------------------------------------------------- 
+ */
 Prenotazione ottieniPrenotazione(TabellaHash t, int indice);

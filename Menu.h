@@ -44,9 +44,9 @@
  *      Viene chiesto all'utente di inserire il nome utente, con un messaggio di avviso per il corretto inserimento
  * 		Se l'inserimento non è valido, stampa un messaggio di avviso
  * 		Se il nomeUtente passa tutti i controlli, allora modifica "utente.txt"	
+ *
  * ---------------------------------------------------------------------------------------------------------------- 
  */
-
 int operazioneAccesso (char operazione, char **nome_utente); 
 
 /*---------------------------------------------------------------------------------------------------------------- 
@@ -81,9 +81,9 @@ int operazioneAccesso (char operazione, char **nome_utente);
  * 		Nel caso in cui operazioneAccesso ritorna 2, stampa un messaggio di registrazione assente
  * 		Nel caso in cui operazioneAccesso ritorna 3, stampa un messaggio di operazione non valida
  * 		Nel caso in cui operazioneAccesso ritorna un valore fuori dall'intervallo [0;3], stampa un messaggio di errore generico e ripete il menu
+ * 
  * ---------------------------------------------------------------------------------------------------------------- 
  */
-
 char* menuAccesso();
 
 /*---------------------------------------------------------------------------------------------------------------- 
@@ -114,7 +114,7 @@ char* menuAccesso();
  * 		Stampa un messaggio di richiesta input
  * 		Stampa messaggi di avviso nel caso di input non validi
  * 		Stampa un messaggio di feedback nel caso in cui l'utente inserisce 'N' o 'n'
+ * 
  * ---------------------------------------------------------------------------------------------------------------- 
  */
- 
-int menuPrincipale();
+ int menuPrincipale();

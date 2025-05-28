@@ -30,7 +30,7 @@
  *      Data locale della macchina ottenuta con successo
  * 
  * Ritorna:
- *      Una stringa della data locale formattata gg/mm/aaaa
+ *      Una stringa della data locale formattata gg/mm/aaaa altrimenti NULL
  * 
  * Effetti collaterali:
  *      Stampa un messaggio di errore in caso di allocazione della memoria per la stringa fallita
@@ -173,6 +173,7 @@ TabellaHash RiempiTabellaHashDaFile (veicolo *v){
     
     fgets(buffer, sizeof(buffer), file); // Leggo a vuoto per partire dalla riga contenente la prenotazione (line 1: "\n")
     while (fgets (buffer, sizeof (buffer), file) != NULL){
+        
         char* token = strtok (buffer, "-");
         if (!(controlloToken (token))){
             free(dataCorrente);
