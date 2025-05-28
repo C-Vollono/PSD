@@ -30,7 +30,7 @@
  *      Data locale della macchina ottenuta con successo
  * 
  * Ritorna:
- *      Una stringa della data locale formattata gg/mm/aaaa
+ *      Una stringa della data locale formattata gg/mm/aaaa, altrimenti NULL
  * 
  * Effetti collaterali:
  *      Stampa un messaggio di errore in caso di allocazione della memoria per la stringa fallita
@@ -104,7 +104,7 @@ int AggiornaStorico (Prenotazione p, int indiceVeicolo, int indiceOrario){
 /*---------------------------------------------------------------------------------------------------------------- 
  * Funzione: RiempiTabellaHashDaFile
  * -----------------------
- *  La funzione legge il file TC1_input.txt o TC4_input.txt (Storico = 1 o Storico = 4), conta il numero di prenotazioni
+ *  La funzione legge il file TC4_input.txt (Storico = 4), conta il numero di prenotazioni
  *  e crea una tabella hash per contenere tutte le prenotazioni
  *  Se la data corrente corrisponde alla data locale viene aggiornata la disponibilita
  * 
@@ -141,9 +141,6 @@ int AggiornaStorico (Prenotazione p, int indiceVeicolo, int indiceOrario){
 
 TabellaHash RiempiTabellaHashDaFile (veicolo *v, int STORICO){
     FILE *file;
-    if (STORICO == 1){
-        file = fopen ("TC1_input.txt", "r");
-    }
     
     if (STORICO == 4){
         file = fopen ("TC4_input.txt", "r");

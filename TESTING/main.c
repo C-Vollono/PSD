@@ -64,7 +64,7 @@ inizio:
     switch (sceltaInt) {
         case 1: { //TC1, testing nuova prenotazione
 
-        T = RiempiTabellaHashDaFile(V, 1);
+        T = NuovaTabellaHash(0);
         if (T == NULL){
         printf("ERRORE: Caricamento prenotazioni fallito.\n");
         free(nomeUtente);
@@ -75,7 +75,7 @@ inizio:
         exit(1);
         }
 
-        FILE *file= fopen("Scelta_TC1.txt", "r");
+        FILE *file= fopen("TC1_input.txt", "r");
                 char buffer[1024];
                 int indiceVeicolo, indiceOrario;
                 fgets(buffer, sizeof(buffer), file);
