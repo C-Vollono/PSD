@@ -30,7 +30,7 @@
  *      Data locale della macchina ottenuta con successo
  * 
  * Ritorna:
- *      Una stringa della data locale formattata gg/mm/aaaa
+ *      Una stringa della data locale formattata gg/mm/aaaa, altrimenti NULL
  * 
  * Effetti collaterali:
  *      Stampa un messaggio di errore in caso di allocazione della memoria per la stringa fallita
@@ -141,9 +141,6 @@ int AggiornaStorico (Prenotazione p, int indiceVeicolo, int indiceOrario){
 
 TabellaHash RiempiTabellaHashDaFile (veicolo *v, int STORICO){
     FILE *file;
-    if (STORICO == 1){
-        file = fopen ("TC1_input.txt", "r");
-    }
     
     if (STORICO == 4){
         file = fopen ("TC4_input.txt", "r");
