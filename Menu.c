@@ -77,7 +77,7 @@ int operazioneAccesso (char operazione, char **nomeUtente){
 	return 3;
  }
 
-  while (1){
+  while (1){ //Controllo input nomeUtente
   	corretto = 1;
 	system("cls | clear");
 	printf("\nVALIDI SOLO CARATTERI ALFANUMERICI, MAX. 25 CARATTERI\n\n");
@@ -102,7 +102,7 @@ int operazioneAccesso (char operazione, char **nomeUtente){
         }
     }
 
-    if (corretto) { 
+    if (corretto) { //Controllo nomeUtente registrati
     	while (fgets(bufferFileUtente, sizeof(bufferFileUtente), utentiRegistrati) != NULL){
     		bufferFileUtente[strcspn(bufferFileUtente, "\n")] = '\0';
     		if (strcmp(bufferFileUtente, bufferUtente) == 0){
@@ -119,7 +119,7 @@ int operazioneAccesso (char operazione, char **nomeUtente){
 		int operazioneInt = operazione - '0';
 
     	switch (operazioneInt){
-    		case 1:
+    		case 1: //REGISTRAZIONE
       			if (utenteCorrisponde){
 					system("cls | clear");
        				return 0;
@@ -150,7 +150,7 @@ int operazioneAccesso (char operazione, char **nomeUtente){
         		return 1;
 
             }
-       	    case 2: 
+       	    case 2: //LOGIN
         		if (utenteCorrisponde){ 
          			*nomeUtente = malloc((strlen(bufferUtente) + 1) * sizeof(char));
          			if (*nomeUtente == NULL) {
@@ -215,7 +215,7 @@ char* menuAccesso(){
 	char operazione;
 	int risultatoOperazione;
 	system("cls | clear"); // Pulizia dopo la prima run del programma
-	while (1){
+	while (1){ //MENU
 		int s2;
 		char sceltaIndice[1024];
             while (1){

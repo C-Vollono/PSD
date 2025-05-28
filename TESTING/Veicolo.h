@@ -36,9 +36,9 @@ typedef struct Vettura *veicolo;
  *      Modifica il contenuto nella struct veicolo
  *      Se il file è vuoto, la struct veicolo risulta NULL
  *      Stampa errore per apertura del file fallita, per l'allocazione dei vari campi della struct e riempimento fallito
+ * 
  * ---------------------------------------------------------------------------------------------------------------- 
  */
-
 int riempiVeicoli (veicolo v);
 
 /*---------------------------------------------------------------------------------------------------------------- 
@@ -66,15 +66,15 @@ int riempiVeicoli (veicolo v);
  * 
  * Effetti collaterali:
  *      Stampa a video i dati della struct veicolo
+ *
  * ---------------------------------------------------------------------------------------------------------------- 
  */
-
 void stampaVeicolo (veicolo v);
 
 /*---------------------------------------------------------------------------------------------------------------- 
  * Funzione: liberaVeicolo
  * -----------------------
- *  Libera la memoria della struct veicolo
+ * Libera la memoria della struct veicolo
  * 
  * Specifica sintattica:
  *      liberaVeicolo(veicolo) -> void
@@ -96,9 +96,9 @@ void stampaVeicolo (veicolo v);
  * 
  * Effetti collaterali:
  *      La struct veicolo non ha più dati presenti in memoria
+ * 
  * ---------------------------------------------------------------------------------------------------------------- 
  */
-
 void liberaVeicolo (veicolo v);
 
 /*---------------------------------------------------------------------------------------------------------------- 
@@ -131,9 +131,9 @@ void liberaVeicolo (veicolo v);
  *      Modifica il contenuto nella struct annidata orari
  *      Se il file è vuoto, la struct veicolo risulta NULL
  *      File viene chiuso in caso in cui controllotoken fallisce
+ * 
  * ---------------------------------------------------------------------------------------------------------------- 
  */
-
 int riempiOrari (veicolo v);
 
 /*---------------------------------------------------------------------------------------------------------------- 
@@ -162,9 +162,9 @@ int riempiOrari (veicolo v);
  * 
  * Effetti collaterali:
  *       Stampa a video la disponibilita ("Non disponibile" o "Disponibile")
+ * 
  * ---------------------------------------------------------------------------------------------------------------- 
  */
-
 void stampaDisponibilita (veicolo v, int indiceOrario);
 
 /*---------------------------------------------------------------------------------------------------------------- 
@@ -193,15 +193,15 @@ void stampaDisponibilita (veicolo v, int indiceOrario);
  * 
  * Effetti collaterali:
  *       Cambiato il valore nel campo Disponibilità della struct annidata Orari
+ * 
  * ---------------------------------------------------------------------------------------------------------------- 
  */
-
 void modificaDisponibilita (veicolo v, int indiceOrario);
 
 /*-----------------------------------------------------------------------------------------------------------------
  * Funzione: ottieniModello
  * ----------------------------------------------------------------------------------------------------------------
- *  Restituisce la stringa del campo modello della struct veicolo 
+ * Restituisce la stringa del campo modello della struct veicolo 
  * 
  * Specifica sintattica:
  *      ottieniModello(veicolo) -> char*
@@ -223,15 +223,15 @@ void modificaDisponibilita (veicolo v, int indiceOrario);
  * 
  * Effetti collaterali:
  *      Nessun effetto collaterale
+ * 
  * ---------------------------------------------------------------------------------------------------------------- 
  */
-
 char* ottieniModello(veicolo v);
 
 /*-----------------------------------------------------------------------------------------------------------------
  * Funzione: ottieniTarga
  * ----------------------------------------------------------------------------------------------------------------
- *  Restituisce la stringa del campo targa della struct veicolo 
+ * Restituisce la stringa del campo targa della struct veicolo 
  * 
  * Specifica sintattica:
  *      ottieniTarga(veicolo) -> char*
@@ -253,15 +253,15 @@ char* ottieniModello(veicolo v);
  * 
  * Effetti collaterali:
  *      Nessun effetto collaterale
+ * 
  * ---------------------------------------------------------------------------------------------------------------- 
  */
-
 char* ottieniTarga(veicolo v);
 
 /*-----------------------------------------------------------------------------------------------------------------
  * Funzione: ottieniOrarioInizio
  * ----------------------------------------------------------------------------------------------------------------
- *  Restituisce il float del campo inizio della struct annidata orari
+ * Restituisce il float del campo inizio della struct annidata orari
  * 
  * Specifica sintattica:
  *      ottieniOrariInizio(veicolo, int) -> float
@@ -284,15 +284,15 @@ char* ottieniTarga(veicolo v);
  * 
  * Effetti collaterali:
  *      Nessun effetto collaterale
+ * 
  * ---------------------------------------------------------------------------------------------------------------- 
  */
-
 float ottieniOrarioInizio(veicolo v, int indiceOrario);
 
 /*-----------------------------------------------------------------------------------------------------------------
  * Funzione: ottieniOrarioFine
  * ----------------------------------------------------------------------------------------------------------------
- *  Restituisce il float del campo fine della struct annidata orari
+ * Restituisce il float del campo fine della struct annidata orari
  * 
  * Specifica sintattica:
  *      ottieniOrariFine(veicolo, int) -> float
@@ -315,15 +315,15 @@ float ottieniOrarioInizio(veicolo v, int indiceOrario);
  * 
  * Effetti collaterali:
  *      Nessun effetto collaterale
+ * 
  * ---------------------------------------------------------------------------------------------------------------- 
  */
-
 float ottieniOrarioFine(veicolo v, int indiceOrario);
 
 /*-----------------------------------------------------------------------------------------------------------------
  * Funzione: ottieniDisponibilita
  * ----------------------------------------------------------------------------------------------------------------
- *  Restituisce l'int del campo Disponibilita della struct annidata orari
+ * Restituisce l'int del campo Disponibilita della struct annidata orari
  * 
  * Specifica sintattica:
  *      ottieniDisponibilita(veicolo, int) -> int
@@ -346,15 +346,15 @@ float ottieniOrarioFine(veicolo v, int indiceOrario);
  * 
  * Effetti collaterali:
  *      Nessun effetto collaterale
+ * 
  * ---------------------------------------------------------------------------------------------------------------- 
  */
-
 int ottieniDisponibilita(veicolo v, int indiceOrario);
 
 /*-----------------------------------------------------------------------------------------------------------------
  * Funzione: ottieniCostoOrario
  * ----------------------------------------------------------------------------------------------------------------
- *  Restituisce il float del campo CostoNoleggioOrario della struct veicolo
+ * Restituisce il float del campo CostoNoleggioOrario della struct veicolo
  * 
  * Specifica sintattica:
  *      ottieniCostoOrario(veicolo) -> float
@@ -376,15 +376,15 @@ int ottieniDisponibilita(veicolo v, int indiceOrario);
  * 
  * Effetti collaterali:
  *      Nessun effetto collaterale
+ * 
  * ---------------------------------------------------------------------------------------------------------------- 
  */
-
 float ottieniCostoOrario(veicolo v);
 
 /*-----------------------------------------------------------------------------------------------------------------
  * Funzione: creaVeicolo
  * ----------------------------------------------------------------------------------------------------------------
- *  Alloca memoria per la struct veicolo
+ * Alloca memoria per la struct veicolo
  * 
  * Specifica sintattica:
  *      creaVeicolo() -> veicolo
@@ -406,9 +406,9 @@ float ottieniCostoOrario(veicolo v);
  * 
  * Effetti collaterali:
  *      Stampa un messaggio di errore in caso di allocazione fallita
+ * 
  * ---------------------------------------------------------------------------------------------------------------- 
  */
-
 veicolo creaVeicolo();
 
 #endif

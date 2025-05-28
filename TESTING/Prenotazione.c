@@ -166,7 +166,6 @@ void LiberaLista (Prenotazione p){
  * ---------------------------------------------------------------------------------------------------------------- 
  */
 
-
 void stampaPrenotazione (Prenotazione p){ 
     printf("\nID Prenotazione: %d\nData: %s\nModello: %s\nOrario selezionato: %.2f/%.2f\nCosto noleggio: %.2f euro\n", p->ID, p->data, ottieniModelloPrenotazione(p), p->OrarioSceltoInizio, p->OrarioSceltoFine, p->CostoNoleggioFinale);
 }
@@ -530,7 +529,8 @@ float costoNoleggio (veicolo v, int k){
  *      Nessun effetto collaterale
  * ---------------------------------------------------------------------------------------------------------------- 
  */
-float ottieniCostoNoleggio (Prenotazione p){
+
+ float ottieniCostoNoleggio (Prenotazione p){
     if (p!=NULL){
         return p->CostoNoleggioFinale;
     }
@@ -566,7 +566,8 @@ float ottieniCostoNoleggio (Prenotazione p){
  *      Nessun effetto collaterale
  * ---------------------------------------------------------------------------------------------------------------- 
  */
-void assegnaNext(Prenotazione p, Prenotazione next){
+
+ void assegnaNext(Prenotazione p, Prenotazione next){
     if(p!=NULL){
         p->next = next;
     }

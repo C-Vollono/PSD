@@ -69,8 +69,8 @@ struct Vettura{
 
     FILE *file;
     char buffer [1024];
-    static int indiceVeicolo=0; 
-    int j = 0;
+    static int indiceVeicolo=0; //Indice del veicolo da riempire
+    int j = 0; //Contatore della riga del file
 
     file = fopen ("Veicoli.txt", "r");
     if (file == NULL){
