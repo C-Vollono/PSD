@@ -507,7 +507,7 @@ float costoNoleggio (veicolo v, int indiceOrario){
 /*---------------------------------------------------------------------------------------------------------------- 
  * Funzione: assegnaNext
  * -----------------------
- * 
+ * Assegna la prossima prenotazione
  * 
  * Specifica sintattica:
  *      assegnaNext(Prenotazione, Prenotazione) -> Prenotazione
