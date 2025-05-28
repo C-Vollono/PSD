@@ -1,5 +1,5 @@
-main.exe: main.o Menu.o Prenotazione.o Veicolo.o
-	gcc main.o Menu.o Prenotazione.o Veicolo.o -o main.exe
+carsharing.exe: main.o Menu.o Prenotazione.o Veicolo.o
+	gcc main.o Menu.o Prenotazione.o Veicolo.o -o carsharing.exe
 
 Menu.o: Menu.c Menu.h
 	gcc -c Menu.c
