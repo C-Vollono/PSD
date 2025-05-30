@@ -11,14 +11,14 @@
 #include "Utile.h"
 
 
-/*DEFINIZIONE STRUCT ORARIO*/
+/*-- DEFINIZIONE STRUCT ORARIO --*/
 typedef struct Orario {
     float inizio;
     float fine;
     int Disponibilita; // 0 = disponibile oppure 1 = non disponibile
 }Orario;
 
-/*DEFINIZIONE STRUCT VETTURA*/
+/*-- DEFINIZIONE STRUCT VETTURA --*/
 struct Vettura{
     char* tipoVeicolo;
     char* modello;
@@ -36,7 +36,6 @@ struct Vettura{
 /*---------------------------------------------------------------------------------------------------------------- 
  * Funzione: riempiVeicoli
  * -----------------------
- * Prende in input la struct veicolo
  * Riempie la struct veicolo con i dati contenuti nel file Veicolo.txt  
  * 
  * Specifica sintattica:
@@ -51,6 +50,7 @@ struct Vettura{
  * Pre-condizione:
  *      Veicolo.txt deve esistere e contenere i dati dei veicoli
  *      La struct veicolo deve esistere
+ *      controlloToken, chiudiFile, riempiOrari devono essere implemetate correttamente
  * 
  * Post-condizione:
  *      La struct veicolo e` riempita con successo
@@ -69,8 +69,8 @@ struct Vettura{
 
     FILE *file;
     char buffer [1024];
-    static int indiceVeicolo=0; 
-    int j = 0;
+    static int indiceVeicolo=0; //Indice del veicolo da riempire
+    int j = 0; //Contatore della riga del file
 
     file = fopen ("Veicoli.txt", "r");
     if (file == NULL){
@@ -275,7 +275,8 @@ struct Vettura{
  * Pre-condizione:
  *      La struct veicolo esistere
  *      Orari.txt deve esistere e contenere i dati degli intervalli orari e il loro status di disponibilita`
- * 
+ *      controlloToken, chiudiFile devono essere implemetate correttamente
+ *      
  * Post-condizione:
  *      La struct annidata Orari riempito con successo
  * 
@@ -644,7 +645,7 @@ float ottieniCostoOrario(veicolo v){
  *      La struct veicolo allocata correttamente altrimenti NULL 
  * 
  * Effetti collaterali:
- *      Stampa a video un messaggio di errore in caso di allocazione fallita
+ *      Stampa un messaggio di errore in caso di allocazione fallita
  * ---------------------------------------------------------------------------------------------------------------- 
  */
 

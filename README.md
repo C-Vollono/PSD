@@ -1,108 +1,42 @@
--- ADT Veicolo --
-	
-	struct Vettura{
-	Tipo di veicolo: Stringa
-	Modello: Stringa
-	Colore: Stringa
-	Targa: Stringa
-	struct Orari disponibili{  //array di struct delle fascie orarie
-		float inizio
-		float fine
-		int disponibilità (booleano)
-	}  
-	Posti omologati: Intero
-	Tipo di combustibile: Stringa
-	Anno di immatricolazione: Intero
-	Costo noleggio: Float (Costo orario)
-	}
+# Car Sharing – Sistema per il noleggio di veicoli  
 
--- Funzioni ADT Veicolo --
-	
-	stampaVeicolo(veicolo) -> void;  //stampa i dati del veicolo e la sua disponibilità
+## Descrizione  
+**Car Sharing** (progettato per un esame di Programmazione e strutture dati) è un sistema software progettato per la gestione e l’ottimizzazione del servizio di car sharing. L’applicazione consente agli utenti di visualizzare la disponibilità dei veicoli, effettuare prenotazioni e consultare lo storico dei noleggi in modo strutturato ed efficiente oltre che ricercare prenotazioni precedenti con un ID apposito.  
 
-	modificaDisponibilita(veicolo, int k) -> void; // Cambia la disponibilità di una fascia oraria occupata nella struct Orari
+## Caratteristiche principali  
+- **Gestione dei veicoli**: Monitoraggio dei mezzi disponibili per il noleggio.  
+- **Sistema di prenotazione**: Registrazione delle prenotazioni con verifica della disponibilità.  
+- **Storico delle prenotazioni**: Consultazione delle prenotazioni passate.
+- **Ricerca veloce delle prenotazioni**: Possibilita` di trovare prenotazioni singole velocemente tramite ID univoco.
+- **Sistema di visualizzazione degli sconti**: Consultazione degli sconti applicabili in determinate circostanze.
+- **Interfaccia interattiva**: Struttura intuitiva per facilitare l’uso del sistema.  
 
-	costoNoleggio (veicolo, int k) -> float; //Calcola il costo complessivo del noleggio con eventuali sconti applicati all'orario
+## Modalità di utilizzo  
+1. **Avvio dell’applicazione** e accesso al menu di autenticazione (Registrazione o Login).  
+2. **Accesso al menu principale** e scelta del servizio richiesto.
+3. **Prenotare un veicolo** tramite scelta di quest'ultimo e orario a seconda della disponibilita`.
+4. **Visualizza catalogo veicoli** e avere una lista completa di tutti i veicoli presenti.
+5. **Visualizza storico delle prenotazioni** e avere una lista di tutte le prenotazioni effettuate con tutte le informazioni.
+6. **Aggiornamento sugli sconti** cosi` da sapere quando e dove vengono applicati eventuali sconti.
+7. **Ricerca di una prenotazione** se si vuol leggere le informazioni di una determinata prenotazione.
+8. **Uscita dal software** concluse tutte le operazioni richieste.
 
-	riempiVeicoli (veicolo, char* nomefile) -> void; //prende i dati dal file Veicoli.txt e li inserisce nell'array di struct dell'ADT Veicolo
+## Implementazione  
+Il sistema è sviluppato in linguaggio C e utilizza strutture dati avanzate per ottimizzare la gestione delle prenotazioni e dei veicoli. I moduli principali includono:  
+- `Veicolo.c/h`: Definizione e gestione dei veicoli.  
+- `Prenotazione.c/h`: Implementazione del sistema di prenotazione.  
+- `TabellaHash.c/h`: Struttura dati per l’archiviazione efficiente delle prenotazioni.  
+- `Menu.c/h`: Interfaccia per l’interazione con l’utente.
+- `Utile.c/h`: Implementazione di funzioni aggiuntive utili al software
 
-	riempiOrari(veicolo, char*file) -> void; //prende i dati dal file Orari.txt e li inserisce nella struct annidata Orari dell'ADT Veicolo
-	
-	stampaOrari(veicolo) -> void // stampa gli orari disponibili del veicolo
+## Installazione e utilizzo  
+1. Clonare il repository del progetto.  
+2. Compilare il codice utilizzando il `Makefile`.  
+3. Avviare l’applicazione ed esplorare le funzionalità disponibili.  
 
-	verificaDisponibilità(veicolo, int k) -> void //stampa a video se un veicolo è disponibile o meno in una determinata fascia oraria
+## Autori  
+Progetto sviluppato da **FrancescoGaetanoVentriglia**, **CristianVollono**, **AntonioRuotolo**. 
 
-	verificaSconto(veicolo, int k) -> float //Restituisce la percentuale di sconto da applicare nel costo del noleggio in determinati orari altrimenti nessuno
+---
 
-	liberaVeicolo(veicolo) -> void //Deallocazione della memoria
-
----------------------------------------------------------------------------------------------------------------------------------------------
-
- -- ADT Prenotazione --
-	
-	struct item {
-
-		char* key; //ID prenotazione
-		char* NomeUtente;
-		veicolo v;
-		char* OrarioScelto; //Da valutare il tipo di dato del campo
-		Float CostoNoleggioFinale;
-
-	}
-
--- Funzioni ADT Prenotazione --
-
-	// Da discutere
-
--- Funzioni Interfaccia utente --
-
-	menu_accesso() -> void //crea il menu di accesso e se va a buon fine richiama la funzione del menu per le varie operazioni
-
-	menu_utente(char* nome_utente, veicolo, int indice_veicolo) -> menu delle varie operazioni che può eseguire l'utente
-
----------------------------------------------------------------------------------------------------------------------------------------------
-
---PSEUDOCODICE--
-	-Chiedere se si è un nuovo utente e si è già registrati.
-	-Se si è un nuovo utente, creare account e salvare le credenziali in un file txt esterno.
-	-Se si è già registrati, accedere e confrontare le credenziali con quelle salvate nel file txt.
-	-Apertura del menu
-
-	-Scelte disponibili nel menu principale: (da fare con uno switch)
-	Nuova prenotazione
-	Visualizza Storico Prenotazioni 
-	Visualizza Sconti
-	Visualizza Veicoli
-	Logout
-	Elimina prenotazione
-
-	-Caso 1 (Nuova prenotazione): 
-	- Chiedi all'utente l'orario in cui vuole prendere un veicolo
-	- Una volta chiesto l'orario, verranno mostrate tutti i veicoli disponibili, con accanto un numero che equivale alla posizione nell'array
-	- Chiedi all'utente di scegliere un veicolo scrivendo il numero accanto al veicolo scelto
-	- Mostri un riepilogo della prenotazione, stampando i dettagli completi del veicolo scelto, il costo totale per l'orario scelto e applichi eventuali sconti associati a quel veicolo
-	-Chiedi all'utente di confermare o annullare la prenotazione
-	-Se l'utente conferma, inserisci nell'adt la prenotazione effettuata
-	-Se l'utente annulla, torni al menu
-	-Torna al menu principale
-	// Dopo aver creato una prenotazione, bisogna aggiornare i file txt esterni degli orari e del veicolo per quanto riguarda la disponibilità. Basta sovrascrivere i file esterni txt con i dati aggiornati nelle struct del programma
-
-	-Caso 2 (Visualizza storico prenotazioni):
-	-Stampa direttamente tutte le prenotazioni effettuate dal cliente //Chiedere per il salvataggio
-	-Chiedi all'utente se vuole tornare al menu principale
-
-	-Caso 3 (Visualizza sconti): 
-	- Chiedi all'utente se vuole vedere gli sconti per orari specifici
-	- Mostri all'utente gli sconti in base a cosa ha scelto
-	-Chiedi all'utente se vuole tornare al menu principale
-
-	-Caso 4 (Visualizza veicoli): 
-	-Stampa le caratteristiche di tutti i veicoli disponibili in catalogo //Implementare dopo la ricerca dei veicoli per caratteristiche (Tipo di conbustibile, anno di immatricolazione, posti omologati ecc...)
-	- Torna al menu principale
-
-	-Caso 5 (Logout): 
-	-Interrompi l'esecuzione del programma
-
-	-Caso 6 (Annulla prenotazione):
-	-Chiedi all'utente di inserire l'ID della prenotazione da concellare
-	-Cancella prenotazione e torna al menu principale //aggiornare file txt
+📌 **Nota**: Per ulteriori dettagli tecnici, consultare la documentazione e i file sorgente presenti nel repository. 

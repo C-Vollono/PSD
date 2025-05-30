@@ -36,7 +36,6 @@
  * 
  * ---------------------------------------------------------------------------------------------------------------- 
  */
-
 char* ottieniData();
 
 /*---------------------------------------------------------------------------------------------------------------- 
@@ -68,10 +67,9 @@ char* ottieniData();
  * 
  * Effetti collaterali:
  *      In caso di fallimento nell'apertura del file viene stampato un messaggio di errore
- * 
+ *
  * ---------------------------------------------------------------------------------------------------------------- 
  */
-
 int AggiornaStorico (Prenotazione p, int indiceVeicolo, int indiceOrario);
 
 /*---------------------------------------------------------------------------------------------------------------- 
@@ -112,8 +110,7 @@ int AggiornaStorico (Prenotazione p, int indiceVeicolo, int indiceOrario);
  * 
  * ---------------------------------------------------------------------------------------------------------------- 
  */
-
-TabellaHash RiempiTabellaHashDaFile (veicolo *v);
+TabellaHash RiempiTabellaHashDaFile (veicolo *v, int STORICO);
 
 /*---------------------------------------------------------------------------------------------------------------- 
  * Funzione: LimitaOrariDisponibili
@@ -145,14 +142,13 @@ TabellaHash RiempiTabellaHashDaFile (veicolo *v);
  * 
  * ---------------------------------------------------------------------------------------------------------------- 
  */
-
 void LimitaOrariDisponibili (veicolo *v);
 
 /*---------------------------------------------------------------------------------------------------------------- 
  * Funzione: verificaSconto
  * -----------------------
  * La funzione verifica la possibilità di un sconto in determinati intervalli orari prestabiliti e restituisce un tipo float
- * riguardante lo sconto da applicare al calcolo del costo totale del noleggio.
+ * riguardante lo sconto da applicare al calcolo del costo totale del noleggio
  * 
  * Specifica sintattica:
  *      verificaSconto(veicolo, int) -> float
@@ -179,10 +175,9 @@ void LimitaOrariDisponibili (veicolo *v);
  *      
  * Effetti collaterali:
  *      Nessun effetto collaterale 
- * 
- * ---------------------------------------------------------------------------------------------------------------- 
+ *
+ *  ---------------------------------------------------------------------------------------------------------------- 
  */
-
 float verificaSconto (veicolo v, int indiceOrario);
 
 /*---------------------------------------------------------------------------------------------------------------- 
@@ -216,7 +211,6 @@ float verificaSconto (veicolo v, int indiceOrario);
  * 
  * ----------------------------------------------------------------------------------------------------------------     
  */
-
 int verificaDisponibilita(veicolo v, int indiceOrario);
 
 /*-----------------------------------------------------------------------------------------------------------------
@@ -248,7 +242,6 @@ int verificaDisponibilita(veicolo v, int indiceOrario);
  * 
  * ---------------------------------------------------------------------------------------------------------------- 
  */
-
 void stampaOrari (veicolo v);
 
 /*-----------------------------------------------------------------------------------------------------------------
@@ -279,13 +272,12 @@ void stampaOrari (veicolo v);
  * 
  * ---------------------------------------------------------------------------------------------------------------- 
  */
-
 int controlloToken (char* token);
 
 /*---------------------------------------------------------------------------------------------------------------- 
  * Funzione: chiudiFile
  * -----------------------
- * Funzione che chiudere un file
+ *  Funzione che chiudere un file
  * 
  * Specifica sintattica:
  *      chiudiFile(FILE) -> int
@@ -310,5 +302,4 @@ int controlloToken (char* token);
  * 
  * ---------------------------------------------------------------------------------------------------------------- 
  */
-
 int chiudiFile(FILE* file);

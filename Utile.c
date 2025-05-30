@@ -7,32 +7,33 @@
 #include "TabellaHash.h"
 #include "Utile.h"
 
+/*-- FUNZIONI DI UTILITA` --*/
 
 /*---------------------------------------------------------------------------------------------------------------- 
  * Funzione: ottieniData
  * -----------------------
- *  
+ *  Funzione per ottenere la data locale della macchina formattata gg/mm/aaaa
  * 
  * Specifica sintattica:
- *      
+ *      ottieniData()-> char*
  *
  * Parametri:
- *      
+ *      Nessun parametro
  * 
  * Specifica semantica:
- *      
+ *      ottieniData() -> data locale formattata
  * 
  * Pre-condizione:
- *      
+ *      Includere la libreria time.h
  * 
  * Post-condizione:
- *      
+ *      Data locale della macchina ottenuta con successo
  * 
  * Ritorna:
- *      
+ *      Una stringa della data locale formattata gg/mm/aaaa altrimenti NULL
  * 
  * Effetti collaterali:
- *      
+ *      Stampa un messaggio di errore in caso di allocazione della memoria per la stringa fallita
  * ---------------------------------------------------------------------------------------------------------------- 
  */
 
@@ -56,28 +57,32 @@ char* ottieniData(){
 /*---------------------------------------------------------------------------------------------------------------- 
  * Funzione: AggiornaStorico
  * -----------------------
- *  
+ *  Aggiorna il file StoricoPrenotazioni.txt in appending con una nuova prenotazione
  * 
  * Specifica sintattica:
- *      
+ *      AggiornaStorico(Prenotazione, int, int)-> int
  *
  * Parametri:
- *      
+ *      p: struct Prenotazione
+ *      indiceVeicolo: indice del veicolo
+ *      indiceOrario: indice dell'orario
  * 
  * Specifica semantica:
- *      
+ *      AggiornaStorico(p, indiceVeicolo, indiceOrario) -> 0 se chiudiFile fallito altrimenti 1
  * 
  * Pre-condizione:
- *      
- * 
+ *      Struct Prenotazione deve esistere e diversa da NULL
+ *      Indici validi
+ *      chiudiFile, ottieniNomeUtente, ottieniDataPrenotazione, ottieniInizioPrenotazione, ottieniFinePrenotazione, ottieniID, ottieniModelloPrenotazione, ottieniTargaPrenotazione devono essere implementate correttamente
  * Post-condizione:
- *      
+ *      Dati scritti correttamente su file
+ *      Chiusura file avvenuta con successo
  * 
  * Ritorna:
- *      
+ *      0 se la chiusura del file e` fallita altrimenti 1
  * 
  * Effetti collaterali:
- *      
+ *      In caso di fallimento nell'apertura del file viene stampato un messaggio di errore
  * ---------------------------------------------------------------------------------------------------------------- 
  */
 
@@ -91,7 +96,7 @@ int AggiornaStorico (Prenotazione p, int indiceVeicolo, int indiceOrario){
         return 0;
     }
 
-    fprintf (file, "\n%s-%s-%.2f-%.2f-%d-%s-%s-%d-%d", ottieniNomeUtente(p), ottieniDataPrenotazione(p), ottieniInizioPrenotazione(p), ottieniFinePrenotazione(p), ottieniID(p), ottieniModelloPrenotazione(p), ottieniTargaPrenotazione(p), indiceVeicolo, indiceOrario); // effettuata modifica per gli indici utili nell'inserimento della tabella hash
+    fprintf (file, "\n%s-%s-%.2f-%.2f-%d-%s-%s-%d-%d", ottieniNomeUtente(p), ottieniDataPrenotazione(p), ottieniInizioPrenotazione(p), ottieniFinePrenotazione(p), ottieniID(p), ottieniModelloPrenotazione(p), ottieniTargaPrenotazione(p), indiceVeicolo, indiceOrario);
 
     return chiudiFile(file);
 }
@@ -99,28 +104,38 @@ int AggiornaStorico (Prenotazione p, int indiceVeicolo, int indiceOrario){
 /*---------------------------------------------------------------------------------------------------------------- 
  * Funzione: RiempiTabellaHashDaFile
  * -----------------------
- *  
+ *  La funzione legge il file StoricoPrenotazioni.txt, conta il numero di prenotazioni
+ *  e crea una tabella hash per contenere tutte le prenotazioni
+ *  Se la data corrente corrisponde alla data locale viene aggiornata la disponibilita
  * 
  * Specifica sintattica:
- *      
+ *      RiempiTabellaHashDaFile(veicolo) -> TabellaHash
  *
  * Parametri:
- *      
+ *      *v: puntatore a un array di struct veicolo
  * 
  * Specifica semantica:
- *      
+ *      RiempiTabellaHashDaFile(*v) -> tabella hash aggiornata o NULL (non ci sono prenotazioni)
  * 
  * Pre-condizione:
- *      
+ *      Il puntatore deve essere diverso da NULL e deve puntare all'array di struct veicolo
+ *      La struct veicolo deve esistere e diversa da NULL
+ *      Tabella hash allocata correttamente
+ *      Formattazione del file corretta
  * 
  * Post-condizione:
- *      
+ *      Tabella hash creata correttamente con le prenotazioni
+ *      Disponibilita` aggiornata in caso data corrente sia uguale a quella locale
+ *      Chiusura del file avvenuta correttamente
+ *      NuovaTabellaHash, chiudiFile, ottieniData, LiberaTabellaHash, controllotoken, NuovaPrenotazione, modificaDisponibilita devono essere implemetate correttamente    
  * 
  * Ritorna:
- *      
+ *      La tabella hash aggiornata con i dati o a NULL in caso non vi siano prenotazioni
  * 
  * Effetti collaterali:
- *      
+ *      Allocata memoria per la tabella hash
+ *      Stampa messaggi di errore in caso di: lettura fallita del file, memoria non allocata correttamente, ottenimento data locale fallita, inserimento fallito
+ *      Viene liberata memoria in caso di tokenizzazione non corretta
  * ---------------------------------------------------------------------------------------------------------------- 
  */
 
@@ -158,6 +173,7 @@ TabellaHash RiempiTabellaHashDaFile (veicolo *v){
     
     fgets(buffer, sizeof(buffer), file); // Leggo a vuoto per partire dalla riga contenente la prenotazione (line 1: "\n")
     while (fgets (buffer, sizeof (buffer), file) != NULL){
+        
         char* token = strtok (buffer, "-");
         if (!(controlloToken (token))){
             free(dataCorrente);
@@ -267,28 +283,31 @@ TabellaHash RiempiTabellaHashDaFile (veicolo *v){
 /*---------------------------------------------------------------------------------------------------------------- 
  * Funzione: LimitaOrariDisponibili
  * -----------------------
- *  
+ *  Modifica la disponibilita` degli orari disponibili durante una prenotazione confrontandoli con l'orario locale
+ * 
  * 
  * Specifica sintattica:
- *      
+ *      LimitaOrariDisponibili(veicolo) -> void
  *
  * Parametri:
- *      
+ *      *v: puntatore a un array di struct veicolo
  * 
  * Specifica semantica:
- *      
+ *      LimitaOrariDisponibili(*v) -> void
  * 
  * Pre-condizione:
- *      
+ *      Il puntatore deve essere diverso da NULL e deve puntare all'array di struct veicolo
+ *      La struct veicolo deve esistere e diversa da NULL
+ *      modificaDisponibilita, ottieniOrarioInizio implementate correttamente
  * 
  * Post-condizione:
- *      
+ *      Disponibilita` modificata in tempo reale
  * 
  * Ritorna:
- *      
+ *      Nessun valore
  * 
  * Effetti collaterali:
- *      
+ *      La disponibilita` viene modificata
  * ---------------------------------------------------------------------------------------------------------------- 
  */
 
@@ -314,17 +333,20 @@ void LimitaOrariDisponibili (veicolo *v){
  * riguardante lo sconto da applicare al calcolo del costo totale del noleggio
  * 
  * Specifica sintattica:
- *      float verificaSconto(veicolo, int) -> float
+ *      verificaSconto(veicolo, int) -> float
  *
  * Parametri:
  *      v: oggetto veicolo
- *      k: indice dell'orario scelto
+ *      indiceOrario: indice dell'orario scelto
  * 
  * Specifica semantica:
- *      verificaSconto(v, k) -> Percentuale di Sconto
+ *      verificaSconto(v, indiceOrario) -> Percentuale di Sconto
+ * 
  * Pre-condizione:
  *      L'oggetto veicolo deve esistere e contenere i dati sugli intervalli orari
- *      
+ *      IndiceOrario deve essere valido
+ *      OttieniOrarioInizio implementato correttamente
+ * 
  * Post-condizione:
  *      Restituisce la percentuale di sconto se l'orario della prenotazione corrisponde all'intervallo
  *      Altrimenti restituisce 1
@@ -338,8 +360,8 @@ void LimitaOrariDisponibili (veicolo *v){
  * ---------------------------------------------------------------------------------------------------------------- 
  */
 
-float verificaSconto (veicolo v, int k){
-      float orario = ottieniOrarioInizio(v , k);
+float verificaSconto (veicolo v, int indiceOrario){
+      float orario = ottieniOrarioInizio(v , indiceOrario);
       if (orario >= 20.00 ){
         return 0.7; //Sconto del 30% se l'orario prenotato è dalle 20.00 in poi
       } else if (orario < 9) {
@@ -364,7 +386,8 @@ float verificaSconto (veicolo v, int k){
  *       
  * Pre-condizione:
  *      L'oggetto veicolo deve esistere e contenere i dati dell'oggetto orari
- *       
+ *      IndiceOrario valido
+ *       ottieniDisponibilita implemetata correttamente 
  * Post-condizione:
  *      Restituisce un intero se ottieniDisponibilita e` 0 o diverso da 0
  * 
@@ -389,17 +412,17 @@ int verificaDisponibilita(veicolo v, int indiceOrario){
  * Stampa a video l'intervallo orario scelto dall'utente con la sua disponibilità (Non disponibile o Disponibile)
  * 
  * Specifica sintattica:
- *      void stampaOrari(veicolo) -> void
+ *      stampaOrari(veicolo) -> void
  *
  * Parametri:
- *      v: oggetto veicolo
+ *      v: struct veicolo
  * 
  * Specifica semantica:
  *      stampaOrari(v) -> void
  *       
  * Pre-condizione:
- *      L'oggetto deve esistere e contenere dati
- *      stampaDisponibilita, ottieniOrarioInizio e ottieniOrarioFine devono esistere 
+ *      La struct veidolo deve esistere e contenere dati
+ *      stampaDisponibilita, ottieniOrarioInizio e ottieniOrarioFine devono esssere implementate correttamente
  *       
  * Post-condizione:
  *      Nessun valore di ritorno
@@ -423,30 +446,28 @@ void stampaOrari (veicolo v){
 /*-----------------------------------------------------------------------------------------------------------------
  * Funzione: controllotoken
  * ----------------------------------------------------------------------------------------------------------------
- * Controllo di eventuali errori nella funzione strtok della libreria string.h 
+ * Controlla se il token e` diverso da NULL (tokenizzazione corretta) 
  * 
  * Specifica sintattica:
- *      void controllotoken(char*, veicolo, FILE*)-> void
+ *      void controllotoken(char*)-> int
  *
  * Parametri:
  *      token: stringa
- *      v: oggetto veicolo
- *      file: puntatore a file
  * 
  * Specifica semantica:
- *      controllotoken(token, v, file)-> void 
+ *      controllotoken(token)-> 1 se token diverso da zero altrimenti 0
  *       
  * Pre-condizione:
  *      token deve esistere
  *       
  * Post-condizione:
- *      Se token == NULL, libera memoria e chiude file
+ *      Se token diverso NULL restituisce 1 altrimenti 0
  * 
  * Ritorna: 
- *      Nessun valore     
+ *      1 se token e` diverso da NULL altrimenti 0     
  * 
  * Effetti collaterali:
- *      Nessun effetto collaterale
+ *      Stampa un messaggio di errore in caso il token sia NULL
  * ---------------------------------------------------------------------------------------------------------------- 
  */
 
@@ -462,28 +483,28 @@ int controlloToken (char* token){
 /*---------------------------------------------------------------------------------------------------------------- 
  * Funzione: chiudiFile
  * -----------------------
- *  
+ *  Funzione che per chiudere un file
  * 
  * Specifica sintattica:
- *      
+ *      chiudiFile(FILE) -> int
  *
  * Parametri:
- *      
+ *      *file: puntatore a file
  * 
  * Specifica semantica:
- *      
+ *      chiudiFile(*file) -> 1 se avvenuto con successo altrimenti 0
  * 
  * Pre-condizione:
- *      
+ *      Puntatore a file diverso da NULL e deve puntare al file
  * 
  * Post-condizione:
- *      
+ *      File chiuso correttamente
  * 
  * Ritorna:
- *      
+ *      1 se avvenuto con successo altrimenti 0
  * 
  * Effetti collaterali:
- *      
+ *      Stampa un messaggio di errore in caso di fallimento nella chiusura del file
  * ---------------------------------------------------------------------------------------------------------------- 
  */
 

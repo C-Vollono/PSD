@@ -44,7 +44,7 @@
  *      Viene chiesto all'utente di inserire il nome utente, con un messaggio di avviso per il corretto inserimento
  * 		Se l'inserimento non è valido, stampa un messaggio di avviso
  * 		Se il nomeUtente passa tutti i controlli, allora modifica "utente.txt"	
- *
+ * 
  * ---------------------------------------------------------------------------------------------------------------- 
  */
 int operazioneAccesso (char operazione, char **nome_utente); 

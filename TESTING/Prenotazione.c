@@ -11,7 +11,6 @@
 #include "Prenotazione.h"
 #include "Utile.h"
 
-
 /*-- DEFINIZIONE STRUCT PRENOTAZIONE --*/
 struct item {
     int ID; //chiave dell'item prenotazione
@@ -60,7 +59,7 @@ struct item {
  * ---------------------------------------------------------------------------------------------------------------- 
  */
 
-Prenotazione NuovaPrenotazione (int ID, char* NomeUtente, veicolo c, int indiceOrario, char* dataPrenotazione){
+Prenotazione NuovaPrenotazione (int ID, char* NomeUtente, veicolo c, int i, char* dataPrenotazione){
 
     Prenotazione p = malloc (sizeof (struct item));
     if (p == NULL){
@@ -89,9 +88,9 @@ Prenotazione NuovaPrenotazione (int ID, char* NomeUtente, veicolo c, int indiceO
         return NULL;
     }
     
-    p->OrarioSceltoInizio = ottieniOrarioInizio(c, indiceOrario);
-    p->OrarioSceltoFine = ottieniOrarioFine(c, indiceOrario);
-    p->CostoNoleggioFinale = costoNoleggio (c, indiceOrario);
+    p->OrarioSceltoInizio = ottieniOrarioInizio(c, i);
+    p->OrarioSceltoFine = ottieniOrarioFine(c, i);
+    p->CostoNoleggioFinale = costoNoleggio (c, i);
     p->next = NULL;
 
     return p;
@@ -167,7 +166,6 @@ void LiberaLista (Prenotazione p){
  * ---------------------------------------------------------------------------------------------------------------- 
  */
 
-
 void stampaPrenotazione (Prenotazione p){ 
     printf("\nID Prenotazione: %d\nData: %s\nModello: %s\nOrario selezionato: %.2f/%.2f\nCosto noleggio: %.2f euro\n", p->ID, p->data, ottieniModelloPrenotazione(p), p->OrarioSceltoInizio, p->OrarioSceltoFine, p->CostoNoleggioFinale);
 }
@@ -228,7 +226,7 @@ int ottieniID (Prenotazione p){
  *      Ottenuto il puntatore al prossimo elemento nella lista concatenata
  * 
  * Ritorna:
- *      puntatore al prossimo elemento nella lista concatenata
+ *      puntatore al prossimo elemento nella lista concatenata altrimenti NULL
  * 
  * Effetti collaterali:
  *      Nessun effetto collaterale
@@ -488,10 +486,10 @@ char* ottieniTargaPrenotazione(Prenotazione p){
  * ---------------------------------------------------------------------------------------------------------------- 
  */
 
-float costoNoleggio (veicolo v, int indiceOrario){
+float costoNoleggio (veicolo v, int k){
 
     int minutiTotali, ore, minuti;
-    float inizio = ottieniOrarioInizio(v , indiceOrario), fine = ottieniOrarioFine(v , indiceOrario);
+    float inizio = ottieniOrarioInizio(v , k), fine = ottieniOrarioFine(v , k);
 
     ore = (int)inizio;
     minuti = round((inizio-ore)*100);
@@ -501,7 +499,42 @@ float costoNoleggio (veicolo v, int indiceOrario){
     minuti = round((fine-ore)*100);
     minutiTotali = (ore*60)+minuti - minutiTotali; // MINUTI TOTALI DEL TEMPO DI NOLEGGIO
 
-    return minutiTotali * ((ottieniCostoOrario(v))/60) * verificaSconto(v, indiceOrario);
+    return minutiTotali * ((ottieniCostoOrario(v))/60) * verificaSconto(v,k);
+}
+
+/*---------------------------------------------------------------------------------------------------------------- 
+ * Funzione: ottieniCostoNoleggio
+ * -----------------------
+ * Restituisce il valore del costo noleggio della prenotazione
+ * 
+ * Specifica sintattica:
+ *      ottieniCostoNoleggio(prenotazione) -> float
+ *
+ * Parametri:
+ *      p: prenotazione da considerare
+ * 
+ * Specifica semantica:
+ *      ottieniCostoNoleggio(p) -> costo della prenotazione
+ * 
+ * Pre-condizione:
+ *      La struct prenotazione deve esistere, essere allocata correttamente e contenere il costo del noleggio
+ * 
+ * Post-condizione:
+ *      Restituisce il costo totale del noleggio della prenotazione
+ * 
+ * Ritorna:
+ *      Un float del costo del noleggio altrimenti -1
+ * 
+ * Effetti collaterali: 
+ *      Nessun effetto collaterale
+ * ---------------------------------------------------------------------------------------------------------------- 
+ */
+
+ float ottieniCostoNoleggio (Prenotazione p){
+    if (p!=NULL){
+        return p->CostoNoleggioFinale;
+    }
+    return -1;
 }
 
 /*---------------------------------------------------------------------------------------------------------------- 
@@ -534,8 +567,7 @@ float costoNoleggio (veicolo v, int indiceOrario){
  * ---------------------------------------------------------------------------------------------------------------- 
  */
 
-
-void assegnaNext(Prenotazione p, Prenotazione next){
+ void assegnaNext(Prenotazione p, Prenotazione next){
     if(p!=NULL){
         p->next = next;
     }

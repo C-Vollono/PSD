@@ -31,8 +31,8 @@ typedef struct hash* TabellaHash;
  *      
  * Effetti collaterali:
  *      Nessun effetto collaterale.
- *
- *  ---------------------------------------------------------------------------------------------------------------- 
+ * 
+ * ---------------------------------------------------------------------------------------------------------------- 
  */
 int ottieniTaglia (TabellaHash t);
 
@@ -65,7 +65,7 @@ int ottieniTaglia (TabellaHash t);
  * 
  * Effetti collaterali:
  *      Stampa un messaggio di errore se l'allocazione fallisce.
- * 
+ *
  * ---------------------------------------------------------------------------------------------------------------- 
  */
 TabellaHash NuovaTabellaHash (int taglia);
@@ -97,7 +97,6 @@ TabellaHash NuovaTabellaHash (int taglia);
  * Effetti collaterali:
  *      Nessun effetto collaterale.
  *      
- * 
  * ---------------------------------------------------------------------------------------------------------------- 
  */
 int FunzioneHash(int ID, int taglia);
@@ -120,10 +119,10 @@ int FunzioneHash(int ID, int taglia);
  * Pre-condizione:
  *      t deve essere allocata correttamente
  *      p deve essere diversa da NULL
- *      ottieniID, ottieniNext, FunzioneHash, assegnaNext devono essere implemetate correttamente
+ *      ottieniID, ottieniNext, FunzioneHash devono essere implemetate correttamente
  * 
  * Post-condizione:
- *      Se l'inserimento ha avuto successo restituisce un 1 (inserimento effettuato correttamente) altrimenti 0
+ *      Se l'inserimento ha avuto successo restituisce un 1 (inserimento effettuato correttamente) altrimenti zero
  *      
  * Ritorna:
  *      0 se la prenotazione è già presente nella tabella hash, 1 altrimenti.
@@ -187,7 +186,7 @@ void LiberaTabellaHash (TabellaHash t);
  * Pre-condizione:
  *      TabellaHash deve esistere e diversa da NULL
  *      nomeUtente allocato correttamente
- *      ottieniTaglia, ottieniNomeUtente, stampaPrenotazione, ottieniNext implementate correttamente
+ *      ottieniTaglia, ottieniNomeUtente, stampaPrenotazione implementate correttamente
  *      
  * Post-condizione:
  *      Nessuna post-condizione.
@@ -207,19 +206,22 @@ void StampaPrenotazioneTabellaHash (TabellaHash t, char* nomeUtente);
 /*---------------------------------------------------------------------------------------------------------------- 
  * Funzione: TrovaPrenotazione
  * -----------------------
- * Cerca all'interno della tabella hash la prenotazione attraverso l'ID
+ *  Cerca all'interno della tabella hash la prenotazione attraverso l'ID
  * 
  * Specifica sintattica:
  *      TrovaPrenotazione (TabellaHash, int, int) -> Prenotazione
  *      
+ *
  * Parametri:
  *      t: tabella hash
  *      ID: chiave Prenotazione
  *      taglia: grandezza tabella hash
  *      
+ * 
  * Specifica semantica:
  *      TrovaPrenotazione: (t, ID, taglia) -> prenotazione se ID trovato altrimenti NULL
  *      
+ * 
  * Pre-condizione:
  *      TabellaHash deve esistere e diverso da NULL
  *      Taglia deve essere maggiore di 0.
@@ -228,12 +230,46 @@ void StampaPrenotazioneTabellaHash (TabellaHash t, char* nomeUtente);
  * Post-condizione:
  *      Restituisce prenotazione se l'ID coincide altrimenti NULL
  *      
+ * 
  * Ritorna:
  *      Prenotazione se l'ID coincide altrimenti NULL
  *      
+ * 
  * Effetti collaterali:
- *      Prenotazione contiene dati della struct Prenotazione  
- *  
+ *      Prenotazione contiene dati della struct Prenotazione   
+ * 
  * ---------------------------------------------------------------------------------------------------------------- 
  */
-Prenotazione TrovaPrenotazione (TabellaHash t, int ID, int taglia, char* nomeUtente);
+Prenotazione TrovaPrenotazione (TabellaHash t, int ID, int taglia);
+
+/*---------------------------------------------------------------------------------------------------------------- 
+ * Funzione: ottieniPrenotazione
+ * -----------------------
+ * Restituisce la prenotazione secondo l'indice
+ * 
+ * Specifica sintattica:
+ *      ottieniPrenotazione (TabellaHash, int) -> Prenotazione
+ *      
+ * Parametri:
+ *      t: tabella hash
+ *      indice: indice tabella hash
+ * 
+ * Specifica semantica:
+ *      ottieniPrenotazione: (t, indice) -> prenotazione
+ * 
+ * Pre-condizione:
+ *      TabellaHash deve esistere e diverso da NULL
+ *      Indice valido
+ * 
+ * Post-condizione:
+ *      Restituisce prenotazione
+ *      
+ * Ritorna:
+ *      Prenotazione
+ *      
+ * Effetti collaterali:
+ *      Nessun effetto collaterale
+ * 
+ * ---------------------------------------------------------------------------------------------------------------- 
+ */
+Prenotazione ottieniPrenotazione(TabellaHash t, int indice);

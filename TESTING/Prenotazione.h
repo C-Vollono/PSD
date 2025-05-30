@@ -1,28 +1,10 @@
-/*ATTENZIONE: Nel codice sono presenti comandi system
-              Implementati per la pulizia del terminale
-              Potrebbero creare conflitti o problemi di vari natura
-              "Annullarli" nel caso della presenza di quest'ultimi*/
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <math.h>
+#include <time.h>
 #include "Veicolo.h"
-#include "Prenotazione.h"
-#include "Utile.h"
 
-
-/*-- DEFINIZIONE STRUCT PRENOTAZIONE --*/
-struct item {
-    int ID; //chiave dell'item prenotazione
-    char* nomeUtente;
-    veicolo v;
-    char* data;
-    float CostoNoleggioFinale;
-    float OrarioSceltoInizio;
-    float OrarioSceltoFine;
-    struct item *next; 
-};
+typedef struct item* Prenotazione;
 
 /*-- FUNZIONI RELATIVE A PRENOTAZIONE --*/
 
@@ -57,45 +39,10 @@ struct item {
  * 
  * Effetti collaterali:
  *      Stampa a video dei messaggi di errore in caso di mancata allocazione di NomeUtente, dataPrenotazione e prenotazione stessa
+ * 
  * ---------------------------------------------------------------------------------------------------------------- 
  */
-
-Prenotazione NuovaPrenotazione (int ID, char* NomeUtente, veicolo c, int indiceOrario, char* dataPrenotazione){
-
-    Prenotazione p = malloc (sizeof (struct item));
-    if (p == NULL){
-        system("cls | clear");
-        perror ("ERRORE: Creazione della prenotazione fallita.\n");
-        return NULL;
-    }
-
-    p->ID = ID;
-    p->nomeUtente = malloc (strlen (NomeUtente)+1);
-
-    if (p->nomeUtente == NULL){
-        system("cls | clear");
-        perror ("ERRORE: Allocazione del nome utente per la prenotazione fallita.\n");
-        return NULL;
-    }
-    strcpy (p->nomeUtente, NomeUtente);
-
-    p->v = c;
-    p->data = strdup (dataPrenotazione);
-
-    if (p->data == NULL){
-        perror ("ERRORE: Allocazione data per la prenotazione fallita.\n");
-        free (p->nomeUtente);
-        free (p);
-        return NULL;
-    }
-    
-    p->OrarioSceltoInizio = ottieniOrarioInizio(c, indiceOrario);
-    p->OrarioSceltoFine = ottieniOrarioFine(c, indiceOrario);
-    p->CostoNoleggioFinale = costoNoleggio (c, indiceOrario);
-    p->next = NULL;
-
-    return p;
-}
+Prenotazione NuovaPrenotazione (int ID, char* NomeUtente, veicolo c, int i, char* dataPrenotazione);
 
 /*---------------------------------------------------------------------------------------------------------------- 
  * Funzione: LiberaLista
@@ -122,21 +69,10 @@ Prenotazione NuovaPrenotazione (int ID, char* NomeUtente, veicolo c, int indiceO
  * 
  * Effetti collaterali:
  *      La struct prenotazione non ha piu` dati presenti in memoria
+ * 
  * ---------------------------------------------------------------------------------------------------------------- 
  */
-
-void LiberaLista (Prenotazione p){
-    Prenotazione nuovap;
-    while (p != NULL){
-        nuovap = p->next;
-
-        free(p->nomeUtente);
-        free(p->data);
-        free (p);
-
-        p = nuovap;
-    }
-}
+void LiberaLista (Prenotazione p);
 
 /*---------------------------------------------------------------------------------------------------------------- 
  * Funzione: stampaPrenotazione
@@ -164,13 +100,10 @@ void LiberaLista (Prenotazione p){
  * 
  * Effetti collaterali:
  *      Stampa a video i dati della struct veicolo
+ * 
  * ---------------------------------------------------------------------------------------------------------------- 
  */
-
-
-void stampaPrenotazione (Prenotazione p){ 
-    printf("\nID Prenotazione: %d\nData: %s\nModello: %s\nOrario selezionato: %.2f/%.2f\nCosto noleggio: %.2f euro\n", p->ID, p->data, ottieniModelloPrenotazione(p), p->OrarioSceltoInizio, p->OrarioSceltoFine, p->CostoNoleggioFinale);
-}
+void stampaPrenotazione (Prenotazione p);
 
 /*---------------------------------------------------------------------------------------------------------------- 
  * Funzione: ottieniID
@@ -197,15 +130,10 @@ void stampaPrenotazione (Prenotazione p){
  * 
  * Effetti collaterali:
  *      Nessun effetto collaterale
+ * 
  * ---------------------------------------------------------------------------------------------------------------- 
  */
-
-int ottieniID (Prenotazione p){
-    if(p!=NULL){
-        return p->ID;
-    }
-    return -1;
-}
+int ottieniID (Prenotazione p);
 
 /*---------------------------------------------------------------------------------------------------------------- 
  * Funzione: ottieniNext
@@ -228,19 +156,14 @@ int ottieniID (Prenotazione p){
  *      Ottenuto il puntatore al prossimo elemento nella lista concatenata
  * 
  * Ritorna:
- *      puntatore al prossimo elemento nella lista concatenata
+ *      puntatore al prossimo elemento nella lista concatenata altrimenti NULL
  * 
  * Effetti collaterali:
  *      Nessun effetto collaterale
+ * 
  * ---------------------------------------------------------------------------------------------------------------- 
  */
-
-struct item *ottieniNext(Prenotazione p){
-    if(p!=NULL){
-        return p->next;
-    }
-    return NULL;
-}
+struct item *ottieniNext(Prenotazione p);
 
 /*---------------------------------------------------------------------------------------------------------------- 
  * Funzione: ottieniNomeUtente
@@ -267,15 +190,10 @@ struct item *ottieniNext(Prenotazione p){
  * 
  * Effetti collaterali:
  *      Nessun effetto collaterale
+ * 
  * ---------------------------------------------------------------------------------------------------------------- 
  */
-
-char* ottieniNomeUtente(Prenotazione p){
-    if(p!=NULL){
-        return p->nomeUtente;
-    }
-    return NULL;
-}
+char* ottieniNomeUtente(Prenotazione p);
 
 /*---------------------------------------------------------------------------------------------------------------- 
  * Funzione: ottieniDataPrenotazione
@@ -302,15 +220,10 @@ char* ottieniNomeUtente(Prenotazione p){
  * 
  * Effetti collaterali:
  *      Nessun effetto collaterale
+ * 
  * ---------------------------------------------------------------------------------------------------------------- 
  */
-
-char* ottieniDataPrenotazione(Prenotazione p){
-    if(p!=NULL){
-        return p->data;
-    }
-    return NULL;
-}
+char* ottieniDataPrenotazione(Prenotazione p);
 
 /*---------------------------------------------------------------------------------------------------------------- 
  * Funzione: ottieniInizioPrenotazione
@@ -337,15 +250,10 @@ char* ottieniDataPrenotazione(Prenotazione p){
  * 
  * Effetti collaterali:
  *      Nessun effetto collaterale
+ * 
  * ---------------------------------------------------------------------------------------------------------------- 
  */
-
-float ottieniInizioPrenotazione(Prenotazione p){
-    if(p!=NULL){
-        return p->OrarioSceltoInizio;
-    }
-    return -1;
-}
+float ottieniInizioPrenotazione(Prenotazione p);
 
 /*---------------------------------------------------------------------------------------------------------------- 
  * Funzione: ottieniFinePrenotazione
@@ -372,15 +280,10 @@ float ottieniInizioPrenotazione(Prenotazione p){
  * 
  * Effetti collaterali:
  *      Nessun effetto collaterale
+ * 
  * ---------------------------------------------------------------------------------------------------------------- 
  */
-
-float ottieniFinePrenotazione(Prenotazione p){
-    if(p!=NULL){
-        return p->OrarioSceltoFine;
-    }
-    return -1;
-}
+float ottieniFinePrenotazione(Prenotazione p);
 
 /*---------------------------------------------------------------------------------------------------------------- 
  * Funzione: ottieniModelloPrenotazione
@@ -408,17 +311,10 @@ float ottieniFinePrenotazione(Prenotazione p){
  * 
  * Effetti collaterali:
  *      Nessun effetto collaterale
+ * 
  * ---------------------------------------------------------------------------------------------------------------- 
  */
-
-char* ottieniModelloPrenotazione(Prenotazione p){
-    veicolo temp = p->v;
-
-    if(p!=NULL){
-        return ottieniModello(temp);
-    }
-    return NULL;
-}
+char* ottieniModelloPrenotazione(Prenotazione p);
 
 /*---------------------------------------------------------------------------------------------------------------- 
  * Funzione: ottieniTargaPrenotazione
@@ -446,17 +342,10 @@ char* ottieniModelloPrenotazione(Prenotazione p){
  * 
  * Effetti collaterali:
  *      Nessun effetto collaterale
+ * 
  * ---------------------------------------------------------------------------------------------------------------- 
  */
-
-char* ottieniTargaPrenotazione(Prenotazione p){
-    veicolo temp = p->v;
-
-    if(p!=NULL){
-        return ottieniTarga(temp);
-    }
-    return NULL;
-}
+char* ottieniTargaPrenotazione(Prenotazione p);
 
 /*---------------------------------------------------------------------------------------------------------------- 
  * Funzione: costoNoleggio
@@ -485,24 +374,40 @@ char* ottieniTargaPrenotazione(Prenotazione p){
  * 
  * Effetti collaterali: 
  *      Nessun effetto collaterale
+ * 
  * ---------------------------------------------------------------------------------------------------------------- 
  */
+float costoNoleggio (veicolo v, int k);
 
-float costoNoleggio (veicolo v, int indiceOrario){
-
-    int minutiTotali, ore, minuti;
-    float inizio = ottieniOrarioInizio(v , indiceOrario), fine = ottieniOrarioFine(v , indiceOrario);
-
-    ore = (int)inizio;
-    minuti = round((inizio-ore)*100);
-    minutiTotali = (ore*60) + minuti; // MINUTI TOTALI SOLO INIZIALI
-
-    ore = (int)fine;
-    minuti = round((fine-ore)*100);
-    minutiTotali = (ore*60)+minuti - minutiTotali; // MINUTI TOTALI DEL TEMPO DI NOLEGGIO
-
-    return minutiTotali * ((ottieniCostoOrario(v))/60) * verificaSconto(v, indiceOrario);
-}
+/*---------------------------------------------------------------------------------------------------------------- 
+ * Funzione: ottieniCostoNoleggio
+ * -----------------------
+ * Restituisce il valore del costo noleggio della prenotazione
+ * 
+ * Specifica sintattica:
+ *      ottieniCostoNoleggio(prenotazione) -> float
+ *
+ * Parametri:
+ *      p: prenotazione da considerare
+ * 
+ * Specifica semantica:
+ *      ottieniCostoNoleggio(p) -> costo della prenotazione
+ * 
+ * Pre-condizione:
+ *      La struct prenotazione deve esistere, essere allocata correttamente e contenere il costo del noleggio
+ * 
+ * Post-condizione:
+ *      Restituisce il costo totale del noleggio della prenotazione
+ * 
+ * Ritorna:
+ *      Un float del costo del noleggio altrimenti -1
+ * 
+ * Effetti collaterali: 
+ *      Nessun effetto collaterale
+ * 
+ * ---------------------------------------------------------------------------------------------------------------- 
+ */
+float ottieniCostoNoleggio (Prenotazione p);
 
 /*---------------------------------------------------------------------------------------------------------------- 
  * Funzione: assegnaNext
@@ -531,12 +436,7 @@ float costoNoleggio (veicolo v, int indiceOrario){
  * 
  * Effetti collaterali: 
  *      Nessun effetto collaterale
+ * 
  * ---------------------------------------------------------------------------------------------------------------- 
  */
-
-
-void assegnaNext(Prenotazione p, Prenotazione next){
-    if(p!=NULL){
-        p->next = next;
-    }
-}
+void assegnaNext(Prenotazione p, Prenotazione next);

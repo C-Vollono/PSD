@@ -25,7 +25,7 @@ void main () {
     
     nomeUtente = menuAccesso(); 
     
-    for (int i=0; i < VEICOLI_TAGLIA; i++){
+    for (int i=0; i < VEICOLI_TAGLIA; i++){ //Ciclo per riempire la struct veicolo
         V[i] = creaVeicolo(); 
         if (V[i] == NULL){  
             for (int j=0; j < i; j++){ free(V[j]);}
@@ -62,64 +62,68 @@ inizio:
     printf ("1) Nuova Prenotazione\n2) Visualizza storico prenotazioni\n3) Visualizza Sconti\n4) Visualizza Veicoli\n5) Trova Prenotazione\n6) Esci\n");
     printf ("Scelga l'operazione da effettuare (da 1-6): ");
 
-    char scelta;
-    while (1){
-        if (scanf (" %c", &scelta) != 1 || scelta < '1' || scelta > '6'){
-			printf("L'operazione scelta non e' valida, riprova: ");
-			while (getchar() != '\n');
-		} else break;
+    char scelta[1024];
+    while (1){ //Ciclo per controllo input della scelta del menu
+        fgets(scelta, sizeof(scelta), stdin);
+        scelta[strcspn(scelta, "\n")] = '\0';
+            if (strlen(scelta) == 1 && scelta[0] >= '1' && scelta[0] <= '6'){
+                break;
+            }
+        printf("Operazione non valida, riprova: ");
     }
     
-    int sceltaInt = scelta - '0';
+    int sceltaInt = scelta[0] - '0';
 
     switch (sceltaInt) {
         case 1: { // Nuova Prenotazione
-            getchar();
+            
             for (int i=0; i<10; i++){
-                printf ("VEICOLO %d\n", i);
+                printf ("--- VEICOLO %d ---\n", i);
                 stampaVeicolo (V[i]);
             }
-
+            
+            
             printf ("Scelga il veicolo che le interessa tra quelli in catalogo (da 0 a 9): ");
             char sceltaIndice[1024];
             int indiceVeicolo;
                 
-            while (1){
+            while (1){ //Controllo input indice veicolo
                 fgets(sceltaIndice, sizeof(sceltaIndice), stdin);
                 sceltaIndice[strcspn(sceltaIndice, "\n")] = '\0';
                 if (strlen(sceltaIndice) == 1 && sceltaIndice[0] >= '0' && sceltaIndice[0] <= '9'){
                     break;
                 }
                 printf("Il veicolo scelto non e' valido, riprova: ");
-    	        }
-                indiceVeicolo = sceltaIndice[0] - '0';
+    	    }
+            
+            indiceVeicolo = sceltaIndice[0] - '0';
 
-                LimitaOrariDisponibili (V);
-                stampaOrari (V[indiceVeicolo]);
-                printf ("\nScelga un orario tra quelli disponibili per il noleggio del veicolo: ");
+            LimitaOrariDisponibili (V);
+            stampaOrari (V[indiceVeicolo]);
+            printf ("\nScelga un orario tra quelli disponibili per il noleggio del veicolo: ");
 
-                int indiceOrario;
-                while (1){
-                    fgets(sceltaIndice, sizeof(sceltaIndice), stdin);
-                    sceltaIndice[strcspn(sceltaIndice, "\n")] = '\0';
-                    if (strlen(sceltaIndice) == 1 && sceltaIndice[0] >= '0' && sceltaIndice[0] <= '7'){
-                        break;
-                    }
-                    printf("L'orario scelto non e' valido, riprova: ");
-    	        }
-                indiceOrario = sceltaIndice[0] - '0';
+            int indiceOrario;
+            while (1){ //Controllo input indice orario
+                fgets(sceltaIndice, sizeof(sceltaIndice), stdin);
+                sceltaIndice[strcspn(sceltaIndice, "\n")] = '\0';
+                if (strlen(sceltaIndice) == 1 && sceltaIndice[0] >= '0' && sceltaIndice[0] <= '7'){
+                    break;
+                }
+                printf("L'orario scelto non e' valido, riprova: ");
+    	    }
+            indiceOrario = sceltaIndice[0] - '0';
                 
-                if (verificaDisponibilita(V[indiceVeicolo], indiceOrario)){
-                    srand (time(NULL));
-                    int ID = rand();
-                    char* dataCorrente = ottieniData();
-                    if (dataCorrente == NULL){
-                        printf("ERRORE: Ottenimento data locale fallito.\n");
-                        free(nomeUtente);
-                        for (int i=0; i < VEICOLI_TAGLIA; i++){
-                            liberaVeicolo(V[i]);
-                            free(V[i]);
-                        }
+            if (verificaDisponibilita(V[indiceVeicolo], indiceOrario)){
+                srand (time(NULL));
+                int ID = rand();
+                char* dataCorrente = ottieniData();
+                if (dataCorrente == NULL){
+                    printf("ERRORE: Ottenimento data locale fallito.\n");
+                    free(nomeUtente);
+                    for (int i=0; i < VEICOLI_TAGLIA; i++){
+                        liberaVeicolo(V[i]);
+                        free(V[i]);
+                    }
                     LiberaTabellaHash(T);
                     exit(1);
                     }
@@ -142,7 +146,7 @@ inizio:
                 printf ("Conferma la sua prenotazione? (Y o N): ");
 
                 char s;
-                while (1){
+                while (1){ //Controllo input conferma prenotazione
                     if (scanf (" %c", &s) != 1 || getchar() != '\n'){
                         printf("Ha inserito una scelta non valida, riprova: ");
                         while(getchar() != '\n');
@@ -216,7 +220,7 @@ inizio:
                 
                 int id;
                 
-                while(1){
+                while(1){ //Controllo input ID prenotazione
                     if(scanf("%d", &id)==1){
                         break;
                     }else{
@@ -225,7 +229,7 @@ inizio:
                 while((getchar()) !='\n');
                 }
 
-                Prenotazione p = TrovaPrenotazione (T, id, taglia);
+                Prenotazione p = TrovaPrenotazione (T, id, taglia, nomeUtente);
                 if (p != NULL){
                     system("cls | clear");
                     printf ("Ecco la sua prenotazione con ID %d:\n", id);
