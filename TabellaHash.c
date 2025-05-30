@@ -186,9 +186,8 @@ int FunzioneHash(int ID, int taglia) {
  */
 
 int InserisciPrenotazione (TabellaHash t, Prenotazione p){
-    int indice;
-    Prenotazione testa, corrente, temp;
-    indice = FunzioneHash (ottieniID(p), t->taglia);
+    int indice = FunzioneHash (ottieniID(p), t->taglia);
+    Prenotazione corrente, testa, temp;
     corrente = testa = t->tabella[indice];
     while (corrente){
         if (ottieniID(corrente) == ottieniID(p)){
