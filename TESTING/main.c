@@ -253,7 +253,7 @@ inizio:
 
             case 4: { //Visualizza veicoli
                 system("cls | clear");
-                if (!StampaVeicoliFile(V)){
+                if (!StampaVeicoliFile()){
                     free(nomeUtente);
                     for (int i=0; i < VEICOLI_TAGLIA; i++){
                         liberaVeicolo(V[i]);
